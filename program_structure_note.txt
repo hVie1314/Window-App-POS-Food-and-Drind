@@ -1,0 +1,37 @@
+/POS
+│
+├── /Assets              # Chứa tài nguyên như ảnh, icon, fonts
+│   ├── /Images          # Tài nguyên ảnh (png, jpg,...)
+│   ├── /Icons           # Các icon (nếu cần)
+│   └── /Fonts           # Các font chữ tùy chỉnh
+│
+├── /Models              # Chứa các lớp mô hình dữ liệu (Data models)
+│   └── Product.cs       # Ví dụ lớp Product đại diện món ăn
+│
+├── /ViewModels          # Chứa các ViewModel, lớp trung gian giữa View và Model
+│   └── MenuViewModel.cs # Ví dụ: ViewModel quản lý logic của màn hình menu
+│
+├── /Views               # Chứa các giao diện người dùng (XAML)
+│   ├── MenuView.xaml    # Giao diện XAML hiển thị menu các món ăn
+│   └── MainWindow.xaml  # Giao diện chính của ứng dụng
+│
+├── /Interfaces          # Chứa các interface để sử dụng cho dependency injection hoặc abstraction
+│   └── IProductService.cs # Interface cho các lớp thao tác với Product (tùy chọn)
+│
+├── /Services            # Chứa các lớp xử lý nghiệp vụ, kết nối với database
+│   └── ProductService.cs  # Ví dụ: Dịch vụ xử lý thao tác với database của món ăn
+│
+├── /Helpers             # Chứa các hàm tiện ích hoặc chuyển đổi
+│   └── DatabaseHelper.cs  # Hàm kết nối hoặc hỗ trợ với MySQL (tùy chọn)
+│
+├── /Styles              # Styles dùng chung cho UI
+│   └── Styles.xaml      # Chứa các style, template cho XAML
+│
+├── /Converters          # Chuyển đổi giá trị giữa ViewModel và View
+│   └── BooleanToVisibilityConverter.cs # Ví dụ: Chuyển đổi bool -> Visibility
+│
+├── /Factories           # Tạo ra đối tượng, cung cấp các instance phức tạp
+│   └── ProductFactory.cs # Ví dụ: Tạo sản phẩm với logic phức tạp
+│
+├── App.xaml             # Cấu hình global application (resource dictionaries, app-wide themes)
+└── MainWindow.xaml.cs   # Code-behind của MainWindow nếu cần xử lý logic trực tiếp
