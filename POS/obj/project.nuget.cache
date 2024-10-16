@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HLUjjc6Bfq8=",
+  "dgSpecHash": "bB5bAHEzaz8=",
   "success": true,
-  "projectFilePath": "D:\\LaptrinhWindow\\ProjectGroup\\POS\\POS.csproj",
+  "projectFilePath": "D:\\LaptrinhWindow\\ProjectGroup - bản phụ\\POS\\POS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ACER\\.nuget\\packages\\communitytoolkit.mvvm\\8.3.2\\communitytoolkit.mvvm.8.3.2.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\fody\\6.6.4\\fody.6.6.4.nupkg.sha512",

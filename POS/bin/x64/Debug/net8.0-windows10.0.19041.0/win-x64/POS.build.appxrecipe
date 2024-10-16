@@ -10,31 +10,31 @@
     <PackageArchitecture>x64</PackageArchitecture>
     <PackageIdentityName>9246cd15-3081-4405-9932-175aa00d9638</PackageIdentityName>
     <PackageIdentityPublisher>CN=hVie</PackageIdentityPublisher>
-    <IntermediateOutputPath>D:\LaptrinhWindow\ProjectGroup\POS\obj\x64\Debug\net8.0-windows10.0.19041.0\win-x64\</IntermediateOutputPath>
+    <IntermediateOutputPath>D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\obj\x64\Debug\net8.0-windows10.0.19041.0\win-x64\</IntermediateOutputPath>
     <RemoteDeploymentType>CopyToDevice</RemoteDeploymentType>
     <PackageRegistrationPath></PackageRegistrationPath>
     <RemoveNonLayoutFiles>false</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
-    <LayoutDir>D:\LaptrinhWindow\ProjectGroup\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppX</LayoutDir>
+    <LayoutDir>D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppX</LayoutDir>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\LaptrinhWindow\ProjectGroup\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppxManifest.xml">
+    <AppXManifest Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\resources.pri">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.runtimeconfig.json">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.runtimeconfig.json">
       <PackagePath>POS.runtimeconfig.json</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.dll">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.dll">
       <PackagePath>POS.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\obj\x64\Debug\net8.0-windows10.0.19041.0\win-x64\apphost.exe">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\obj\x64\Debug\net8.0-windows10.0.19041.0\win-x64\apphost.exe">
       <PackagePath>POS.exe</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\ACER\.nuget\packages\microsoft.web.webview2\1.0.2651.64\runtimes\win-x64\native\WebView2Loader.dll">
@@ -667,28 +667,28 @@
     <AppxPackagedFile Include="C:\Users\ACER\.nuget\packages\microsoft.web.webview2\1.0.2651.64\lib_manual\net6.0-windows10.0.17763.0\Microsoft.Web.WebView2.Core.Projection.dll">
       <PackagePath>Microsoft.Web.WebView2.Core.Projection.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.deps.json">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.deps.json">
       <PackagePath>POS.deps.json</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup\POS\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\LaptrinhWindow\\ProjectGroup\\POS\\POS.csproj": {}
+    "D:\\LaptrinhWindow\\ProjectGroup - bản phụ\\POS\\POS.csproj": {}
   },
   "projects": {
-    "D:\\LaptrinhWindow\\ProjectGroup\\POS\\POS.csproj": {
+    "D:\\LaptrinhWindow\\ProjectGroup - bản phụ\\POS\\POS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\LaptrinhWindow\\ProjectGroup\\POS\\POS.csproj",
+        "projectUniqueName": "D:\\LaptrinhWindow\\ProjectGroup - bản phụ\\POS\\POS.csproj",
         "projectName": "POS",
-        "projectPath": "D:\\LaptrinhWindow\\ProjectGroup\\POS\\POS.csproj",
+        "projectPath": "D:\\LaptrinhWindow\\ProjectGroup - bản phụ\\POS\\POS.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\LaptrinhWindow\\ProjectGroup\\POS\\obj\\",
+        "outputPath": "D:\\LaptrinhWindow\\ProjectGroup - bản phụ\\POS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

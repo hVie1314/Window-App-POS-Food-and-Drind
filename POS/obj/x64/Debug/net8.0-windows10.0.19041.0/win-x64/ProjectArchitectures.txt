@@ -1,1 +1,1 @@
-D:\LaptrinhWindow\ProjectGroup\POS\POS.csproj;x64
+D:\LaptrinhWindow\ProjectGroup - bản phụ\POS\POS.csproj;x64
