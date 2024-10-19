@@ -6,8 +6,8 @@
     xmlns:local="using:POS"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        
-    </StackPanel>
+    mc:Ignorable="d" Activated="Window_Activated">
+
+    <Frame Name="MainFrame"/>
+    
 </Window>

@@ -12,7 +12,6 @@ namespace POS.Models
         public int StockQuantity { get; set; }
         public string IsAvailable { get; set; }
         public string ImagePath { get; set; }
-        public string Type { get; set; }
 
         //public Product(int productId, string name, int price, string category, int stockQuantity, string isAvailable, string imagePath, string type)
         //{
