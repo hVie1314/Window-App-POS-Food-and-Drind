@@ -57,12 +57,12 @@
             
             <!--navigation button-->
             <StackPanel Orientation="Vertical" Height="960">
-                <Button Content="Menu" Width="110" Height="50" Margin="0,150,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Hóa đơn" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Kho hàng" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Thực đơn" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Nhân viên" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Báo cáo" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Menu" Width="110" Height="50" Margin="0,130,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Hóa đơn" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Kho hàng" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Thực đơn" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Nhân viên" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Báo cáo" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
         </StackPanel>
 
