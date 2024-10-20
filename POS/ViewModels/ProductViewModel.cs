@@ -10,9 +10,9 @@ namespace POS.ViewModels
 {
     public sealed partial class ProductViewModel : INotifyPropertyChanged
     {
-        private MockDao _productDao = new MockDao(); // Sử dụng MockDao cho testing
+        private MockDao _productDao = new MockDao(); // Use MockDao for testing
 
-        // Bộ nhớ đệm cho tất cả sản phẩm từ cơ sở dữ liệu
+        // Cache all products and the filtered products
         private ObservableCollection<Product> _allProducts;
         public ObservableCollection<Product> Products { get; private set; }
 
@@ -22,19 +22,18 @@ namespace POS.ViewModels
 
         public ProductViewModel()
         {
-            // Khởi tạo lệnh
             LoadProducts();
         }
 
         private void LoadProducts()
         {
             var productsFromDb = _productDao.GetAll();
-            _allProducts = new ObservableCollection<Product>(productsFromDb); // Bộ nhớ đệm ban đầu
-            Products = new ObservableCollection<Product>(_allProducts); // Hiển thị tất cả sản phẩm ban đầu
-            FilterAndSortProducts(); // Lọc và sắp xếp sản phẩm
+            _allProducts = new ObservableCollection<Product>(productsFromDb);
+            Products = new ObservableCollection<Product>(_allProducts);
+            FilterAndSortProducts();
         }
 
-        // Thuộc tính để liên kết với AutoSuggestBox cho tìm kiếm
+        // Property for search text
         public string SearchText
         {
             get => _searchText;
@@ -43,13 +42,13 @@ namespace POS.ViewModels
                 if (_searchText != value)
                 {
                     _searchText = value;
-                    OnPropertyChanged(nameof(SearchText)); // Thông báo UI
-                    FilterAndSortProducts(); // Gọi lọc và sắp xếp khi thay đổi văn bản
+                    OnPropertyChanged(nameof(SearchText)); // Notify UI to update
+                    FilterAndSortProducts();
                 }
             }
         }
 
-        // Thuộc tính cho category
+        // Property for selected category
         public string SelectedCategory
         {
             get => _selectedCategory;
@@ -64,7 +63,7 @@ namespace POS.ViewModels
             }
         }
 
-        // Thuộc tính cho sort order
+        // Property for sort order
         public string SelectedSortOrder
         {
             get => _selectedSortOrder;
@@ -79,25 +78,25 @@ namespace POS.ViewModels
             }
         }
 
-        // Lọc và sắp xếp sản phẩm
+        // Filter and sort products based on search text, category, and sort order
         private void FilterAndSortProducts()
         {
             var filteredProducts = _allProducts.AsEnumerable();
 
-            // Lọc theo category
+            // Category
             if (SelectedCategory != "Tất cả")
             {
                 filteredProducts = filteredProducts.Where(p => p.Category == SelectedCategory);
             }
 
-            // Lọc theo văn bản tìm kiếm
+            // Search text
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 filteredProducts = filteredProducts
                     .Where(p => p.Name.ToLower().Contains(SearchText.ToLower()));
             }
 
-            // Sắp xếp sản phẩm
+            // Sort order
             switch (SelectedSortOrder)
             {
                 case "price_ascending":
@@ -107,11 +106,11 @@ namespace POS.ViewModels
                     filteredProducts = filteredProducts.OrderByDescending(p => p.Price);
                     break;
                 default:
-                    // Mặc định không sắp xếp
+                    // Do nothing
                     break;
             }
 
-            // Cập nhật danh sách sản phẩm hiển thị
+            // Clear and add filtered products to Products
             Products.Clear();
             foreach (var product in filteredProducts)
             {
@@ -119,10 +118,10 @@ namespace POS.ViewModels
             }
         }
 
-        // ICommand cho việc thay đổi category
+        // ICommand for changing category
         public ICommand SetCategoryCommand => new RelayCommand<string>(category => SelectedCategory = category);
 
-        // ICommand cho việc thay đổi thứ tự sắp xếp
+        // ICommand for changing sort order
         public ICommand SetSortOrderCommand => new RelayCommand<string>(sortOrder => SelectedSortOrder = sortOrder);
 
         // INotifyPropertyChanged implementation
