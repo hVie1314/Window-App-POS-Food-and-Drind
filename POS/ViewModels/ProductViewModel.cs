@@ -1,60 +1,117 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
+using System.ComponentModel;
 using POS.Models;
 using POS.Services;
-using POS.Helpers;
-using System.ComponentModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace POS.ViewModels
 {
     public sealed partial class ProductViewModel : INotifyPropertyChanged
     {
-        private MockDao _productDao = new MockDao(); // Use MockDao for testing
-        private string _searchText;
+        private MockDao _productDao = new MockDao(); // Sử dụng MockDao cho testing
 
-        // Cache for all products from the database
+        // Bộ nhớ đệm cho tất cả sản phẩm từ cơ sở dữ liệu
         private ObservableCollection<Product> _allProducts;
-
         public ObservableCollection<Product> Products { get; private set; }
 
-        // The ICommand property for the search button
-        public ICommand SearchCommand { get; }
+        private string _searchText;
+        private string _selectedCategory = "Tất cả";
+        private string _selectedSortOrder = "default";
 
         public ProductViewModel()
         {
-            // Initialize command
-            SearchCommand = new RelayCommand(SearchProducts, CanSearchProducts);
+            // Khởi tạo lệnh
             LoadProducts();
         }
 
         private void LoadProducts()
         {
             var productsFromDb = _productDao.GetAll();
-            _allProducts = new ObservableCollection<Product>(productsFromDb); // Cache the original list
-            Products = new ObservableCollection<Product>(_allProducts); // Display all products initially
+            _allProducts = new ObservableCollection<Product>(productsFromDb); // Bộ nhớ đệm ban đầu
+            Products = new ObservableCollection<Product>(_allProducts); // Hiển thị tất cả sản phẩm ban đầu
+            FilterAndSortProducts(); // Lọc và sắp xếp sản phẩm
         }
 
-        // Property to bind to the TextBox for search input
+        // Thuộc tính để liên kết với AutoSuggestBox cho tìm kiếm
         public string SearchText
         {
             get => _searchText;
             set
             {
-                _searchText = value;
-                OnPropertyChanged(nameof(SearchText)); // Notify UI
-                ((RelayCommand)SearchCommand).RaiseCanExecuteChanged(); // Raise CanExecuteChanged when the search text is updated
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged(nameof(SearchText)); // Thông báo UI
+                    FilterAndSortProducts(); // Gọi lọc và sắp xếp khi thay đổi văn bản
+                }
             }
         }
 
-        // Command execution logic
-        private void SearchProducts(object parameter)
+        // Thuộc tính cho category
+        public string SelectedCategory
         {
-            var filteredProducts = _allProducts
-                .Where(p => p.Name.ToLower().Contains(SearchText.ToLower()))
-                .ToList();
+            get => _selectedCategory;
+            set
+            {
+                if (_selectedCategory != value)
+                {
+                    _selectedCategory = value;
+                    OnPropertyChanged(nameof(SelectedCategory));
+                    FilterAndSortProducts();
+                }
+            }
+        }
 
-            // Clear the current list and add the filtered products
+        // Thuộc tính cho sort order
+        public string SelectedSortOrder
+        {
+            get => _selectedSortOrder;
+            set
+            {
+                if (_selectedSortOrder != value)
+                {
+                    _selectedSortOrder = value;
+                    OnPropertyChanged(nameof(SelectedSortOrder));
+                    FilterAndSortProducts();
+                }
+            }
+        }
+
+        // Lọc và sắp xếp sản phẩm
+        private void FilterAndSortProducts()
+        {
+            var filteredProducts = _allProducts.AsEnumerable();
+
+            // Lọc theo category
+            if (SelectedCategory != "Tất cả")
+            {
+                filteredProducts = filteredProducts.Where(p => p.Category == SelectedCategory);
+            }
+
+            // Lọc theo văn bản tìm kiếm
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                filteredProducts = filteredProducts
+                    .Where(p => p.Name.ToLower().Contains(SearchText.ToLower()));
+            }
+
+            // Sắp xếp sản phẩm
+            switch (SelectedSortOrder)
+            {
+                case "price_ascending":
+                    filteredProducts = filteredProducts.OrderBy(p => p.Price);
+                    break;
+                case "price_descending":
+                    filteredProducts = filteredProducts.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    // Mặc định không sắp xếp
+                    break;
+            }
+
+            // Cập nhật danh sách sản phẩm hiển thị
             Products.Clear();
             foreach (var product in filteredProducts)
             {
@@ -62,16 +119,13 @@ namespace POS.ViewModels
             }
         }
 
-        // CanExecute logic to enable or disable the search button based on SearchText
-        private bool CanSearchProducts(object parameter)
-        {
-            // The line below has bug cause crash program. Will be fixed later (if have enough time :v)
-            //return !string.IsNullOrEmpty(SearchText); 
+        // ICommand cho việc thay đổi category
+        public ICommand SetCategoryCommand => new RelayCommand<string>(category => SelectedCategory = category);
 
-            return true;
-        }
+        // ICommand cho việc thay đổi thứ tự sắp xếp
+        public ICommand SetSortOrderCommand => new RelayCommand<string>(sortOrder => SelectedSortOrder = sortOrder);
 
-        // OnPropertyChanged implementation for notifying the UI about property changes
+        // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
