@@ -32,8 +32,8 @@
                         <Border Grid.Column="0" Width="100">
                             <Image Source="{x:Bind ImagePath}" Stretch="Fill"/>
                         </Border>
-                        <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontSize="20" Foreground="Black" Margin="20 0 0 0" Padding="30"/>
-                        <TextBlock Grid.Column="2" Text="{x:Bind Price}" FontSize="20" Foreground="Black" Margin="0 0 20 0" Padding="30" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontSize="20" Foreground="Black" Margin="20 0 0 0" Padding="35"/>
+                        <TextBlock Grid.Column="2" Text="{x:Bind Price}" FontSize="20" Foreground="Black" Margin="0 0 20 0" Padding="35" HorizontalAlignment="Right"/>
                     </Grid>
                 </Button>
             </DataTemplate>
@@ -57,12 +57,12 @@
             
             <!--navigation button-->
             <StackPanel Orientation="Vertical" Height="960">
-                <Button Content="Menu" Width="110" Height="50" Margin="0,150,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Hóa đơn" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Kho hàng" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Thực đơn" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Nhân viên" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Báo cáo" Width="110" Height="50" Margin="0,0,0,10" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Menu" Width="110" Height="50" Margin="0,130,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Hóa đơn" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Kho hàng" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Thực đơn" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Nhân viên" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Báo cáo" Width="110" Height="50" Margin="0,0,0,20" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
         </StackPanel>
 
@@ -72,10 +72,9 @@
             <!--head-->
             <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
                 <!--search bar-->
-                <TextBox PlaceholderText="Tìm kiếm" FontSize="12" Width="300" Height="40" Margin="45 0 0 0" Padding="10" Background="White"/>
+                <TextBox PlaceholderText="Tìm kiếm" FontSize="12" Width="300" Height="40" Margin="45 0 0 0" Padding="10" Background="White" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"/>
+                <Button Content="Search" Width="50" Height="40" Margin="0 0 40 0" Style="{StaticResource CustomButtonStyle}" Command="{x:Bind ViewModel.SearchCommand}"/>
                 <!--category-->
-                <Button Content="Search" Width="50" Height="40" Margin="0 0 40 0" Style="{StaticResource CustomButtonStyle}"/>
-                <!--sort-->
                 <ComboBox Width="150" Height="40" SelectedIndex="0" Background="BurlyWood" Margin="0 40 40 0" HorizontalContentAlignment="Center">
                     <ComboBoxItem Content="Tất cả"/>
                     <ComboBoxItem Content="Khai vị"/>
@@ -84,7 +83,7 @@
                     <ComboBoxItem Content="Nước giải khát"/>
                     <ComboBoxItem Content="Đồ uống có cồn"/>
                 </ComboBox>
-                    
+                <!--sort-->
                 <ComboBox Width="150" Height="40" SelectedIndex="0" Background="BurlyWood" Margin="0 40 40 0" HorizontalContentAlignment="Center">
                     <ComboBoxItem Content="Mặc định"/>
                     <ComboBoxItem Content="Giá tăng dần"/>
