@@ -12,22 +12,53 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using Microsoft.UI.Windowing;
+using WinRT.Interop;
+using Microsoft.UI;
+using POS.Views;
 
 namespace POS
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private AppWindow _apw;
+        private OverlappedPresenter _presenter;
+
         public MainWindow()
         {
-            this.InitializeComponent();  
+            this.InitializeComponent();
+
+            // Initialize AppWindow and OverlappedPresenter
+            GetAppWindowAndPresenter();
+
+            // Set fixed size and disable resizing
+            SetFixedSize(1920, 1080);
         }
 
+        private void GetAppWindowAndPresenter()
+        {
+            var hWnd = WindowNative.GetWindowHandle(this);
+            WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            _apw = AppWindow.GetFromWindowId(myWndId);
+            _presenter = _apw.Presenter as OverlappedPresenter;
+        }
 
+        private void SetFixedSize(int width, int height)
+        {
+            if (_presenter != null)
+            {
+                _presenter.IsResizable = false;
+                _apw.Resize(new Windows.Graphics.SizeInt32(width, height));
+                _apw.SetPresenter(AppWindowPresenterKind.Overlapped);
+                // Removed the line causing the error as there is no SetPreferredMinSize method in AppWindow
+                //_apw.SetPreferredMinSize(new Windows.Graphics.SizeInt32(width, height));
+                // _apw.SetPreferredMaxSize(new Windows.Graphics.SizeInt32(width, height));
+            }
+        }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            MainFrame.Navigate(typeof(Menu));
+        }
     }
 }

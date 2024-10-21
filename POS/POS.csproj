@@ -15,8 +15,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\Image\logo.jpg" />
+    <Content Remove="Assets\Image\pho_bo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="MainPage.xaml" />
     <None Remove="OrderPage.xaml" />
+    <None Remove="Styles\customStyles.xaml" />
+    <None Remove="Views\Menu.xaml" />
     <None Remove="Views\ProductView.xaml" />
   </ItemGroup>
 
@@ -50,11 +56,26 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\image\" />
     <Folder Include="Converters\" />
     <Folder Include="Factories\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Styles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\Image\pho_bo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\Image\logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Update="Styles\CustomStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Menu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ProductView.xaml">
