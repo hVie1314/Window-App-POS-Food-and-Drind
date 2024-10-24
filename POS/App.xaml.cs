@@ -1,40 +1,20 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using POS.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using POS;
 
 namespace POS
 {
-
-    public partial class App : Application
+        public partial class App : Application
     {
         public App()
         {
             this.InitializeComponent();
-
-            Ioc.Default.ConfigureServices(new ServiceCollection()
-                .AddSingleton<MainWindowViewModel>()
-                .BuildServiceProvider());
         }
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+<<<<<<< Updated upstream
             m_window = new LoginWindow();
             Frame rootFrame = new Frame();
             rootFrame.NavigationFailed += OnNavigationFailed;
@@ -53,5 +33,11 @@ namespace POS
         }
 
         private Window m_window;
+=======
+            // Tạo cửa sổ chính ShellWindow
+            var shellWindow = new ShellWindow();
+            shellWindow.Activate();
+        }
+>>>>>>> Stashed changes
     }
 }

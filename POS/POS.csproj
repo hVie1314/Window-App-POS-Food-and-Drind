@@ -14,8 +14,23 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
     <None Remove="MainPage.xaml" />
     <None Remove="OrderPage.xaml" />
+=======
+    <Content Remove="Assets\Image\logo.jpg" />
+    <Content Remove="Assets\Image\pho_bo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ChangeAccountPage.xaml" />
+    <None Remove="LoginPage.xaml" />
+    <None Remove="MainPage.xaml" />
+    <None Remove="OrderPage.xaml" />
+    <None Remove="ShellWindow.xaml" />
+    <None Remove="Styles\customStyles.xaml" />
+    <None Remove="Views\Menu.xaml" />
+    <None Remove="Views\ProductView.xaml" />
+>>>>>>> Stashed changes
   </ItemGroup>
 
   <ItemGroup>
@@ -49,11 +64,47 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Factories\" />
+<<<<<<< Updated upstream
     <Folder Include="Helpers\" />
     <Folder Include="Models\" />
     <Folder Include="Styles\" />
     <Folder Include="Views\" />
     <Folder Include="Services\" />
+=======
+    <Folder Include="Login\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\Image\pho_bo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\Image\logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Update="ShellWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="ChangeAccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\CustomStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Menu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ProductView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Page Update="OrderPage.xaml">
