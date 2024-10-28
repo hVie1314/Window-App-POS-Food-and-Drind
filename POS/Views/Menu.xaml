@@ -83,6 +83,7 @@
 
                 <NavigationView.FooterMenuItems>
                     <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
+                   
                 </NavigationView.FooterMenuItems>
 
                 <Frame x:Name="ContentFrame" Width="5"/>

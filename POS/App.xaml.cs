@@ -36,6 +36,12 @@ namespace POS
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
+            var root = new Frame();
+            m_window.Content = root;
+            var name = "POS.LoginPage";
+            var type = Type.GetType(name);
+            root.Navigate(type);
+
             m_window.Activate();
 
             //m_window = new LoginWindow();

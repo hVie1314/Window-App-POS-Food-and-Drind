@@ -1,0 +1,37 @@
+﻿<Page x:ConnectionId='1'
+    x:Class="POS.OrderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Order Menu" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center"/>
+
+            <!-- Danh sách món ăn -->
+            <ListView x:ConnectionId='2' x:Name="MenuListView"                                  Width="300" Margin="0,20,0,0" 
+                      SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontSize="18"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Chọn số lượng món ăn -->
+            <TextBlock Text="Quantity:" FontSize="18" Margin="0,20,0,0"/>
+            <NumberBox x:ConnectionId='3' x:Name="QuantityNumberBox" Width="100" Value="1" Minimum="1"/>
+
+            <!-- Nút thêm vào giỏ hàng -->
+            <Button x:ConnectionId='4' Content="Add to Cart"                         Width="200" Margin="0,20,0,0"/>
+
+            <!-- Hiển thị hóa đơn tạm thời -->
+            <TextBlock Text="Order Summary:" FontSize="18" FontWeight="Bold" Margin="0,20,0,0"/>
+            <TextBlock x:ConnectionId='5' x:Name="OrderSummaryTextBlock" FontSize="16" TextWrapping="Wrap" Width="300"/>
+        </StackPanel>
+    </Grid>
+</Page>
+
