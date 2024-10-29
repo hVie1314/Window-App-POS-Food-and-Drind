@@ -29,13 +29,13 @@
     <AppXManifest Include="D:\LaptrinhWindow\ProGroup- 03\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-10-28T19:45:58.372</Modified>
+      <Modified>2024-10-29T14:15:32.235</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\LaptrinhWindow\ProGroup- 03\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2024-10-28T19:36:03.025</Modified>
+      <Modified>2024-10-29T14:15:31.905</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\LaptrinhWindow\ProGroup- 03\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.runtimeconfig.json">
       <PackagePath>POS.runtimeconfig.json</PackagePath>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\LaptrinhWindow\ProGroup- 03\POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\POS.dll">
       <PackagePath>POS.dll</PackagePath>
-      <Modified>2024-10-28T19:45:57.867</Modified>
+      <Modified>2024-10-29T14:15:31.431</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\LaptrinhWindow\ProGroup- 03\POS\obj\x64\Debug\net8.0-windows10.0.19041.0\win-x64\apphost.exe">
       <PackagePath>POS.exe</PackagePath>
-      <Modified>2024-10-28T19:45:57.884</Modified>
+      <Modified>2024-10-29T14:15:31.491</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\ACER\.nuget\packages\microsoft.web.webview2\1.0.2651.64\runtimes\win-x64\native\WebView2Loader.dll">
       <PackagePath>runtimes\win-x64\native\WebView2Loader.dll</PackagePath>
