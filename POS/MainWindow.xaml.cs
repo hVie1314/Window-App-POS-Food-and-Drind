@@ -56,9 +56,9 @@ namespace POS
             }
         }
 
-        private void Window_Activated(object sender, WindowActivatedEventArgs args)
-        {
-            MainFrame.Navigate(typeof(Menu));
-        }
+        //private void Window_Activated(object sender, WindowActivatedEventArgs args)
+        //{
+        //    MainFrame.Navigate(typeof(Menu));
+        //}
     }
 }
