@@ -8,7 +8,7 @@ exports.seed = async function(knex) {
 
   // Inserts seed entries
   await knex('baocaodoanhthu').insert([
-    { baocaoid: 1, ngaybaocao: '2024-10-10', doanhthu: 95000, hoadonid: 1 },
-    { baocaoid: 2, ngaybaocao: '2024-10-10', doanhthu: 30000, hoadonid: 2 }
+    { ngaybaocao: '2024-10-10', doanhthu: 95000, hoadonid: 1 },
+    { ngaybaocao: '2024-10-10', doanhthu: 30000, hoadonid: 2 }
   ]);
 };

@@ -7,12 +7,25 @@ using System.Threading.Tasks;
 
 namespace POS.Interfaces
 {
-    public interface IDao<T> where T : class
+    public interface IDao<T>
     {
-        IEnumerable<T> GetAll();        // Lấy tất cả các đối tượng T từ database
-        T GetById(int id);              // Lấy đối tượng T theo ID
-        void Add(T entity);             // Thêm đối tượng T vào database
-        void Update(T entity);          // Cập nhật đối tượng T
-        void Delete(int id);            // Xóa đối tượng T theo ID
+        // Retrieve all items with pagination, search, and sorting
+        Tuple<int, List<T>> GetAll(
+            int page = 1, 
+            int rowsPerPage = 10, 
+            string keyword = "", 
+            bool ascending = true);
+
+        // Insert a new item of type T
+        int Insert(T entity);
+
+        // Update an existing item of type T
+        bool Update(T entity);
+
+        // Delete an item by ID
+        bool Delete(int id);
+
+        // Retrieve a single item by ID
+        T GetById(int id);
     }
 }

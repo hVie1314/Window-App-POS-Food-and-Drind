@@ -8,9 +8,9 @@ exports.seed = async function(knex) {
 
   // Inserts seed entries
   await knex('khohang').insert([
-    {khoid: 1, tennguyenlieu: 'Gạo', soluongton: 100, donvitinh: 'kg', ngaynhapkho: '2024-10-01', ngayhethan: '2025-10-01' },
-    {khoid: 2, tennguyenlieu: 'Bánh Phở', soluongton: 50, donvitinh: 'kg', ngaynhapkho: '2024-09-15', ngayhethan: '2025-09-15' },
-    {khoid: 3, tennguyenlieu: 'Muối', soluongton: 30, donvitinh: 'kg', ngaynhapkho: '2024-10-05', ngayhethan: '2025-10-05' }
+    { tennguyenlieu: 'Gạo', soluongton: 100, donvitinh: 'kg', ngaynhapkho: '2024-10-01', ngayhethan: '2025-10-01' },
+    { tennguyenlieu: 'Bánh Phở', soluongton: 50, donvitinh: 'kg', ngaynhapkho: '2024-09-15', ngayhethan: '2025-09-15' },
+    { tennguyenlieu: 'Muối', soluongton: 30, donvitinh: 'kg', ngaynhapkho: '2024-10-05', ngayhethan: '2025-10-05' }
   ]);
 };
 
