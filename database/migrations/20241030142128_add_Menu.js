@@ -6,7 +6,7 @@ exports.up = async function(knex) {
     await knex.raw(`
         CREATE TABLE Menu (
             MonAnID SERIAL PRIMARY KEY,  
-            TenMonAn VARCHAR(100) NOT NULL,  
+            TenMonAn VARCHAR(100) NOT NULL UNIQUE,  
             LoaiMonAn VARCHAR(50),  
             Gia INT,  
             MoTa VARCHAR(255),  
