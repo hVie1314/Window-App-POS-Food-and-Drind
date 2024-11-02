@@ -5,12 +5,15 @@ using POS.Models;
 using POS.Services;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using POS.Interfaces;
+using System.Collections.Generic;
+using System;
 
 namespace POS.ViewModels
 {
     public sealed partial class ProductViewModel : INotifyPropertyChanged
     {
-        private MockDao _productDao = new MockDao(); // Use MockDao for testing
+        private IProductDao _productDao = new PostgresProductDao(); // Use MockDao for testing
 
         // Cache all products and the filtered products
         private ObservableCollection<Product> _allProducts;
@@ -27,8 +30,8 @@ namespace POS.ViewModels
 
         private void LoadProducts()
         {
-            var productsFromDb = _productDao.GetAll();
-            _allProducts = new ObservableCollection<Product>(productsFromDb);
+            Tuple<int, List<Product>> productsFromDb = _productDao.GetAllProducts();
+            _allProducts = new ObservableCollection<Product>(productsFromDb.Item2);
             Products = new ObservableCollection<Product>(_allProducts);
             FilterAndSortProducts();
         }
