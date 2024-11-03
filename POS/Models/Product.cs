@@ -1,28 +1,17 @@
-﻿using POS.Interfaces;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 
 namespace POS.Models
 {
-    public class Product
+    public class Product: INotifyPropertyChanged
     {
         public int ProductID { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
         public string Category { get; set; }
-        public int StockQuantity { get; set; }
-        public string IsAvailable { get; set; }
+        public int Price { get; set; }
+        public string Description { get; set; }
         public string ImagePath { get; set; }
+        public bool Status { get; set; } = true;
 
-        //public Product(int productId, string name, int price, string category, int stockQuantity, string isAvailable, string imagePath, string type)
-        //{
-        //    ProductID = productId;
-        //    Name = name;
-        //    Price = price;
-        //    Category = category;
-        //    StockQuantity = stockQuantity;
-        //    IsAvailable = isAvailable;
-        //    ImagePath = imagePath;
-        //    Type = type;
-        //}
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
