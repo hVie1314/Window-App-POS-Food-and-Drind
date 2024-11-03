@@ -1,6 +1,8 @@
+
 ﻿using System.ComponentModel;
 
 namespace POS.Models
+
 {
     public class Product: INotifyPropertyChanged
     {
@@ -12,6 +14,8 @@ namespace POS.Models
         public string ImagePath { get; set; }
         public bool Status { get; set; } = true;
 
+
         public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }

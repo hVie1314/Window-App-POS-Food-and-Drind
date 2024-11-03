@@ -11,11 +11,13 @@ using System;
 using POS.Views;
 using Microsoft.UI.Xaml.Controls;
 
+
 namespace POS.ViewModels
 {
     public sealed partial class ProductViewModel : INotifyPropertyChanged
     {
         private IProductDao _productDao = null; // Use MockDao for testing
+
 
         // Cache all products and the filtered products
         private ObservableCollection<Product> _allProducts;
@@ -70,6 +72,7 @@ namespace POS.ViewModels
             TotalPages = (TotalItems / RowsPerPage)
                 + ((TotalItems % RowsPerPage == 0)
                         ? 0 : 1);
+
         }
 
         public void LoadProducts(int page)

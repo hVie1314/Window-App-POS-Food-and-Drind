@@ -9,7 +9,9 @@ namespace POS.Interfaces
     {
         Tuple<int, List<Product>> GetAllProducts(
             int page = 1,
+
             int rowsPerPage = 5,
+
             string searchKeyword = "",
             string categoryType = "",
             int isPriceSort = 0 // 0: không sắp xếp, 1: sắp xếp tăng dần, 2: sắp xếp giảm dần

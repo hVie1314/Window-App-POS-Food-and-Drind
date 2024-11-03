@@ -6,6 +6,7 @@ using POS.Models;
 using POS.Helpers;
 using static System.Net.Mime.MediaTypeNames;
 
+
 namespace POS.Services
 {
     public class PostgresProductDao : IProductDao
@@ -37,6 +38,7 @@ namespace POS.Services
                 }
 
                 sql += "offset @Skip rows fetch next @Take rows only";
+
 
                 var skip = (page - 1) * rowsPerPage;
                 var command = new NpgsqlCommand(sql, connection);
