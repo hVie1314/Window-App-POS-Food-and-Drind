@@ -60,34 +60,46 @@
                 <Image Source="ms-appx:///Assets/Image/logo.jpg" Stretch="Fill"/>
             </Border>
             
+            <!--combobox phân trang-->
+            <ComboBox Name="pagesComboBox" Width="100" Height="35" SelectionChanged="pagesComboBox_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
             <!--navigation button-->
-            <NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="671" Margin="0 -3 0 0">
+            <StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
+                <!-- Các thành phần khác của StackPanel -->
 
-                <NavigationView.Resources>
-                    <!-- Custom color -->
-                    <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="OrangeRed"/>
-                    <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="BurlyWood" />
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Blue"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Red"/>
-                </NavigationView.Resources>
+                <NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="671" Margin="0 -3 0 0">
+                    <NavigationView.Resources>
+                        <!-- Custom colors -->
+                        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+                        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="OrangeRed"/>
+                        <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="BurlyWood" />
+                        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Blue"/>
+                        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Red"/>
+                    </NavigationView.Resources>
 
-                <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Menu" Icon="Home" Tag="menu"/>
-                    <NavigationViewItem Content="Hóa đơn" Icon="Document" Tag="hoadon"/>
-                    <NavigationViewItem Content="Kho hàng" Icon="AllApps" Tag="khohang"/>
-                    <NavigationViewItem Content="Thực đơn" Icon="Contact" Tag="thucdon"/>
-                    <NavigationViewItem Content="Nhân viên" Icon="PhoneBook" Tag="nhanvien"/>
-                    <NavigationViewItem Content="Báo cáo" Icon="Contact" Tag="baocao"/>
-                </NavigationView.MenuItems>
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem Content="Menu" Icon="Home" Tag="menu"/>
+                        <NavigationViewItem Content="Hóa đơn" Icon="Document" Tag="hoadon"/>
+                        <NavigationViewItem Content="Kho hàng" Icon="AllApps" Tag="khohang"/>
+                        <NavigationViewItem Content="Thực đơn" Icon="Contact" Tag="thucdon"/>
+                        <NavigationViewItem Content="Nhân viên" Icon="PhoneBook" Tag="nhanvien"/>
+                        <NavigationViewItem Content="Báo cáo" Icon="Contact" Tag="baocao"/>
+                    </NavigationView.MenuItems>
 
-                <NavigationView.FooterMenuItems>
-                    <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
-                   
-                </NavigationView.FooterMenuItems>
-
-                <Frame x:Name="ContentFrame" Width="5"/>
-            </NavigationView>
+                    <NavigationView.FooterMenuItems>
+                        <NavigationViewItem Content="Tài khoản" Icon="Admin" Tag="admin" Tapped="AccountItem_Tapped"/>
+                        <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
+                    </NavigationView.FooterMenuItems>
+                </NavigationView>
+            </StackPanel>
         </StackPanel>
 
 
@@ -96,32 +108,43 @@
             <!--head-->
             <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
                 <!--search bar-->
-                <AutoSuggestBox PlaceholderText="Tìm kiếm" FontSize="12" Width="360"  Height="40" Margin="60 0 40 0" VerticalContentAlignment="Center" Background="BurlyWood" QueryIcon="Find" Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"/>
+                <AutoSuggestBox 
+    x:Name="SearchBox"
+    PlaceholderText="Tìm kiếm" 
+    FontSize="12" 
+    Width="360"  
+    Height="40" 
+    Margin="60 0 40 0" 
+    VerticalContentAlignment="Center" 
+    Background="BurlyWood" 
+    QueryIcon="Find" 
+    QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
 
                 <!--category-->
-                <AppBarButton Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category"  Width="70"  Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
+                <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category"  Width="70"  Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="Tất cả" Command="{x:Bind ViewModel.SetCategoryCommand}" CommandParameter="Tất cả"/>
-                            <MenuFlyoutItem Text="Khai vị" Command="{x:Bind ViewModel.SetCategoryCommand}" CommandParameter="Khai vị"/>
-                            <MenuFlyoutItem Text="Món chính" Command="{x:Bind ViewModel.SetCategoryCommand}" CommandParameter="Món chính"/>
-                            <MenuFlyoutItem Text="Tráng miệng" Command="{x:Bind ViewModel.SetCategoryCommand}" CommandParameter="Tráng miệng"/>
-                            <MenuFlyoutItem Text="Nước giải khát" Command="{x:Bind ViewModel.SetCategoryCommand}" CommandParameter="Nước giải khát"/>
-                            <MenuFlyoutItem Text="Đồ uống có cồn" Command="{x:Bind ViewModel.SetCategoryCommand}" CommandParameter="Đồ uống có cồn"/>
+                            <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag=""/>
+                            <MenuFlyoutItem Text="Khai vị" Click="MenuFlyoutItem_Click" Tag="Khai vị"/>
+                            <MenuFlyoutItem Text="Món chính" Click="MenuFlyoutItem_Click" Tag="Món chính"/>
+                            <MenuFlyoutItem Text="Tráng miệng" Click="MenuFlyoutItem_Click" Tag="Tráng miệng"/>
+                            <MenuFlyoutItem Text="Nước giải khát" Click="MenuFlyoutItem_Click" Tag="Nước giải khát"/>
+                            <MenuFlyoutItem Text="Đồ uống có cồn" Click="MenuFlyoutItem_Click" Tag="Đồ uống có cồn"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
 
                 <!--sort-->
-                <AppBarButton Icon="Sort" IsCompact="True" ToolTipService.ToolTip="Sắp xếp" AutomationProperties.Name="Sort" Width="70"  Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
+                <AppBarButton Icon="Sort" IsCompact="True" ToolTipService.ToolTip="Sắp xếp" AutomationProperties.Name="Sort" Width="70" Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="Mặc định" Command="{x:Bind ViewModel.SetSortOrderCommand}" CommandParameter="default"/>
-                            <MenuFlyoutItem Text="Giá tăng dần" Command="{x:Bind ViewModel.SetSortOrderCommand}" CommandParameter="price_ascending"/>
-                            <MenuFlyoutItem Text="Giá giảm dần" Command="{x:Bind ViewModel.SetSortOrderCommand}" CommandParameter="price_descending"/>
+                            <MenuFlyoutItem Text="Mặc định" Click="Sort_Item_Click" Tag="0"/>
+                            <MenuFlyoutItem Text="Giá tăng dần" Click="Sort_Item_Click" Tag="1"/>
+                            <MenuFlyoutItem Text="Giá giảm dần" Click="Sort_Item_Click" Tag="2"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
+
 
 
                 <!--add, edit, remove-->
@@ -134,7 +157,7 @@
             <!--items-->
             <StackPanel>
                 <!--list view-->
-                <ListBox Name="itemsListBox" ItemsSource="{x:Bind ViewModel.Products}" ItemTemplate="{StaticResource VerticalLayout}" Width="1050" Height="650" Background="Beige"/> <!--Style="{StaticResource CustomListBoxItemStyle}"-->
+                <ListBox Name="itemsListBox" ItemsSource="{x:Bind ViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource VerticalLayout}" Width="1050" Height="650" Background="Beige"/> <!--Style="{StaticResource CustomListBoxItemStyle}"-->
             </StackPanel>
 
             <!--paging-->

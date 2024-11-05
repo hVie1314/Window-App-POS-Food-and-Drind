@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using POS.Interfaces;
 using POS.Models;
 using POS.Helpers;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace POS.Services
 {
@@ -35,7 +37,8 @@ namespace POS.Services
                     sql += "ORDER BY gia DESC ";
                 }
 
-                sql += "OFFSET @Skip LIMIT @Take";
+                sql += "offset @Skip rows fetch next @Take rows only";
+
 
                 var skip = (page - 1) * rowsPerPage;
                 var command = new NpgsqlCommand(sql, connection);
