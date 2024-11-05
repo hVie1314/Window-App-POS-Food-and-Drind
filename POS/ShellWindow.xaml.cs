@@ -9,7 +9,7 @@ namespace POS
         public ShellWindow()
         {
             this.InitializeComponent();
-            ContentFrame.Navigate(typeof(LoginPage));
+            ContentFrame.Navigate(typeof(ChangeAccountPage));
         }
     }
 }
