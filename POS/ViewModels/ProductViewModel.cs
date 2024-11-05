@@ -13,7 +13,7 @@ namespace POS.ViewModels
 {
     public sealed partial class ProductViewModel : INotifyPropertyChanged
     {
-        private IProductDao _productDao = new PostgresProductDao(); // Use MockDao for testing
+        private IProductDao _productDao = new PostgresProductDao();
 
         // Cache all products and the filtered products
         private ObservableCollection<Product> _allProducts;
@@ -30,7 +30,7 @@ namespace POS.ViewModels
 
         private void LoadProducts()
         {
-            Tuple<int, List<Product>> productsFromDb = _productDao.GetAllProducts();
+            Tuple<int, List<Product>> productsFromDb = _productDao.GetAllProducts(1, 50, "", "", 0);
             _allProducts = new ObservableCollection<Product>(productsFromDb.Item2);
             Products = new ObservableCollection<Product>(_allProducts);
             FilterAndSortProducts();
