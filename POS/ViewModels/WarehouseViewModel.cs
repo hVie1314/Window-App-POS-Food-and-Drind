@@ -4,11 +4,9 @@ using POS.Models;
 using POS.Services;
 using POS.Interfaces;
 using System;
-using System.Windows.Input;
-using POS.Helpers;
-using Microsoft.UI.Xaml.Controls;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 
 namespace POS.ViewModels
@@ -24,6 +22,10 @@ namespace POS.ViewModels
         public int TotalPages { get; set; } = 0;
         public int TotalItems { get; set; } = 0;
 
+        private string _currentSortColumn = null;
+        private string _currentSortDirection = null;
+
+
         public WarehouseViewModel()
         {
             GetAllWarehouses();
@@ -31,7 +33,7 @@ namespace POS.ViewModels
 
         public void GetAllWarehouses()
         {
-            var (totalItems, warehouses) = _warehouseDao.GetAllWarehouses(CurrentPage, RowsPerPage, Keyword);
+            var (totalItems, warehouses) = _warehouseDao.GetAllWarehouses(CurrentPage, RowsPerPage, Keyword, _currentSortColumn, _currentSortDirection);
             Warehouses = new FullObservableCollection<Warehouse>(warehouses);
 
             TotalItems = totalItems;
@@ -56,7 +58,7 @@ namespace POS.ViewModels
                 warehouse.WarehouseID = newId;
 
                 // Recall from database to get the full object
-                var (totalItems, warehouses) = _warehouseDao.GetAllWarehouses(CurrentPage, RowsPerPage, Keyword);
+                var (totalItems, warehouses) = _warehouseDao.GetAllWarehouses(CurrentPage, RowsPerPage, Keyword, _currentSortColumn, _currentSortDirection);
                 Warehouses = new FullObservableCollection<Warehouse>(warehouses);
 
                 // Notify the change to UI
@@ -140,6 +142,31 @@ namespace POS.ViewModels
             {
                 Console.WriteLine($"Error when updating warehouse: {ex.Message}");
             }
+        }
+
+        // Sorting feature
+        public void SortWarehouses(string columnName)
+        {
+            if (columnName == _currentSortColumn)
+            {
+                // Thay đổi trạng thái sắp xếp
+                _currentSortDirection = _currentSortDirection switch
+                {
+                    null => "ASC",   // Không sắp xếp -> Tăng dần
+                    "ASC" => "DESC", // Tăng dần -> Giảm dần
+                    "DESC" => null,  // Giảm dần -> Không sắp xếp
+                    _ => null
+                };
+            }
+            else
+            {
+                // Đổi sang cột mới, bắt đầu từ ASC
+                _currentSortColumn = columnName;
+                _currentSortDirection = "ASC";
+            }
+
+            // Gọi lại LoadWarehouses để tải dữ liệu từ database
+            LoadWarehouses(CurrentPage);
         }
 
 

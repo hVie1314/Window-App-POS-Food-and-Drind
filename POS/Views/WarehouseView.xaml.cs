@@ -7,6 +7,7 @@ using CommunityToolkit.WinUI.UI.Controls;
 using System;
 using POS.Models;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Data;
 
 
 namespace POS.Views
@@ -268,6 +269,29 @@ namespace POS.Views
             {
                 DispatcherQueue.TryEnqueue(() => DeleteSuccessTeachingTip.IsOpen = false);
             });
+        }
+
+        // Sort feature
+        private void OnDataGridSorting(object sender, DataGridColumnEventArgs e)
+        {
+            // Only apply for the columns that need to be sorted
+            if (e.Column.Header?.ToString() == "Ngày nhập" || e.Column.Header?.ToString() == "Ngày hết hạn")
+            {
+                var column = e.Column as DataGridTextColumn;
+                if (column != null)
+                {
+                    var binding = column.Binding as Binding;
+                    if (binding != null)
+                    {
+                        var propertyName = binding.Path.Path; // Get the property name to sort
+                        ViewModel.SortWarehouses(propertyName);
+                    }
+                }
+            }
+            else
+            {
+                // Do nothing when click on other columns
+            }
         }
     }
 }

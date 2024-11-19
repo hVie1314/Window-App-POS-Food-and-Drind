@@ -51,9 +51,11 @@ namespace POS.Interfaces
     public interface IWarehouseDao
     {
         Tuple<int, List<Warehouse>> GetAllWarehouses(
-            int page = 1,
-            int rowsPerPage = 10,
-            string searchKeyword = ""
+            int page = 1, 
+            int rowsPerPage = 12, 
+            string searchKeyword = "", 
+            string sortColumn = null, 
+            string sortDirection = null
         );
         int InsertWarehouse(Warehouse warehouse);
         bool UpdateWarehouse(Warehouse warehouse);
