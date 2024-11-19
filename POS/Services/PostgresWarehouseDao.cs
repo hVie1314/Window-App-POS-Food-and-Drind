@@ -12,52 +12,6 @@ namespace POS.Services
     {
         public PostgresWarehouseDao() { }
 
-        //public Tuple<int, List<Warehouse>> GetAllWarehouses(int page, int rowsPerPage, string searchKeyword)
-        //{
-        //    var warehouses = new List<Warehouse>();
-        //    int totalRecords = 0;
-
-        //    using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
-        //    {
-        //        connection.Open();
-
-        //        var countSql = "SELECT COUNT(*) FROM khohang";
-        //        var countCommand = new NpgsqlCommand(countSql, connection);
-        //        totalRecords = Convert.ToInt32(countCommand.ExecuteScalar());
-
-        //        var sql = @"
-        //            SELECT khoid, tennguyenlieu, soluongton, donvitinh, ngaynhapkho, ngayhethan
-        //            FROM khohang
-        //            WHERE tennguyenlieu ILIKE @SearchKeyword 
-        //            ORDER BY khoid
-        //            LIMIT @RowsPerPage OFFSET @Offset";
-
-        //        var command = new NpgsqlCommand(sql, connection);
-        //        command.Parameters.AddWithValue("@SearchKeyword", $"%{searchKeyword}%");
-        //        command.Parameters.AddWithValue("@RowsPerPage", rowsPerPage);
-        //        command.Parameters.AddWithValue("@Offset", (page - 1) * rowsPerPage);
-
-        //        using (var reader = command.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                var warehouse = new Warehouse
-        //                {
-        //                    WarehouseID = reader.GetInt32(reader.GetOrdinal("khoid")),
-        //                    IngredientName = reader.GetString(reader.GetOrdinal("tennguyenlieu")),
-        //                    StockQuantity = reader.GetInt32(reader.GetOrdinal("soluongton")),
-        //                    Unit = reader.GetString(reader.GetOrdinal("donvitinh")),
-        //                    EntryDate = reader.GetDateTime(reader.GetOrdinal("ngaynhapkho")),
-        //                    ExpirationDate = reader.GetDateTime(reader.GetOrdinal("ngayhethan"))
-        //                };
-        //                warehouses.Add(warehouse);
-        //            }
-        //        }
-        //    }
-
-        //    return new Tuple<int, List<Warehouse>>(totalRecords, warehouses);
-        //}
-
         public Tuple<int, List<Warehouse>> GetAllWarehouses(int page, int rowsPerPage, string searchKeyword, string sortColumn = null, string sortDirection = null)
         {
             var warehouses = new List<Warehouse>();

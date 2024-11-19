@@ -149,23 +149,23 @@ namespace POS.ViewModels
         {
             if (columnName == _currentSortColumn)
             {
-                // Thay đổi trạng thái sắp xếp
+                // Change sort direction
                 _currentSortDirection = _currentSortDirection switch
                 {
-                    null => "ASC",   // Không sắp xếp -> Tăng dần
-                    "ASC" => "DESC", // Tăng dần -> Giảm dần
-                    "DESC" => null,  // Giảm dần -> Không sắp xếp
+                    null => "ASC",   
+                    "ASC" => "DESC", 
+                    "DESC" => null, 
                     _ => null
                 };
             }
             else
             {
-                // Đổi sang cột mới, bắt đầu từ ASC
+                // Change sort column
                 _currentSortColumn = columnName;
                 _currentSortDirection = "ASC";
             }
 
-            // Gọi lại LoadWarehouses để tải dữ liệu từ database
+            // Recall the data
             LoadWarehouses(CurrentPage);
         }
 
