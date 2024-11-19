@@ -27,10 +27,12 @@ namespace POS.Services
                 var sql = @"
                     SELECT khoid, tennguyenlieu, soluongton, donvitinh, ngaynhapkho, ngayhethan
                     FROM khohang
+                    WHERE tennguyenlieu ILIKE @SearchKeyword 
                     ORDER BY khoid
                     LIMIT @RowsPerPage OFFSET @Offset";
 
                 var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@SearchKeyword", $"%{searchKeyword}%");
                 command.Parameters.AddWithValue("@RowsPerPage", rowsPerPage);
                 command.Parameters.AddWithValue("@Offset", (page - 1) * rowsPerPage);
 
