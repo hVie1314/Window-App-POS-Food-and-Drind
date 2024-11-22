@@ -48,7 +48,7 @@
 
     <Grid Background="Beige">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140" />
+            <ColumnDefinition Width="150" />
             <ColumnDefinition Width="1050" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -109,26 +109,26 @@
             <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
                 <!--search bar-->
                 <AutoSuggestBox 
-    x:Name="SearchBox"
-    PlaceholderText="Tìm kiếm" 
-    FontSize="12" 
-    Width="360"  
-    Height="40" 
-    Margin="60 0 40 0" 
-    VerticalContentAlignment="Center" 
-    Background="BurlyWood" 
-    QueryIcon="Find" 
-    QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
+                    x:Name="SearchBox"
+                    PlaceholderText="Tìm kiếm" 
+                    FontSize="12" 
+                    Width="360"  
+                    Height="40" 
+                    Margin="60 0 40 0" 
+                    VerticalContentAlignment="Center" 
+                    Background="BurlyWood" 
+                    QueryIcon="Find" 
+                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
 
                 <!--category-->
                 <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category"  Width="70"  Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag=""/>
+                            <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag="Tất cả"/>
                             <MenuFlyoutItem Text="Khai vị" Click="MenuFlyoutItem_Click" Tag="Khai vị"/>
                             <MenuFlyoutItem Text="Món chính" Click="MenuFlyoutItem_Click" Tag="Món chính"/>
                             <MenuFlyoutItem Text="Tráng miệng" Click="MenuFlyoutItem_Click" Tag="Tráng miệng"/>
-                            <MenuFlyoutItem Text="Nước giải khát" Click="MenuFlyoutItem_Click" Tag="Nước giải khát"/>
+                            <MenuFlyoutItem Text="Đồ uống" Click="MenuFlyoutItem_Click" Tag="Đồ uống"/>
                             <MenuFlyoutItem Text="Đồ uống có cồn" Click="MenuFlyoutItem_Click" Tag="Đồ uống có cồn"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>

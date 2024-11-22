@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS.Views.WarehouseView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:local1="using:POS.Views"
+    xmlns:local2="using:POS.ViewModels"
+    xmlns:local3="using:POS.Styles"
+    xmlns:local4="using:POS.Converters"                   
+    xmlns:models="using:POS.Models"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:primitives="using:CommunityToolkit.WinUI.UI.Controls.Primitives" 
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <!-- Import Resources -->
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Converters -->
+            <local4:DateToStringConverter x:Key="DateToStringConverter"/>
+            
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="Beige">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--left side-->
+        <StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
+            <!--logo-->
+            <Border Height="120" BorderThickness="5" CornerRadius="40">
+                <Image Source="ms-appx:///Assets/Image/logo.jpg" Stretch="Fill"/>
+            </Border>
+
+            <!--navigation button-->
+            <StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
+                <!-- Các thành phần khác của StackPanel -->
+
+                <NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="671" Margin="0 -3 0 0">
+                    <NavigationView.Resources>
+                        <!-- Custom colors -->
+                        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
+                        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="OrangeRed"/>
+                        <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="BurlyWood" />
+                        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Blue"/>
+                        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Red"/>
+                    </NavigationView.Resources>
+
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem Content="Menu" Icon="Home" Tag="menu"/>
+                        <NavigationViewItem Content="Hóa đơn" Icon="Document" Tag="hoadon"/>
+                        <NavigationViewItem Content="Kho hàng" Icon="AllApps" Tag="khohang"/>
+                        <NavigationViewItem Content="Thực đơn" Icon="Contact" Tag="thucdon"/>
+                        <NavigationViewItem Content="Nhân viên" Icon="PhoneBook" Tag="nhanvien"/>
+                        <NavigationViewItem Content="Báo cáo" Icon="Contact" Tag="baocao"/>
+                    </NavigationView.MenuItems>
+
+                    <NavigationView.FooterMenuItems>
+                        <NavigationViewItem Content="Tài khoản" Icon="Admin" Tag="admin"/>
+                        <!--Tapped="AccountItem_Tapped"-->
+                        <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
+                    </NavigationView.FooterMenuItems>
+                </NavigationView>
+            </StackPanel>
+        </StackPanel>
+
+        <!--mid side-->
+        <StackPanel Grid.Column="1" Orientation="Vertical" Height="793">
+            <!--head-->
+            <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
+                <!--search bar-->
+                <AutoSuggestBox 
+                    x:Name="SearchBox"
+                    PlaceholderText="Tìm kiếm" 
+                    FontSize="12" 
+                    Width="400"  
+                    Height="40" 
+                    Margin="60 0 40 0" 
+                    VerticalContentAlignment="Center" 
+                    Background="BurlyWood" 
+                    QueryIcon="Find"  
+                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
+
+                <!--add, remove btn-->
+                <Button Content="Thêm" Width="180" Height="40" Margin="430 0 40 0" HorizontalAlignment="Center" 
+                        Click="AddWarehouse_Click" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Xóa" Width="180" Height="40" HorizontalAlignment="Center"
+                        Click="DeleteWarehouse_Click" Style="{StaticResource CustomButtonStyle}"/>
+                
+                <!--refresh btn-->
+                <!--<Button Width="40" Height="40" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <FontIcon Glyph="&#xE72C;" />
+                    </StackPanel>
+                </Button>-->
+            </StackPanel>
+
+            <!--items-->
+            <StackPanel Width="1382" Height="620">
+                <controls:DataGrid
+                    x:Name="itemsDataGrid"
+                    ItemsSource="{x:Bind ViewModel.Warehouses, Mode=OneWay}"
+                    SelectedItem="{x:Bind ViewModel.SelectedWarehouse, Mode=TwoWay}"
+                    Width="1350" Height="630"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="False"
+                    Sorting="OnDataGridSorting">
+
+                    <controls:DataGrid.Resources>
+                        <Color x:Key="WheatColor">#F5DEB3</Color>
+                        <!--<Color x:Key="YellowishColor">#FFFFF700</Color>-->
+                        <!--<Color x:Key="BlueishColor">#FF00e5ff</Color>-->
+                        <StaticResource x:Key="DataGridColumnHeaderBackgroundColor" ResourceKey="WheatColor"/>
+                        <!--<StaticResource x:Key="DataGridColumnHeaderHoveredBackgroundColor" ResourceKey="YellowishColor"/>-->
+                        <!--<StaticResource x:Key="DataGridColumnHeaderPressedBackgroundColor" ResourceKey="BlueishColor"/>-->
+                    </controls:DataGrid.Resources>
+
+                    <controls:DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="primitives:DataGridColumnHeader">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                    </controls:DataGrid.ColumnHeaderStyle>
+
+                    <controls:DataGrid.RowStyle>
+                        <Style TargetType="controls:DataGridRow">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Height" Value="49"/>
+                            <!--<Setter Property="Background" Value="White"/>-->
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </controls:DataGrid.RowStyle>
+
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn Header="Mã nguyên liệu" Binding="{Binding WarehouseID}" Width="*" IsReadOnly="True"/>
+                        <controls:DataGridTextColumn Header="Tên nguyên liệu" Binding="{Binding IngredientName}" Width="*" />
+                        <controls:DataGridTextColumn Header="Số lượng" Binding="{Binding StockQuantity}" Width="*" />
+                        <controls:DataGridTextColumn Header="Đơn vị tính" Binding="{Binding Unit}" Width="*" />
+                        <controls:DataGridTextColumn Header="Ngày nhập" Binding="{Binding EntryDate, Converter={StaticResource DateToStringConverter}}" Width="*" >
+                            <controls:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="primitives:DataGridColumnHeader">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="Ngày nhập" VerticalAlignment="Center" />
+                                                    <FontIcon Glyph="&#xE8CB;" FontSize="14" Margin="15 0 0 0" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </controls:DataGridTextColumn.HeaderStyle>
+                        </controls:DataGridTextColumn>
+                        <controls:DataGridTextColumn Header="Ngày hết hạn" Binding="{Binding ExpirationDate, Converter={StaticResource DateToStringConverter}}" Width="*" >
+                            <controls:DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="primitives:DataGridColumnHeader">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="Ngày hết hạn" VerticalAlignment="Center" />
+                                                    <FontIcon Glyph="&#xE8CB;" FontSize="14" Margin="15 0 0 0" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </controls:DataGridTextColumn.HeaderStyle>
+                        </controls:DataGridTextColumn>
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
+            </StackPanel>
+
+            <!--paging-->
+            <StackPanel Orientation="Horizontal" Height="50" Width="1382">
+                <!--combobox phân trang-->
+                <ComboBox Name="pagesComboBox" Width="100" Height="35" Margin="641 0 0 0" SelectionChanged="pagesComboBox_SelectionChanged" VerticalAlignment="Center" Background="LightSlateGray">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </StackPanel>
+        </StackPanel>
+
+
+        <!--ContentDialog for adding new warehouse-->
+        <ContentDialog
+            x:Name="AddWarehouseDialog"
+            Title="Thêm nguyên liệu"
+            PrimaryButtonText="Hủy"
+            SecondaryButtonText="Lưu"
+            PrimaryButtonClick="OnCancelAddWarehouse"
+            SecondaryButtonClick="OnSaveWarehouse"
+            CornerRadius="10"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+
+            <StackPanel Spacing="10" Padding="20">
+                <TextBox x:Name="IngredientNameTextBox" PlaceholderText="Tên nguyên liệu" Margin="0 5" />
+                <TextBox x:Name="StockQuantityTextBox" PlaceholderText="Số lượng tồn" Margin="0 5" />
+                <TextBox x:Name="UnitTextBox" PlaceholderText="Đơn vị tính" Margin="0 5" />
+                <DatePicker x:Name="EntryDatePicker" Header="Ngày nhập kho" Margin="0 5" />
+                <DatePicker x:Name="ExpirationDatePicker" Header="Ngày hết hạn" Margin="0 5" />
+            </StackPanel>
+        </ContentDialog>
+
+        <!-- TeachingTip for notification -->
+        <Grid>
+            <!--Add-->
+            <muxc:TeachingTip
+                x:Name="AddSuccessTeachingTip"
+                Subtitle="Nguyên liệu đã được lưu thành công!"
+                Background="LightBlue"
+                IsOpen="False" />
+            
+            <!--Delete-->
+            <muxc:TeachingTip
+                x:Name="DeleteSuccessTeachingTip"
+                Subtitle="Nguyên liệu đã được xóa khỏi hệ thống."
+                Background="LightBlue"
+                IsOpen="False" />
+        </Grid>
+
+    </Grid>
+</Page>

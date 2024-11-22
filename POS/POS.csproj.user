@@ -5,13 +5,16 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="Views\WarehouseView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BankPaymentView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\CustomStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Menu.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\ProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <None Update="MainWindow.xaml">

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using POS.Interfaces;
 using POS.Models;
 using POS.Helpers;
+using System.Diagnostics;
 
 namespace POS.Services
 {
@@ -11,7 +12,7 @@ namespace POS.Services
     {
         public PostgresWarehouseDao() { }
 
-        public Tuple<int, List<Warehouse>> GetAllWarehouses(int page, int rowsPerPage, string searchKeyword)
+        public Tuple<int, List<Warehouse>> GetAllWarehouses(int page, int rowsPerPage, string searchKeyword, string sortColumn = null, string sortDirection = null)
         {
             var warehouses = new List<Warehouse>();
             int totalRecords = 0;
@@ -20,17 +21,31 @@ namespace POS.Services
             {
                 connection.Open();
 
-                var countSql = "SELECT COUNT(*) FROM khohang";
+                // Đếm tổng số bản ghi
+                var countSql = "SELECT COUNT(*) FROM khohang WHERE tennguyenlieu ILIKE @SearchKeyword";
                 var countCommand = new NpgsqlCommand(countSql, connection);
+                countCommand.Parameters.AddWithValue("@SearchKeyword", $"%{searchKeyword}%");
                 totalRecords = Convert.ToInt32(countCommand.ExecuteScalar());
+
+                // Xây dựng câu SQL chính
 
                 var sql = @"
                     SELECT khoid, tennguyenlieu, soluongton, donvitinh, ngaynhapkho, ngayhethan
                     FROM khohang
-                    ORDER BY khoid
-                    LIMIT @RowsPerPage OFFSET @Offset";
+                    WHERE tennguyenlieu ILIKE @SearchKeyword
+                ";
 
+                if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortDirection))
+                {
+                    if (sortColumn == "EntryDate") sortColumn = "ngaynhapkho";
+                    else if (sortColumn == "ExpirationDate") sortColumn = "ngayhethan";
+
+                    sql += $" ORDER BY {sortColumn} {sortDirection}";
+                }
+
+                sql += @" LIMIT @RowsPerPage OFFSET @Offset";
                 var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@SearchKeyword", $"%{searchKeyword}%");
                 command.Parameters.AddWithValue("@RowsPerPage", rowsPerPage);
                 command.Parameters.AddWithValue("@Offset", (page - 1) * rowsPerPage);
 
