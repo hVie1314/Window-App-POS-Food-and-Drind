@@ -16,24 +16,31 @@ using Microsoft.UI.Windowing;
 using WinRT.Interop;
 using Microsoft.UI;
 using POS.Views;
+using Windows.UI.WindowManagement;
+using AppWindow = Microsoft.UI.Windowing.AppWindow;
 
 namespace POS
 {
     public sealed partial class MainWindow : Window
     {
         private AppWindow _apw;
+        AppWindow m_appWindow;
         private OverlappedPresenter _presenter;
 
         public MainWindow()
         {
             this.InitializeComponent();
-
-            // Initialize AppWindow and OverlappedPresenter
-            GetAppWindowAndPresenter();
-
-            // Set fixed size and disable resizing
-            SetFixedSize(1920, 1080);
+            //// Set FullScreen
+            ////================================================================================================
+            //m_appWindow = GetAppWindowForCurrentWindow();
+            //m_appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+            ////================================================================================================
+            //// Initialize AppWindow and OverlappedPresenter
+            //GetAppWindowAndPresenter();
+            //// Set fixed size and disable resizing
+            //SetFixedSize(1920, 1080);
         }
+
 
         private void GetAppWindowAndPresenter()
         {
@@ -42,7 +49,6 @@ namespace POS
             _apw = AppWindow.GetFromWindowId(myWndId);
             _presenter = _apw.Presenter as OverlappedPresenter;
         }
-
         private void SetFixedSize(int width, int height)
         {
             if (_presenter != null)
@@ -56,6 +62,21 @@ namespace POS
             }
         }
 
+        //================================================================================================
+        //Lấy set Fullcreen cho AppWindow
+        private AppWindow GetAppWindowForCurrentWindow()
+        {
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            WindowId myWndId2 = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+
+            return AppWindow.GetFromWindowId(myWndId2);
+        }
+
+        private void SwitchPresenter_FullScreen(object sender, RoutedEventArgs e)
+        {
+            m_appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+        }
+        //================================================================================================
         //private void Window_Activated(object sender, WindowActivatedEventArgs args)
         //{
         //    MainFrame.Navigate(typeof(Menu));
