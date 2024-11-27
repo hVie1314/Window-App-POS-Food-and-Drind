@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using POS.Models;
 using POS.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,15 @@ namespace POS.Views
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuFlyoutItem;
-            ViewModel._selectedCategory = menuItem.Tag.ToString();
+            if (menuItem != null && menuItem.Tag != null)
+            {
+                ViewModel.selectedCategory = menuItem.Tag.ToString();
+                
+            }
+            else
+            {
+                ViewModel.selectedCategory = "";
+            }
             ViewModel.LoadProducts(1);
             UpdatePagingInfo_bootstrap();
         }
@@ -41,7 +50,7 @@ namespace POS.Views
         private void Sort_Item_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuFlyoutItem;
-            ViewModel._selectedSortOrder = int.Parse(menuItem.Tag.ToString());
+            ViewModel.selectedSortOrder = int.Parse(menuItem.Tag.ToString());
             ViewModel.LoadProducts(1);
             UpdatePagingInfo_bootstrap();
         }
@@ -54,7 +63,23 @@ namespace POS.Views
                 UpdatePagingInfo_bootstrap();
         }
         //================================================================
+        //Next and Previous button
+        private void nextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (pagesComboBox.SelectedIndex < ViewModel.TotalPages-1)
+            {
+                pagesComboBox.SelectedIndex++;
+            }
+        }
 
+        private void previousButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.CurrentPage > 1)
+            {
+                pagesComboBox.SelectedIndex--;
+            }
+        }
+        //================================================================
         private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             // Lấy NavigationViewItem từ sender
@@ -92,5 +117,32 @@ namespace POS.Views
                 ViewModel.LoadProducts(item.Page);
             }
         }
+
+        private void itemListBox_selectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listBox = sender as ListBox;
+            if (listBox != null)
+            {
+                if (listBox.SelectedItem != null)
+                {
+                    var product = listBox.SelectedItem as Product;
+                    if (product != null)
+                    {
+                        //var dialog = new ContentDialog();
+                        //dialog.XamlRoot = this.XamlRoot;
+                        //await dialog.ShowAsync();
+                        FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+                        OrdersUserControl.AddToOrder(product);
+                    }
+                }
+            }
+        }
+        //Dialog
+        //private async void AddProductButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new ContentDialog();
+        //    dialog.XamlRoot = this.XamlRoot;
+        //    await dialog.ShowAsync();
+        //}
     }
 }

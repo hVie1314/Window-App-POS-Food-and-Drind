@@ -31,24 +31,32 @@
 
     <Grid Background="Beige">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
+
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        
 
         <!--left side-->
-        <StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
-            <!--logo-->
+        <!--<StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
+            --><!--logo--><!--
+
             <Border Height="120" BorderThickness="5" CornerRadius="40">
                 <Image Source="ms-appx:///Assets/Image/logo.jpg" Stretch="Fill"/>
             </Border>
 
-            <!--navigation button-->
+            --><!--navigation button--><!--
             <StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
-                <!-- Các thành phần khác của StackPanel -->
+                --><!-- Các thành phần khác của StackPanel -->
 
-                <NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="671" Margin="0 -3 0 0">
+                <!--<NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="671" Margin="0 -3 0 0">
                     <NavigationView.Resources>
-                        <!-- Custom colors -->
+                        --><!-- Custom colors --><!--
+
+
                         <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
                         <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="OrangeRed"/>
                         <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="BurlyWood" />
@@ -67,15 +75,17 @@
 
                     <NavigationView.FooterMenuItems>
                         <NavigationViewItem Content="Tài khoản" Icon="Admin" Tag="admin"/>
-                        <!--Tapped="AccountItem_Tapped"-->
+
+                        --><!--Tapped="AccountItem_Tapped"--><!--
                         <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
                     </NavigationView.FooterMenuItems>
-                </NavigationView>
+                </NavigationView>--><!--
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
 
         <!--mid side-->
-        <StackPanel Grid.Column="1" Orientation="Vertical" Height="793">
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+
             <!--head-->
             <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
                 <!--search bar-->
@@ -106,7 +116,9 @@
             </StackPanel>
 
             <!--items-->
-            <StackPanel Width="1382" Height="620">
+
+            <StackPanel >
+
                 <controls:DataGrid
                     x:Name="itemsDataGrid"
                     ItemsSource="{x:Bind ViewModel.Warehouses, Mode=OneWay}"
@@ -194,22 +206,6 @@
                 </controls:DataGrid>
             </StackPanel>
 
-            <!--paging-->
-            <StackPanel Orientation="Horizontal" Height="50" Width="1382">
-                <!--combobox phân trang-->
-                <ComboBox Name="pagesComboBox" Width="100" Height="35" Margin="641 0 0 0" SelectionChanged="pagesComboBox_SelectionChanged" VerticalAlignment="Center" Background="LightSlateGray">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock>
-                                <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
-            </StackPanel>
-        </StackPanel>
-
 
         <!--ContentDialog for adding new warehouse-->
         <ContentDialog
@@ -233,21 +229,45 @@
         </ContentDialog>
 
         <!-- TeachingTip for notification -->
-        <Grid>
-            <!--Add-->
-            <muxc:TeachingTip
+
+            <Grid>
+                <!--Add-->
+                <muxc:TeachingTip
+
                 x:Name="AddSuccessTeachingTip"
                 Subtitle="Nguyên liệu đã được lưu thành công!"
                 Background="LightBlue"
                 IsOpen="False" />
-            
-            <!--Delete-->
-            <muxc:TeachingTip
+
+
+                <!--Delete-->
+                <muxc:TeachingTip
+
                 x:Name="DeleteSuccessTeachingTip"
                 Subtitle="Nguyên liệu đã được xóa khỏi hệ thống."
                 Background="LightBlue"
                 IsOpen="False" />
+
+            </Grid>
+        </StackPanel>
+        
+        <!--paging-->
+        <StackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Center">
+            <!--combobox phân trang-->
+            <ComboBox Name="pagesComboBox" Width="100" Height="35" SelectionChanged="pagesComboBox_SelectionChanged" VerticalAlignment="Center" Background="LightSlateGray">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+             <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+        </StackPanel>
+
         </Grid>
+
 
     </Grid>
 </Page>

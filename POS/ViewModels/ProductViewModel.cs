@@ -2,7 +2,7 @@
 using System.Linq;
 using System.ComponentModel;
 using POS.Models;
-using POS.Services;
+using POS.Services.DAO;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using POS.Interfaces;
@@ -19,37 +19,22 @@ namespace POS.ViewModels
         private IProductDao _productDao = new PostgresProductDao();
         public ObservableCollection<Product> Products { get; private set; }
 
-        public string _searchText;
-        public string _selectedCategory = "Tất cả";
-        public int _selectedSortOrder = 0;
+
+        public string searchText;
+        public string selectedCategory = "";
+        public int selectedSortOrder = 0;
+
+
 
 
         public string Keyword { get; set; } = "";
         public bool NameAcending { get; set; } = false;
         public int CurrentPage { get; set; } = 1;
-        public int RowsPerPage { get; set; } = 5;
+        public int RowsPerPage { get; set; } = 4;
         public int TotalPages { get; set; } = 0;
         public int TotalItems { get; set; } = 0;
 
-        //=======================================================================================================
-        //Phân trang
-        //void UpdatePagingInfo_bootstrap()
-        //{
-        //    var infoList = new List<object>();
-        //    for (int i = 1; i <= TotalPages; i++)
-        //    {
-        //        infoList.Add(new
-        //        {
-        //            Page = i,                    // Giá trị của Page cho mỗi trang
-        //            Total = TotalPages  // Tổng số trang
-        //        });
-        //    }
-
-        //    pagesComboBox.ItemsSource = infoList; // Gán danh sách cho ComboBox
-        //    pagesComboBox.SelectedIndex = 0;
-        //}
-
-        //=======================================================================================================
+     
         public ProductViewModel()
         {
             _productDao = new PostgresProductDao();
@@ -59,7 +44,9 @@ namespace POS.ViewModels
         public void GetAllProducts()
         {
             var (totalItems, products) = _productDao.GetAllProducts(
-                CurrentPage, RowsPerPage, Keyword, _selectedCategory, _selectedSortOrder);
+
+                CurrentPage, RowsPerPage, Keyword,selectedCategory, selectedSortOrder);
+
             Products = new FullObservableCollection<Product>(
                 products
             );
