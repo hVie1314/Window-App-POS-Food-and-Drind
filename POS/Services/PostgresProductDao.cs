@@ -25,27 +25,31 @@ namespace POS.Services
                 var sql = @"
                 SELECT COUNT(*) OVER() AS TotalItems, monanid, tenmonan, loaimonan, gia, mota, imagepath, trangthai 
                 FROM menu
-                WHERE tenmonan ILIKE @SearchKeyword and loaimonan ILIKE @Category
+                WHERE tenmonan ILIKE @SearchKeyword
                 ";
 
+                if (categoryType == "Tất cả")
+                {
+                    // do nothing
+                }
+                else if (categoryType == "Đồ uống")
+                    sql += " AND loaimonan = 'Đồ uống'";
+                else
+                    sql += @" AND loaimonan = @CategoryType";
+
                 if (isPriceSort == 1)
-                {
-                    sql += "ORDER BY gia ASC ";
-                }
+                    sql += " ORDER BY gia ASC ";
                 else if (isPriceSort == 2)
-                {
-                    sql += "ORDER BY gia DESC ";
-                }
+                    sql += " ORDER BY gia DESC ";
 
-                sql += "offset @Skip rows fetch next @Take rows only";
-
+                sql += " OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
 
                 var skip = (page - 1) * rowsPerPage;
                 var command = new NpgsqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@Skip", skip);
                 command.Parameters.AddWithValue("@Take", rowsPerPage);
                 command.Parameters.AddWithValue("@SearchKeyword", $"%{searchKeyword}%");
-                command.Parameters.AddWithValue("@Category", $"%{categoryType}%");
+                command.Parameters.AddWithValue("@CategoryType", categoryType);
 
                 using (var reader = command.ExecuteReader())
                 {

@@ -23,7 +23,7 @@
     <None Remove="Styles\customStyles.xaml" />
     <None Remove="Views\BankPaymentView.xaml" />
     <None Remove="Views\Menu.xaml" />
-    <None Remove="Views\ProductView.xaml" />
+    <None Remove="Views\WarehouseView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +39,12 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
+
     <PackageReference Include="Fody" Version="6.9.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
@@ -73,9 +75,11 @@
     <None Update="Assets\Image\logo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+
     <Page Update="DetailProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+
     <Page Update="Styles\CustomStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

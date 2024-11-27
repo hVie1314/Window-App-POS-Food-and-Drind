@@ -31,6 +31,7 @@
 
     <Grid Background="Beige">
         <Grid.ColumnDefinitions>
+
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -42,6 +43,7 @@
         <!--left side-->
         <!--<StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
             --><!--logo--><!--
+
             <Border Height="120" BorderThickness="5" CornerRadius="40">
                 <Image Source="ms-appx:///Assets/Image/logo.jpg" Stretch="Fill"/>
             </Border>
@@ -53,6 +55,8 @@
                 <!--<NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="671" Margin="0 -3 0 0">
                     <NavigationView.Resources>
                         --><!-- Custom colors --><!--
+
+
                         <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
                         <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="OrangeRed"/>
                         <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="BurlyWood" />
@@ -71,6 +75,7 @@
 
                     <NavigationView.FooterMenuItems>
                         <NavigationViewItem Content="Tài khoản" Icon="Admin" Tag="admin"/>
+
                         --><!--Tapped="AccountItem_Tapped"--><!--
                         <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
                     </NavigationView.FooterMenuItems>
@@ -80,6 +85,7 @@
 
         <!--mid side-->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+
             <!--head-->
             <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
                 <!--search bar-->
@@ -110,7 +116,9 @@
             </StackPanel>
 
             <!--items-->
+
             <StackPanel >
+
                 <controls:DataGrid
                     x:Name="itemsDataGrid"
                     ItemsSource="{x:Bind ViewModel.Warehouses, Mode=OneWay}"
@@ -198,6 +206,7 @@
                 </controls:DataGrid>
             </StackPanel>
 
+
         <!--ContentDialog for adding new warehouse-->
         <ContentDialog
             x:Name="AddWarehouseDialog"
@@ -220,20 +229,25 @@
         </ContentDialog>
 
         <!-- TeachingTip for notification -->
+
             <Grid>
                 <!--Add-->
                 <muxc:TeachingTip
+
                 x:Name="AddSuccessTeachingTip"
                 Subtitle="Nguyên liệu đã được lưu thành công!"
                 Background="LightBlue"
                 IsOpen="False" />
 
+
                 <!--Delete-->
                 <muxc:TeachingTip
+
                 x:Name="DeleteSuccessTeachingTip"
                 Subtitle="Nguyên liệu đã được xóa khỏi hệ thống."
                 Background="LightBlue"
                 IsOpen="False" />
+
             </Grid>
         </StackPanel>
         
@@ -251,6 +265,9 @@
             </ComboBox>
 
         </StackPanel>
+
+        </Grid>
+
 
     </Grid>
 </Page>

@@ -19,9 +19,11 @@ namespace POS.ViewModels
         private IProductDao _productDao = new PostgresProductDao();
         public ObservableCollection<Product> Products { get; private set; }
 
+
         public string searchText;
         public string selectedCategory = "";
         public int selectedSortOrder = 0;
+
 
 
 
@@ -44,6 +46,7 @@ namespace POS.ViewModels
             var (totalItems, products) = _productDao.GetAllProducts(
 
                 CurrentPage, RowsPerPage, Keyword,selectedCategory, selectedSortOrder);
+
             Products = new FullObservableCollection<Product>(
                 products
             );
@@ -59,6 +62,7 @@ namespace POS.ViewModels
             CurrentPage = page;
             GetAllProducts();
         }
+
 
         // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

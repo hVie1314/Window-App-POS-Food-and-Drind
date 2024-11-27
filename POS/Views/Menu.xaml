@@ -49,8 +49,10 @@
 
     <Grid Background="Beige">
         <Grid.ColumnDefinitions>
+
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="3*" />
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -120,7 +122,7 @@
                 <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category"  Width="70"  Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag=""/>
+                            <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag="Tất cả"/>
                             <MenuFlyoutItem Text="Khai vị" Click="MenuFlyoutItem_Click" Tag="Khai vị"/>
                             <MenuFlyoutItem Text="Món chính" Click="MenuFlyoutItem_Click" Tag="Món chính"/>
                             <MenuFlyoutItem Text="Tráng miệng" Click="MenuFlyoutItem_Click" Tag="Tráng miệng"/>
