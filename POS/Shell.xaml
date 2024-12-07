@@ -48,38 +48,44 @@
                                     ToolTipService.ToolTip=""
                                     Icon="Home">
                 </NavigationViewItem>
-                    <NavigationViewItem Content="Hóa đơn"
+                <NavigationViewItem Content="Hóa đơn"
                                     Tag="POS.Views.HoaDon"
                                     ToolTipService.ToolTip=""
                                     Icon="Document">
-                    </NavigationViewItem>
-                        <NavigationViewItem Content="Kho hàng"
+                </NavigationViewItem>
+                <NavigationViewItem Content="Kho hàng"
                                     Tag="POS.Views.WarehouseView"
                                     ToolTipService.ToolTip=""
                                     Icon="AllApps">
-                        </NavigationViewItem>
-                            <NavigationViewItem Content="Thực đơn"
-                                        Tag="POS.Views.ThucDon"
-                                        ToolTipService.ToolTip=""
-                                        Icon="Contact">
-                            </NavigationViewItem>
-                                <NavigationViewItem Content="Nhân viên"
-                                            Tag="POS.Views.NhanVien"
-                                            ToolTipService.ToolTip=""
-                                            Icon="PhoneBook">
-                                </NavigationViewItem>
-                                    <NavigationViewItem Content="Báo cáo"
-                                Tag="POS.Views.BaoCao"
-                                ToolTipService.ToolTip=""
-                                Icon="Contact">
-                                    </NavigationViewItem>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Thực đơn"
+                                    Tag="POS.Views.ThucDon"
+                                    ToolTipService.ToolTip=""
+                                    Icon="Contact">
+                </NavigationViewItem>
+                <NavigationViewItem Content="Nhân viên"
+                                    Tag="POS.Views.NhanVien"
+                                    ToolTipService.ToolTip=""
+                                    Icon="PhoneBook">
+                </NavigationViewItem>
+                <NavigationViewItem Content="Báo cáo"
+                                    Tag="POS.Views.BaoCao"
+                                    ToolTipService.ToolTip=""
+                                    Icon="Contact">
+                </NavigationViewItem>
+                <!--//////////////////////////////////////////-->
+                <NavigationViewItem Content="temp (payment)"
+                                    Tag="POS.Views.PaymentView"
+                                    ToolTipService.ToolTip=""
+                                    Icon="Contact">
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Tài khoản"
                                     Tag="POS.Views.TaiKhoan"
                                     ToolTipService.ToolTip=""
                                     Icon="Account"
-                    />
+                                    />
                 <NavigationViewItem Content="Quản trị"
                                     Tag="POS.Views.QuanTri"
                                     ToolTipService.ToolTip=""

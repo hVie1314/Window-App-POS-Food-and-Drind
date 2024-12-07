@@ -58,47 +58,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <!--left side-->
-        <!--<StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">-->
-            <!--logo-->
-            <!--<Border Height="120" BorderThickness="5" CornerRadius="40">
-                <Image Source="ms-appx:///Assets/Image/logo.jpg" Stretch="Fill"/>
-            </Border>-->
-            
-            
-            
-            <!--navigation button-->
-            <!--<StackPanel Grid.Column="0" Orientation="Vertical"  BorderThickness="0 0 2 0">-->
-                <!-- Các thành phần khác của StackPanel -->
-
-                <!--<NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="703"  Margin="0 -3 0 0">-->
-                    <!--<NavigationView.Resources>
-                        --><!-- Custom colors --><!--
-                        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
-                        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="OrangeRed"/>
-                        <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="BurlyWood" />
-                        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Blue"/>
-                        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Red"/>
-                    </NavigationView.Resources>
-
-                    <NavigationView.MenuItems>
-                        <NavigationViewItem Content="Menu" Icon="Home" Tag="menu"/>
-                        <NavigationViewItem Content="Hóa đơn" Icon="Document" Tag="hoadon"/>
-                        <NavigationViewItem Content="Kho hàng" Icon="AllApps" Tag="khohang"/>
-                        <NavigationViewItem Content="Thực đơn" Icon="Contact" Tag="thucdon"/>
-                        <NavigationViewItem Content="Nhân viên" Icon="PhoneBook" Tag="nhanvien"/>
-                        <NavigationViewItem Content="Báo cáo" Icon="Contact" Tag="baocao"/>
-                    </NavigationView.MenuItems>
-
-                    <NavigationView.FooterMenuItems>
-                        <NavigationViewItem Content="Tài khoản" Icon="Account" Tag="admin" Tapped="AccountItem_Tapped"/>
-                        <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
-                    </NavigationView.FooterMenuItems>
-
-                    <Frame x:Name="ContentFrame" Width="5"/>
-                </NavigationView>--><!--
-            </StackPanel>-->
-        <!--</StackPanel>-->
 
 
         <!--mid side-->
@@ -208,7 +167,7 @@
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
-                         <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+                                <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
                             </TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
@@ -219,26 +178,6 @@
         
         <!--right side-->
         <uc:OrdersUserConstrol Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="OrdersUserControl" Margin="0 0 0 0"/>
-        <!--<ContentDialog
-            x:Name="ProductSelectDialog"
-            Title=""
-            PrimaryButtonText="Hủy"
-            SecondaryButtonText="Thêm vào Order"
-            PrimaryButtonClick="OrderDiaglogCancelClick"
-            SecondaryButtonClick="AddOrderClick"
-            CornerRadius="10"
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch">
-            <DataTemplate x:DataType="models:Product">
-            <StackPanel Spacing="10" Padding="20" Orientation="Vertical">
-                <Image Source="{x:Bind ImagePath}" Stretch="Fill"/>
-                <TextBlock Text="{x:Bind Name}" FontSize="20" IsColorFontEnabled="True" Foreground="Red"/>
-                <TextBlock Text="{x:Bind Price, Converter={StaticResource currencyFormatter}}" FontSize="20"/>
-                <TextBlock Text="Số lượng:" FontSize="20"/>
-                    <NumberBox x:Name="QuantityNumberBox" Value="1" Minimum="1" SpinButtonPlacementMode="Inline" SmallChange="1" Width="100" Foreground="Black" Background="BurlyWood"/>
-                </StackPanel>
-            </DataTemplate>
-        </ContentDialog>-->
 
     </Grid>
     

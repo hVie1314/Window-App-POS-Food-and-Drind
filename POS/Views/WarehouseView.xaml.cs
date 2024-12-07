@@ -47,6 +47,22 @@ namespace POS.Views
             }
         }
 
+        private void nextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (pagesComboBox.SelectedIndex < ViewModel.TotalPages - 1)
+            {
+                pagesComboBox.SelectedIndex++;
+            }
+        }
+
+        private void previousButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.CurrentPage > 1)
+            {
+                pagesComboBox.SelectedIndex--;
+            }
+        }
+
         void UpdatePagingInfo_bootstrap()
         {
             var infoList = new List<object>();
