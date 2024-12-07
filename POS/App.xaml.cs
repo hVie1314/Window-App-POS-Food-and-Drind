@@ -18,6 +18,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using POS.Services;
 
 namespace POS
 {
@@ -27,22 +28,26 @@ namespace POS
         public App()
         {
             this.InitializeComponent();
-
-            Ioc.Default.ConfigureServices(new ServiceCollection()
-                .AddSingleton<MainWindowViewModel>()
-                .BuildServiceProvider());
         }
 
+        public INavigation navigate => m_window;
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
-            var root = new Frame();
-            m_window.Content = root;
-            var name = "POS.LoginPage";
-            var type = Type.GetType(name);
-            root.Navigate(type);
-
+            m_window = new Shell();
             m_window.Activate();
+        }
+
+        //protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        //{
+        //    m_window = new MainWindow();
+        //    var root = new Frame();
+        //    m_window.Content = root;
+        //    var name = "POS.Views.Menu2";
+        //    var type = Type.GetType(name);
+        //    m_window.Activate();
+        //    root.Navigate(type);
+
+           
 
             //m_window = new LoginWindow();
             //Frame rootFrame = new Frame();
@@ -54,13 +59,13 @@ namespace POS
             //// Place the frame in the current Window
             //m_window.Content = rootFrame;
             //m_window.Activate();
-        }
+        //}
 
         //void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         //{
         //    throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         //}
 
-        private Window m_window;
+        internal Shell m_window;
     }
 }

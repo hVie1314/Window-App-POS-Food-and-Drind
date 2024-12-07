@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using POS.Models;
-using POS.Services;
+
+using POS.Services.DAO;
+
 using POS.Interfaces;
 using System;
 using System.Linq;
@@ -18,7 +20,7 @@ namespace POS.ViewModels
 
         public string Keyword { get; set; } = "";
         public int CurrentPage { get; set; } = 1;
-        public int RowsPerPage { get; set; } = 12;
+        public int RowsPerPage { get; set; } = 10;
         public int TotalPages { get; set; } = 0;
         public int TotalItems { get; set; } = 0;
 

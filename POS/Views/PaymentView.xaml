@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS.Views.PaymentView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local1="using:POS.Views"
+    xmlns:local2="using:POS.ViewModels"
+    xmlns:local3="using:POS.Styles"
+    xmlns:local4="using:POS.Converters"                   
+    xmlns:models="using:POS.Models"
+    xmlns:models1="using:POS.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:muxc="using:ABI.Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    
+    <!-- Import Resources -->
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Converters -->
+            <local4:NumberToVnCurrencyConverter x:Key="currencyFormatter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+    <Grid>
+        <Button x:Name="ShowPaymentDialog" 
+            Content="Thanh toán" 
+            Width="100" 
+            Height="40" 
+            Margin="10" 
+            Click="OnPaymentButtonClicked"/>
+
+
+        <!--Create payment dialog-->
+        <ContentDialog 
+            x:Name="PaymentDialog"
+            Title="Thanh toán"
+            PrimaryButtonText="Hủy"
+            SecondaryButtonText="Thanh toán"
+            DefaultButton="Secondary"
+            PrimaryButtonClick="OnCancelPayment"
+            SecondaryButtonClick="OnSubmitPayment"
+            CornerRadius="10"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            >
+
+
+            <StackPanel Orientation="Vertical" Height="550" Width="600" HorizontalAlignment="Center">
+                <!--Title-->
+                <TextBlock Text="Hóa Đơn #{ID}" FontSize="24" FontWeight="Bold" Margin="40" HorizontalAlignment="Center"/>
+
+                <!--Details-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Width="300">
+                        <TextBlock Text="Số tiền đã nhận*" FontSize="16" Margin="10 0 0 0"/>
+                        <TextBox x:Name="ReceivedAmountTextBox" 
+                                 Text="{x:Bind ViewModel.ReceivedAmount, Mode=TwoWay}"
+                                 FontSize="16" Margin="10" HorizontalAlignment="Left" 
+                                 Width="260" Height="35" 
+                                 Background="White" 
+                                 BorderBrush="Black" BorderThickness="1" CornerRadius="5"
+                                 TextChanged="ReceivedAmountTextBox_TextChanged"/>
+
+                        <TextBlock Text="Số tiền thanh toán*" FontSize="16" Margin="10 10 0 0"/>
+                        <TextBox x:Name="PaymentAmountTextBox" 
+                                 Text="{x:Bind ViewModel.TotalPayable, Converter={StaticResource currencyFormatter}}" 
+                                 FontSize="16" Margin="10" HorizontalAlignment="Left" 
+                                 Width="260" Height="35"  
+                                 Background="LightGray"
+                                 BorderBrush="Black" BorderThickness="1" CornerRadius="5"
+                                 IsReadOnly="True"/>
+
+                        <TextBlock Text="Tiền thừa: " FontSize="16" Margin="10 10 0 0"/>
+                        <TextBlock x:Name="change" FontSize="16" Foreground="Red" Margin="30 10 0 0"
+                                   Text="{x:Bind ViewModel.Change, Mode=OneWay, Converter={StaticResource currencyFormatter}}"/>
+                    </StackPanel>
+
+                    <Border Grid.Column="1" BorderThickness="1" Width="280" Height="240" BorderBrush="LightSlateGray" CornerRadius="10">
+                        <!--<Border.Effect>
+                            <DropShadowEffect ShadowDepth="5" 
+                          Color="Black" 
+                          Opacity="0.5" 
+                          BlurRadius="10" />
+                        </Border.Effect>-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="160" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <TextBlock Text="Tổng hóa đơn:" FontSize="16" VerticalAlignment="Center" Margin="20 30 0 0" />
+                                <TextBlock Text="Thuế:" FontSize="16" VerticalAlignment="Center" Margin="20 20 0 0"/>
+                                <TextBlock Text="Giảm giá:" FontSize="16" VerticalAlignment="Center" Margin="20 20 0 0"/>
+                                <TextBlock Text="Tổng thanh toán:" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="20 50 0 0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <TextBlock Grid.Column="1" Grid.Row="0" x:Name="totalCost" FontSize="16" Margin="0 30 20 0" HorizontalAlignment="Right"
+                                           Text="{x:Bind ViewModel.TotalCost, Mode=OneWay, Converter={StaticResource currencyFormatter}}"/>
+                                <TextBlock Grid.Column="1" Grid.Row="1" x:Name="vat" FontSize="16" Margin="0 20 20 0" HorizontalAlignment="Right">
+                                            <Run Text="{x:Bind ViewModel.VAT, Mode=OneWay}" />
+                                            <Run Text="%" />
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" Grid.Row="2" x:Name="discount" FontSize="16" Margin="0 20 20 0" HorizontalAlignment="Right"
+                                           Text="{x:Bind ViewModel.Discount, Mode=OneWay, Converter={StaticResource currencyFormatter}}"/>
+                                <TextBlock Grid.Column="1" Grid.Row="3" x:Name="totalPayment" FontSize="16" FontWeight="Bold" Margin="0 50 20 0" HorizontalAlignment="Right"
+                                           Text="{x:Bind ViewModel.TotalPayable, Converter={StaticResource currencyFormatter}}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!--Payment method-->
+                <TextBlock Text="Phương thức thanh toán" FontSize="16" Margin="10 30 0 0"/>
+                <ComboBox x:Name="PaymentMethodComboBox" 
+                      PlaceholderText="Chọn phương thức thanh toán" 
+                      ItemsSource="{Binding PaymentMethods}" 
+                      SelectedItem="{Binding SelectedPaymentMethod, Mode=TwoWay}"
+                      Margin="0 10 0 0" HorizontalAlignment="Center" 
+                      Width="580" Height="40" FontSize="16" 
+                      Background="White" 
+                      BorderBrush="Black" BorderThickness="1" CornerRadius="5" 
+                      />
+
+                <!--Discount -->
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Mã giảm giá" FontSize="16" Margin="10 20 0 0"/>
+                        <TextBox x:Name="SaleNotesTextBox" 
+                             PlaceholderText="Nhập mã giảm giá (nếu có)" 
+                             Text="{}"
+                             Margin="10" HorizontalAlignment="Center" 
+                             Width="580" Height="40"  FontSize="16" 
+                             BorderBrush="Black" BorderThickness="1" CornerRadius="5"
+                             AcceptsReturn="True" 
+                             TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ContentDialog>
+        
+        <!--Payment success dialog-->
+        <ContentDialog
+            x:Name="SuccessPaymentDialog"
+            Title="Thanh toán thành công"
+            Content="Thanh toán đã được xử lý thành công."
+            PrimaryButtonText="In hóa đơn"
+            CloseButtonText="Đóng"
+            DefaultButton="Primary"
+            />
+
+        <!--Momo payment info dialog-->
+        <ContentDialog
+            x:Name="MoMoPaymentDialog"
+            Title="Thanh toán qua MoMo"
+            PrimaryButtonText="Đã thanh toán"
+            CloseButtonText="Hủy"
+            DefaultButton="Primary">
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="10">
+                <!-- QR Code -->
+                <TextBlock Text="Quét mã QR để thanh toán" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
+                <Border BorderBrush="Black" BorderThickness="1" Width="200" Height="200" HorizontalAlignment="Center">
+                    <Image Source="{x:Bind ViewModel.MomoQRCodeImagePath}" Stretch="Uniform"/>
+                </Border>
+
+                <TextBlock Text="Số tiền cần thanh toán" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
+                <TextBlock Text="{x:Bind ViewModel.TotalPayable, Converter={StaticResource currencyFormatter}}" FontSize="16" Foreground="OrangeRed" FontWeight="Bold" TextAlignment="Center"/>
+
+                <TextBlock Text="Thông tin tài khoản MoMo" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
+                <TextBlock Text="{x:Bind ViewModel.MomoAcountInfo}" FontSize="16" Foreground="Blue" FontWeight="Bold" TextAlignment="Center"/>
+            </StackPanel>
+        </ContentDialog>
+        
+        
+        <!--Print Invoice-->
+        <ContentDialog
+            x:Name="InvoiceDialog"
+            Title="Thanh toán thành công"
+            SecondaryButtonText="Đóng"
+            SecondaryButtonClick="OnCloseInvoiceDialog"
+            DefaultButton="Secondary"
+            CornerRadius="10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <!--PrimaryButtonText="In hóa đơn"-->
+            <!--PrimaryButtonClick="OnPrintInvoice"-->
+
+            <ScrollViewer x:Name="Invoice">
+                <StackPanel Margin="10" Spacing="10">
+                    <!-- Tiêu đề có biểu tượng -->
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="10">
+                        <Border Width="60" Height="60">
+                            <Image Source="ms-appx:///Assets/Image/logo.jpg" Stretch="Fill"/>
+                        </Border>
+                        <TextBlock Text="HÓA ĐƠN THANH TOÁN" FontSize="24" Margin="0 10 0 0" FontWeight="Bold" Foreground="DodgerBlue" />
+                    </StackPanel>
+
+                    <!-- Thông tin hóa đơn -->
+                    <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="5" Padding="10" Margin="0 10">
+                        <StackPanel Spacing="5">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE80E;" FontSize="16" Foreground="Gray" />
+                                <TextBlock Text="Mã hóa đơn:" FontSize="16" FontWeight="SemiBold" Margin="5 0 0 0" />
+                                <TextBlock Text="{x:Bind ViewModel.InvoiceId}" FontSize="16" Margin="5 0 0 0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE823;" FontSize="16" Foreground="Gray" />
+                                <TextBlock Text="Ngày thanh toán:" FontSize="16" FontWeight="SemiBold" Margin="5 0 0 0" />
+                                <TextBlock Text="{x:Bind ViewModel.PaymentDate, Mode=OneWay}" FontSize="16" Margin="5 0 0 0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE1D7;" FontSize="16" Foreground="Gray" />
+                                <TextBlock Text="Phương thức thanh toán:" FontSize="16" FontWeight="SemiBold" Margin="5 0 0 0" />
+                                <!--<TextBlock Text="{x:Bind ViewModel.PaymentMethods, Mode=OneWay}" FontSize="16" Margin="5 0 0 0" />-->
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Danh sách sản phẩm -->
+                    <TextBlock Text="Danh sách món ăn" FontSize="18" FontWeight="Bold" Margin="0 10" Foreground="Black" />
+                    <ListView ItemsSource="{x:Bind ViewModel.InvoiceItems}" Margin="0 0 10 0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models1:InvoiceItem">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="{x:Bind Name}" FontSize="16" Width="170" />
+                                    <TextBlock Text="{x:Bind Quantity}" FontSize="16" Width="50" HorizontalAlignment="Center" />
+                                    <TextBlock Text="{x:Bind Price, Converter={StaticResource currencyFormatter}}" 
+                                       FontSize="16" Width="120" HorizontalAlignment="Right" TextAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <!-- Tóm tắt hóa đơn -->
+                    <StackPanel Margin="0 10 0 0">
+                        <Grid Width="400">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Vertical" Grid.Column="0">
+                                <TextBlock Text="Tổng hóa đơn" FontSize="16"/>
+                                <TextBlock Text="Thuế" FontSize="16"/>
+                                <TextBlock Text="Giảm giá" FontSize="16"/>
+                                <TextBlock Text="Tổng thanh toán" FontSize="16" FontWeight="Bold" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Grid.Column="1">
+                                <TextBlock Text="{x:Bind ViewModel.TotalCost, Converter={StaticResource currencyFormatter}}" FontSize="16" Margin="0 0 10 0" HorizontalAlignment="Right"/>
+                                <TextBlock FontSize="16" Margin="0 0 10 0" HorizontalAlignment="Right">
+                                    <Run Text="{x:Bind ViewModel.VAT, Mode=OneWay}" />
+                                    <Run Text="%" />
+                                </TextBlock>
+                                <TextBlock Text="{x:Bind ViewModel.Discount, Converter={StaticResource currencyFormatter}}" FontSize="16" Margin="0 0 10 0" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{x:Bind ViewModel.TotalPayable, Converter={StaticResource currencyFormatter}}" FontSize="16" FontWeight="Bold" Margin="0 0 10 0" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <TextBlock Text="Cảm ơn quý khách." FontStyle="Oblique" FontWeight="SemiBold" FontSize="18" Margin="0 50 0 0" TextAlignment="Center" />
+                </StackPanel>
+            </ScrollViewer>
+        </ContentDialog>
+
+
+    </Grid>
+</Page>

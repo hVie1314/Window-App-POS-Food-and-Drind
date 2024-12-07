@@ -6,6 +6,7 @@
     xmlns:local1="using:POS.Views"
     xmlns:local2="using:POS.ViewModels"
     xmlns:local3="using:POS.Styles"
+    xmlns:uc="using:POS.Views.UserControls"
     xmlns:local4="using:POS.Converters"
     xmlns:models="using:POS.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,7 +28,7 @@
             <!--update later-->
             <DataTemplate x:Key="VerticalLayout" x:DataType="models:Product">
                 <Border Height="100" Width="900" Margin="62 0 0 0" VerticalAlignment="Center" CornerRadius="40" Background="Wheat">
-                    <Grid Height="100" Width="900">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -48,65 +49,21 @@
 
     <Grid Background="Beige">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="1050" />
-            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="3*" />
+
         </Grid.ColumnDefinitions>
-
-        <!--left side-->
-        <StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
-            <!--logo-->
-            <Border Height="120" BorderThickness="5" CornerRadius="40">
-                <Image Source="ms-appx:///Assets/Image/logo.jpg" Stretch="Fill"/>
-            </Border>
-            
-            <!--combobox phân trang-->
-            <ComboBox Name="pagesComboBox" Width="100" Height="35" SelectionChanged="pagesComboBox_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            
-            <!--navigation button-->
-            <StackPanel Grid.Column="0" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="0 0 2 0">
-                <!-- Các thành phần khác của StackPanel -->
-
-                <NavigationView PaneTitle="POS" Foreground="Black" Background="Wheat" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneOpen="True" Height="671" Margin="0 -3 0 0">
-                    <NavigationView.Resources>
-                        <!-- Custom colors -->
-                        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
-                        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="OrangeRed"/>
-                        <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="BurlyWood" />
-                        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Blue"/>
-                        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Red"/>
-                    </NavigationView.Resources>
-
-                    <NavigationView.MenuItems>
-                        <NavigationViewItem Content="Menu" Icon="Home" Tag="menu"/>
-                        <NavigationViewItem Content="Hóa đơn" Icon="Document" Tag="hoadon"/>
-                        <NavigationViewItem Content="Kho hàng" Icon="AllApps" Tag="khohang"/>
-                        <NavigationViewItem Content="Thực đơn" Icon="Contact" Tag="thucdon"/>
-                        <NavigationViewItem Content="Nhân viên" Icon="PhoneBook" Tag="nhanvien"/>
-                        <NavigationViewItem Content="Báo cáo" Icon="Contact" Tag="baocao"/>
-                    </NavigationView.MenuItems>
-
-                    <NavigationView.FooterMenuItems>
-                        <NavigationViewItem Content="Tài khoản" Icon="Admin" Tag="admin" Tapped="AccountItem_Tapped"/>
-                        <NavigationViewItem Content="Quản trị" Icon="Admin" Tag="admin"/>
-                    </NavigationView.FooterMenuItems>
-                </NavigationView>
-            </StackPanel>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
 
 
         <!--mid side-->
-        <StackPanel Grid.Column="1" Orientation="Vertical" Height="793">
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
             <!--head-->
-            <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
+            <StackPanel Orientation="Horizontal" BorderBrush="BurlyWood" >
                 <!--search bar-->
                 <AutoSuggestBox 
                     x:Name="SearchBox"
@@ -155,56 +112,73 @@
             </StackPanel>
             
             <!--items-->
-            <StackPanel>
+            <StackPanel Padding="50">
                 <!--list view-->
-                <ListBox Name="itemsListBox" ItemsSource="{x:Bind ViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource VerticalLayout}" Width="1050" Height="650" Background="Beige"/> <!--Style="{StaticResource CustomListBoxItemStyle}"-->
-            </StackPanel>
+                <ListBox SelectionChanged="itemListBox_selectionChanged" VerticalAlignment="Center" HorizontalAlignment="Center" Name="itemsListBox" ItemsSource="{x:Bind ViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource VerticalLayout}"  Background="Beige">
+                    <!--Style="{StaticResource CustomListBoxItemStyle}"-->
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout x:Name="CenteredFlyout" Placement="Full">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                    <Setter Property="MinWidth" Value="300"/>
+                                    <Setter Property="MaxHeight" Value="300"/>
+                                    <Setter Property="MinHeight" Value="200"/>
+                                    <Setter Property="Padding" Value="20"/>
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                <Image Grid.Column="0" MaxHeight="100" Source="{Binding ImagePath}"/>
+                                <NumberBox Minimum="1" Value="1" 
+                                SmallChange="1"
+                                LargeChange="10"
+                                SpinButtonPlacementMode="Compact" />
+                                </StackPanel>
 
-            <!--paging-->
-            <StackPanel Orientation="Horizontal" Height="120" Width="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="This Space For Paging" Width="1100" HorizontalTextAlignment="Center" Foreground="Black"/>
+                            </Grid>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </ListBox>
             </StackPanel>
+            
+
+           
         </StackPanel>
 
+        <!--paging-->
+        <Grid Grid.Row="1" Grid.Column="0" >
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                <TextBlock>
+             Tổng số món: <Run Text="{x:Bind ViewModel.TotalItems}"></Run>
+                </TextBlock>
+                <TextBlock>
+             Hiển thị: <Run Text="{x:Bind ViewModel.Products.Count, Mode=OneWay}"></Run>/<Run Text="{x:Bind ViewModel.RowsPerPage}"></Run>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="previousButton" Width="80" Height="35" Content="&lt; Back" Click="previousButton_Click"/>
+                <!--combobox phân trang-->
+                <ComboBox Name="pagesComboBox" Width="100" Height="35" SelectionChanged="pagesComboBox_SelectionChanged" HorizontalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Name="nextButton" Width="80" Height="35" Content="Next &gt;" Click="nextButton_Click"/>
+            </StackPanel>
+        </Grid>
+        
         <!--right side-->
-        <StackPanel Grid.Column="2" Orientation="Vertical" BorderBrush="BurlyWood" BorderThickness="2 0 0 0">
-            <Border Height="240">
-                <Image Source="ms-appx:///Assets/Image/pho_bo.jpg" Stretch="Fill"/>
-            </Border>
-            <TextBlock Text="Phở bò" FontSize="30" HorizontalAlignment="Center" Padding="60" Foreground="Black"/>
+        <uc:OrdersUserConstrol Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="OrdersUserControl" Margin="0 0 0 0"/>
 
-            <Grid Height="140">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="Giá" FontSize="12" Margin="10 0 0 0" Padding="15" Foreground="Black"/>
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Số lượng" FontSize="12" Margin="10 0 0 0" Padding="15" Foreground="Black"/>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Thành tiền" FontSize="12" Margin="10 0 0 0" Padding="15" Foreground="Black"/>
-
-                <TextBlock Grid.Column="1" Grid.Row="0" Text="100.000 đ" FontSize="12" Margin="0 0 10 0" Padding="15" HorizontalAlignment="Right" Foreground="Black"/>
-                <NumberBox Grid.Column="1" Grid.Row="1" Value="1"  Minimum="1" SpinButtonPlacementMode="Inline" SmallChange="1" Width="100" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="Black" Background="BurlyWood"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="200.000 đ" FontSize="12"  Margin="0 0 10 0" Padding="15" HorizontalAlignment="Right" Foreground="Black"/>
-            </Grid>
-
-            <AppBarButton Icon="Contact" IsCompact="True" AutomationProperties.Name="ID Selector" HorizontalAlignment="Center" Width="200" Height="65" Margin="0 90 0 10" Foreground="Black" Background="BurlyWood">
-                <AppBarButton.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="ID 1" Tag="1"/>
-                        <MenuFlyoutItem Text="ID 2" Tag="2"/>
-                        <MenuFlyoutItem Text="ID 3" Tag="3"/>
-                    </MenuFlyout>
-                </AppBarButton.Flyout>
-            </AppBarButton>
-
-            <Button Content="Thêm vào hóa đơn" Width="200" Height="40" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-        </StackPanel>
     </Grid>
+    
 </Page>
