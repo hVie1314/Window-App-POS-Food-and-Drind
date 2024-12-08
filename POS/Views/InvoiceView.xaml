@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS.Views.InvoiceView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS.Views"
+    xmlns:model="using:POS.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="Beige">
+        <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <GridView Grid.Row="0" ItemsSource="{x:Bind ViewModel.Invoices, Mode=OneWay}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="model:WholeInvoice">
+                    <StackPanel Width="200" Height="300" Background="White" Margin="10" CornerRadius="10">
+                        <Grid Background= "#ccffdd" Padding="10">
+                            <TextBlock FontWeight="Bold">
+                                #<Run Text="{x:Bind Invoice.InvoiceID, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                        <ListView ItemsSource="{x:Bind InvoiceDetailsWithProductInfo}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="model:InvoiceDetailWithProductInfo">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontSize="20" Text="{x:Bind InvoiceDetailProperty.Quantity, Mode=OneWay}"/>
+                                        <TextBlock FontSize="20" Text=". "/>
+                                        <TextBlock FontSize="20" Text="{x:Bind ProductName, Mode=OneWay}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <!--paging-->
+        <Grid Grid.Row="1" >
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                <TextBlock>
+     Tổng hóa đơn: <Run Text="{x:Bind ViewModel.TotalItems}"></Run>
+                </TextBlock>
+                <TextBlock>
+     Hiển thị: <Run Text="{x:Bind ViewModel.Invoices.Count, Mode=OneWay}"></Run>/<Run Text="{x:Bind ViewModel.ItemsPerPage}"></Run>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="previousButton" Width="80" Height="35" Content="&lt; Back" Click="previousButton_Click"/>
+                <!--combobox phân trang-->
+                <ComboBox Name="pagesComboBox" Width="100" Height="35" SelectionChanged="pagesComboBox_SelectionChanged" HorizontalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+
+                 <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Name="nextButton" Width="80" Height="35" Content="Next &gt;" Click="nextButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

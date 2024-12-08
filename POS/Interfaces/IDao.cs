@@ -77,8 +77,9 @@ namespace POS.Interfaces
     {
         Tuple<int, List<InvoiceDetail>> GetAllInvoiceDetails(
             int page = 1,
-            int rowsPerPage = 10
+            int rowsPerPage = 10    
         );
+        public Tuple<int, List<InvoiceDetailWithProductInfo>> GetAllInvoiceDetailsWithProductInformation(int invoiceId);
         int InsertInvoiceDetail(InvoiceDetail invoiceDetail);
         bool UpdateInvoiceDetail(InvoiceDetail invoiceDetail);
         void RemoveInvoiceDetailById(int invoiceDetailId);

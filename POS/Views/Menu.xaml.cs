@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using POS.Models;
 using POS.ViewModels;
@@ -13,6 +14,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -23,11 +25,14 @@ namespace POS.Views
     public sealed partial class Menu : Page
     {
         public ProductViewModel ViewModel { get; set; }
+        public Product SelectedProduct { get; set; }
         public Menu()
         {
             this.InitializeComponent();
-            ViewModel = new ProductViewModel();
-            this.DataContext = ViewModel;
+            this.ViewModel = new ProductViewModel();
+            //this.DataContext = ViewModel;
+            this.SelectedProduct = new Product();
+            //this.DataContext = ViewModel;
             UpdatePagingInfo_bootstrap();
         }
         //==========================================================
@@ -62,11 +67,25 @@ namespace POS.Views
                 ViewModel.LoadProducts(1);
                 UpdatePagingInfo_bootstrap();
         }
+        
+        private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+           
+            var menuItem = sender as NavigationViewItem;
+
+
+            if (menuItem != null)
+            {
+                var accountWindow = new ShellWindow();
+                accountWindow.Activate();
+            }
+        }
         //================================================================
+        //Pagination
         //Next and Previous button
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (pagesComboBox.SelectedIndex < ViewModel.TotalPages-1)
+            if (pagesComboBox.SelectedIndex < ViewModel.TotalPages - 1)
             {
                 pagesComboBox.SelectedIndex++;
             }
@@ -79,20 +98,6 @@ namespace POS.Views
                 pagesComboBox.SelectedIndex--;
             }
         }
-        //================================================================
-        private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            // Lấy NavigationViewItem từ sender
-            var menuItem = sender as NavigationViewItem;
-
-            // Kiểm tra xem menuItem có hợp lệ không
-            if (menuItem != null)
-            {
-                var accountWindow = new ShellWindow();
-                accountWindow.Activate();
-            }
-        }
-
         void UpdatePagingInfo_bootstrap()
         {
             var infoList = new List<object>();
@@ -117,8 +122,9 @@ namespace POS.Views
                 ViewModel.LoadProducts(item.Page);
             }
         }
+        //================================================================================================
 
-        private void itemListBox_selectionChanged(object sender, SelectionChangedEventArgs e)
+        private void itemListBox_selectionChanged(object sender, TappedRoutedEventArgs e)
         {
             var listBox = sender as ListBox;
             if (listBox != null)
@@ -131,12 +137,26 @@ namespace POS.Views
                         //var dialog = new ContentDialog();
                         //dialog.XamlRoot = this.XamlRoot;
                         //await dialog.ShowAsync();
+                        //SelectedProduct = product;
+                        SelectedProduct.AssignFrom(product);
+                        // Hiển thị hình ảnh tương ứng
+                        var bitmap = new BitmapImage(new Uri(product.ImagePath, UriKind.RelativeOrAbsolute));
+                        SelectedProductImage.Source = bitmap;
                         FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-                        OrdersUserControl.AddToOrder(product);
+
+
+                        
                     }
                 }
             }
         }
+        private void AddToBillClick(object sender, RoutedEventArgs args)
+        {
+            OrdersUserControl.AddToOrder(SelectedProduct,((int)QuanlityBox.Value));
+            CenteredFlyout.Hide();
+            QuanlityBox.Value = 1;
+        }
+
         //Dialog
         //private async void AddProductButton_Click(object sender, RoutedEventArgs e)
         //{
