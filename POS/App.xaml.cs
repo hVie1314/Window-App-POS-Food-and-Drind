@@ -28,10 +28,6 @@ namespace POS
         public App()
         {
             this.InitializeComponent();
-
-            Ioc.Default.ConfigureServices(new ServiceCollection()
-                .AddSingleton<MainWindowViewModel>()
-                .BuildServiceProvider());
         }
 
         public INavigation navigate => m_window;

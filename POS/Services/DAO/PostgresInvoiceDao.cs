@@ -43,12 +43,12 @@ namespace POS.Services.DAO
                         {
                             InvoiceID = reader.GetInt32(reader.GetOrdinal("hoadonid")),
                             InvoiceDate = reader.GetDateTime(reader.GetOrdinal("ngaylaphoadon")),
-                            TotalAmount = reader.GetInt32(reader.GetOrdinal("tongtien")),
+                            TotalAmount = reader.GetDouble(reader.GetOrdinal("tongtien")),
                             PaymentMethod = reader.GetString(reader.GetOrdinal("phuongthucthanhtoan")),
                             CustomerID = reader.GetInt32(reader.GetOrdinal("khachhangid")),
                             EmployeeID = reader.GetInt32(reader.GetOrdinal("nhanvienid")),
                             Discount = reader.GetFloat(reader.GetOrdinal("giamgia")),
-                            VAT = reader.GetFloat(reader.GetOrdinal("thuevat")),
+                            Tax = reader.GetDouble(reader.GetOrdinal("thuevat")),
                             Note = reader.IsDBNull(reader.GetOrdinal("ghichu")) ? null : reader.GetString(reader.GetOrdinal("ghichu"))
                         };
                         invoices.Add(invoice);
@@ -74,12 +74,12 @@ namespace POS.Services.DAO
                 var command = new NpgsqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@InvoiceDate", invoice.InvoiceDate);
                 command.Parameters.AddWithValue("@TotalAmount", invoice.TotalAmount);
-                command.Parameters.AddWithValue("@PaymentMethod", invoice.PaymentMethod);
+                command.Parameters.AddWithValue("@PaymentMethod", invoice.PaymentMethod ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@CustomerID", invoice.CustomerID);
                 command.Parameters.AddWithValue("@EmployeeID", invoice.EmployeeID);
                 command.Parameters.AddWithValue("@Discount", invoice.Discount);
-                command.Parameters.AddWithValue("@VAT", invoice.VAT);
-                command.Parameters.AddWithValue("@Note", invoice.Note);
+                command.Parameters.AddWithValue("@VAT", invoice.Tax);
+                command.Parameters.AddWithValue("@Note", invoice.Note ?? (object)DBNull.Value);
 
                 newId = Convert.ToInt32(command.ExecuteScalar());
             }
@@ -117,7 +117,7 @@ namespace POS.Services.DAO
                 command.Parameters.AddWithValue("@CustomerID", invoice.CustomerID);
                 command.Parameters.AddWithValue("@EmployeeID", invoice.EmployeeID);
                 command.Parameters.AddWithValue("@Discount", invoice.Discount);
-                command.Parameters.AddWithValue("@VAT", invoice.VAT);
+                command.Parameters.AddWithValue("@VAT", invoice.Tax);
                 command.Parameters.AddWithValue("@Note", invoice.Note);
                 command.Parameters.AddWithValue("@InvoiceID", invoice.InvoiceID);
 

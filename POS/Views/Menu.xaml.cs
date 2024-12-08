@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using POS.Models;
 using POS.ViewModels;
@@ -13,6 +14,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -23,11 +25,14 @@ namespace POS.Views
     public sealed partial class Menu : Page
     {
         public ProductViewModel ViewModel { get; set; }
+        public Product SelectedProduct { get; set; }
         public Menu()
         {
             this.InitializeComponent();
-            ViewModel = new ProductViewModel();
-            this.DataContext = ViewModel;
+            this.ViewModel = new ProductViewModel();
+            //this.DataContext = ViewModel;
+            this.SelectedProduct = new Product();
+            //this.DataContext = ViewModel;
             UpdatePagingInfo_bootstrap();
         }
         //==========================================================
@@ -118,7 +123,7 @@ namespace POS.Views
             }
         }
 
-        private void itemListBox_selectionChanged(object sender, SelectionChangedEventArgs e)
+        private void itemListBox_selectionChanged(object sender, TappedRoutedEventArgs e)
         {
             var listBox = sender as ListBox;
             if (listBox != null)
@@ -131,12 +136,26 @@ namespace POS.Views
                         //var dialog = new ContentDialog();
                         //dialog.XamlRoot = this.XamlRoot;
                         //await dialog.ShowAsync();
+                        //SelectedProduct = product;
+                        SelectedProduct.AssignFrom(product);
+                        // Hiển thị hình ảnh tương ứng
+                        var bitmap = new BitmapImage(new Uri(product.ImagePath, UriKind.RelativeOrAbsolute));
+                        SelectedProductImage.Source = bitmap;
                         FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-                        OrdersUserControl.AddToOrder(product);
+
+
+                        
                     }
                 }
             }
         }
+        private void AddToBillClick(object sender, RoutedEventArgs args)
+        {
+            OrdersUserControl.AddToOrder(SelectedProduct,((int)QuanlityBox.Value));
+            CenteredFlyout.Hide();
+            QuanlityBox.Value = 1;
+        }
+
         //Dialog
         //private async void AddProductButton_Click(object sender, RoutedEventArgs e)
         //{

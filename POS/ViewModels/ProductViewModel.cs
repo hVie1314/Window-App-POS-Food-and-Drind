@@ -16,15 +16,14 @@ namespace POS.ViewModels
 {
     public sealed partial class ProductViewModel : INotifyPropertyChanged
     {
-        private IProductDao _productDao = new PostgresProductDao();
+        private IProductDao _productDao;
         public ObservableCollection<Product> Products { get; private set; }
+
 
 
         public string searchText;
         public string selectedCategory = "";
         public int selectedSortOrder = 0;
-
-
 
 
         public string Keyword { get; set; } = "";
@@ -62,7 +61,6 @@ namespace POS.ViewModels
             CurrentPage = page;
             GetAllProducts();
         }
-
 
         // INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
