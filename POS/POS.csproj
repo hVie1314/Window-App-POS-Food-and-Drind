@@ -22,9 +22,12 @@
     <None Remove="DetailProductWindow.xaml" />
     <None Remove="Styles\customStyles.xaml" />
     <None Remove="Views\BankPaymentView.xaml" />
+    <None Remove="Views\InvoiceView.xaml" />
     <None Remove="Views\Menu.xaml" />
+
     <None Remove="Views\PaymentView.xaml" />
     <None Remove="Views\WarehouseView.xaml" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -47,7 +50,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.241114004-experimental1" />
+
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+
+
     <PackageReference Include="Npgsql" Version="9.0.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.0" />
@@ -74,7 +80,9 @@
     <None Update="Assets\Image\logo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\PaymentView.xaml">
+
+    <Page Update="Views\InvoiceView.xaml">
+
       <Generator>MSBuild:Compile</Generator>
     </Page>
 

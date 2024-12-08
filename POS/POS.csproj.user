@@ -5,7 +5,9 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
-    <Page Update="Views\PaymentView.xaml">
+
+    <Page Update="Views\InvoiceView.xaml">
+
       <SubType>Designer</SubType>
     </Page>
     <Page Update="DetailProductWindow.xaml">

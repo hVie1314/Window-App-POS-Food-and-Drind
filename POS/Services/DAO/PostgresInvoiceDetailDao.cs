@@ -73,7 +73,7 @@ namespace POS.Services.DAO
                 command.Parameters.AddWithValue("@ProductID", invoiceDetail.ProductID);
                 command.Parameters.AddWithValue("@Quantity", invoiceDetail.Quantity);
                 command.Parameters.AddWithValue("@Price", invoiceDetail.Price);
-                command.Parameters.AddWithValue("@Note", invoiceDetail.Note);
+                command.Parameters.AddWithValue("@Note", invoiceDetail.Note ?? (object)DBNull.Value);
 
                 newId = Convert.ToInt32(command.ExecuteScalar());
             }

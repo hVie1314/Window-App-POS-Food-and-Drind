@@ -6,12 +6,12 @@ namespace POS.Models
     {
         public int InvoiceID { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public int TotalAmount { get; set; }
+        public double TotalAmount { get; set; }
         public string PaymentMethod { get; set; }
         public int CustomerID { get; set; }
         public int EmployeeID { get; set; }
-        public float Discount { get; set; } = 0;
-        public float VAT { get; set; } = 10;
+        public double Discount { get; set; } = 0;
+        public double Tax { get; set; } = 10;
         public string Note { get; set; }
     }
 }

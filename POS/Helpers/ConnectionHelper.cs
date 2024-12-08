@@ -13,7 +13,8 @@ namespace POS.Helpers
                 Port = int.Parse(Environment.GetEnvironmentVariable("DB_PORT")),
                 Database = Environment.GetEnvironmentVariable("DB_NAME"),
                 Username = Environment.GetEnvironmentVariable("DB_USER"),
-                Password = Environment.GetEnvironmentVariable("DB_PASS")
+                Password = Environment.GetEnvironmentVariable("DB_PASS"),
+                IncludeErrorDetail = true
             };
             return builder.ConnectionString;
         }
