@@ -226,5 +226,6 @@
 
             <Button Name="nextButton" Width="80" Height="35" Content="Next &gt;" Click="nextButton_Click"/>
         </StackPanel>
+
     </Grid>
 </Page>
