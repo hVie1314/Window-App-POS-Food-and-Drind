@@ -12,9 +12,19 @@ using Microsoft.UI.Xaml.Data;
 
 namespace POS.Views
 {
+    /// <summary>
+    /// Giao diện quản lý kho hàng.
+    /// </summary>
     public sealed partial class WarehouseView : Page
     {
+        /// <summary>
+        /// ViewModel quản lý logic và dữ liệu của giao diện quản lý kho hàng.
+        /// </summary>
         public WarehouseViewModel ViewModel { get; set; }
+
+        /// <summary>
+        /// Khởi tạo giao diện quản lý kho hàng.
+        /// </summary>
         public WarehouseView()
         {
             this.InitializeComponent();
@@ -24,7 +34,12 @@ namespace POS.Views
         }
 
         //==========================================================
-        // search feature
+
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng nhập từ khóa tìm kiếm.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             ViewModel.Keyword = SearchBox.Text;
@@ -34,6 +49,11 @@ namespace POS.Views
 
         //================================================================
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chuyển sang trang chức năng tài khoản.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             // Lấy NavigationViewItem từ sender
@@ -47,6 +67,11 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chuyển trang trong phân trang.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
             if (pagesComboBox.SelectedIndex < ViewModel.TotalPages - 1)
@@ -55,6 +80,11 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chuyển trang trong phân trang.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void previousButton_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.CurrentPage > 1)
@@ -63,6 +93,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Cập nhật thông tin phân trang.
+        /// </summary>
         void UpdatePagingInfo_bootstrap()
         {
             var infoList = new List<object>();
@@ -79,6 +112,11 @@ namespace POS.Views
             pagesComboBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Xử lý sự kien khi người dùng chọn trang trong phân trang.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dynamic item = pagesComboBox.SelectedItem;
@@ -89,12 +127,20 @@ namespace POS.Views
         }
 
         //================================================================
-        // Add feature
+
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chọn nút thêm kho hàng
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddWarehouse_Click(object sender, RoutedEventArgs e)
         {
             ShowAddWarehouseDialog();
         }
 
+        /// <summary>
+        /// Hiển thị dialog thêm kho hàng.
+        /// </summary>
         private void ShowAddWarehouseDialog()
         {
             // Reset dialog fields
@@ -107,6 +153,9 @@ namespace POS.Views
             _ = AddWarehouseDialog.ShowAsync(); 
         }
 
+        /// <summary>
+        /// Hiển thị thông báo thêm kho hàng thành công.
+        /// </summary>
         private void ShowAddSuccessTeachingTip()
         {
             AddSuccessTeachingTip.IsOpen = true;
@@ -118,6 +167,11 @@ namespace POS.Views
             });
         }
 
+        /// <summary>
+        /// Xử lý sự kien khi người dùng chọn nút lưu kho hàng.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private async void OnSaveWarehouse(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             string ingredientName = IngredientNameTextBox.Text;
@@ -156,18 +210,31 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Xử lý sự kien khi người dùng chọn nút hủy thêm kho hàng.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnCancelAddWarehouse(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             AddWarehouseDialog.Hide();
         }
 
         //================================================================
-        // Delete feature
+        /// <summary>
+        /// Xử lý sự kien khi người dùng chọn nút xóa kho hàng
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void DeleteWarehouse_Click(object sender, RoutedEventArgs e)
         {
             await DeleteWarehouseAsync();
         }
 
+        /// <summary>
+        /// Xử lý sự kiện xóa kho hàng.
+        /// </summary>
+        /// <returns></returns>
         private async Task DeleteWarehouseAsync()
         {
             if (ViewModel.SelectedWarehouse == null)
@@ -222,6 +289,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Hiển thị thông báo xóa kho hàng thành công.
+        /// </summary>
         private async void DeleteWarehouse()
         {
             if (ViewModel.SelectedWarehouse == null)
@@ -276,6 +346,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Hiển thị thông báo xóa kho hàng thành công.
+        /// </summary>
         private void ShowDeleteSuccessTeachingTip()
         {
             DeleteSuccessTeachingTip.IsOpen = true;
@@ -287,7 +360,11 @@ namespace POS.Views
             });
         }
 
-        // Sort feature
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chọn sắp xếp cột trong bảng kho hàng.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDataGridSorting(object sender, DataGridColumnEventArgs e)
         {
             // Only apply for the columns that need to be sorted
