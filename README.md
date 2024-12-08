@@ -59,5 +59,3 @@ Vào VS cài thêm extention như hình để có thể tương tác với postg
 ![image](https://github.com/user-attachments/assets/191d6591-4bc0-4574-92a4-f9148385a6e9)
 
 
-Please make sure to update tests as appropriate.
-
