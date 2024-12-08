@@ -6,7 +6,7 @@ Sinh viên thực hiện:
 
 20120092 - Trần Huy Hoàng
 
-22120369 - Phan Văn Tiến
+22120369 - Quan Phan Tiến
 
 22120429 - Hoàng Quốc Việt
 
