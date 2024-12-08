@@ -122,7 +122,7 @@
                 </TextBlock>
             </Grid>
             <StackPanel Margin="15" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button CornerRadius="6" Content="Lưu hóa đơn" Height="40" HorizontalAlignment="Center" Click="SaveInvoice_Click"/>
+                <Button HorizontalContentAlignment="Stretch" CornerRadius="6" Content="Lưu hóa đơn" Height="40" HorizontalAlignment="Center" Click="SaveInvoice_Click"/>
                 <Button CornerRadius="6" Content="Thanh toán" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>

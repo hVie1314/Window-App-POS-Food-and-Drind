@@ -7,7 +7,7 @@ using POS.Helpers;
 
 namespace POS.Services.DAO
 {
-    public class PostgresInvoiceDetailDao : IInvoiceDetailDao
+    public class PostgresInvoiceDetailDao: IInvoiceDetailDao
     {
         public PostgresInvoiceDetailDao() { }
 
@@ -27,11 +27,12 @@ namespace POS.Services.DAO
                 var sql = @"
                     SELECT chitietid, hoadonid, monanid, soluong, giaban, thanhtien, ghichu
                     FROM chitiethoadon
+                    WHERE hoadonid = @InvoiceID
                     ORDER BY chitietid
-                    LIMIT @RowsPerPage OFFSET @Offset";
+                    LIMIT @ItemsPerPage OFFSET @Offset";
 
                 var command = new NpgsqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@RowsPerPage", rowsPerPage);
+                command.Parameters.AddWithValue("@ItemsPerPage", rowsPerPage);
                 command.Parameters.AddWithValue("@Offset", (page - 1) * rowsPerPage);
 
                 using (var reader = command.ExecuteReader())
@@ -52,8 +53,64 @@ namespace POS.Services.DAO
                     }
                 }
             }
-
             return new Tuple<int, List<InvoiceDetail>>(totalRecords, invoiceDetails);
+        }
+
+            public Tuple<int, List<InvoiceDetailWithProductInfo>> GetAllInvoiceDetailsWithProductInformation(int invoiceId)
+            { 
+
+            var invoiceDetailsWithProductInformation = new List<InvoiceDetailWithProductInfo>();
+            int totalRecords = 0;
+
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var countSql = "SELECT COUNT(*) FROM chitiethoadon";
+                var countCommand = new NpgsqlCommand(countSql, connection);
+                totalRecords = Convert.ToInt32(countCommand.ExecuteScalar());
+
+                var sql = @"
+                    SELECT chitietid, hoadonid, chitiethoadon.monanid, soluong, giaban, thanhtien, ghichu, tenmonan, loaimonan, mota
+                    FROM 
+                    chitiethoadon
+                    INNER JOIN 
+                    menu 
+                    ON 
+                    chitiethoadon.monanid = menu.monanid
+                    WHERE hoadonid = @InvoiceID AND chitiethoadon.monanid = menu.monanid
+                    ORDER BY chitietid";
+
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@InvoiceID", invoiceId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var invoiceDetailWithProductInformation = new InvoiceDetailWithProductInfo
+                        {
+                            InvoiceDetailProperty = new InvoiceDetail
+                            {
+                                DetailID = reader.GetInt32(reader.GetOrdinal("chitietid")),
+                                InvoiceID = reader.GetInt32(reader.GetOrdinal("hoadonid")),
+                                ProductID = reader.GetInt32(reader.GetOrdinal("monanid")),
+                                Quantity = reader.GetInt32(reader.GetOrdinal("soluong")),
+                                Price = reader.GetInt32(reader.GetOrdinal("giaban")),
+                                TotalAmount = reader.GetInt32(reader.GetOrdinal("thanhtien")),
+                                Note = reader.IsDBNull(reader.GetOrdinal("ghichu")) ? null : reader.GetString(reader.GetOrdinal("ghichu"))
+                            }
+                            ,
+                            ProductName = reader.GetString(reader.GetOrdinal("tenmonan")),
+                            CategoryName = reader.GetString(reader.GetOrdinal("loaimonan")),
+                            Description = reader.IsDBNull(reader.GetOrdinal("mota")) ? null : reader.GetString(reader.GetOrdinal("mota"))
+                        };
+                        invoiceDetailsWithProductInformation.Add(invoiceDetailWithProductInformation);
+                    }
+                }
+            }
+
+            return new Tuple<int, List<InvoiceDetailWithProductInfo>>(totalRecords, invoiceDetailsWithProductInformation);
         }
 
         public int InsertInvoiceDetail(InvoiceDetail invoiceDetail)

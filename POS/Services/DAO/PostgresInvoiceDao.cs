@@ -44,7 +44,7 @@ namespace POS.Services.DAO
                             InvoiceID = reader.GetInt32(reader.GetOrdinal("hoadonid")),
                             InvoiceDate = reader.GetDateTime(reader.GetOrdinal("ngaylaphoadon")),
                             TotalAmount = reader.GetDouble(reader.GetOrdinal("tongtien")),
-                            PaymentMethod = reader.GetString(reader.GetOrdinal("phuongthucthanhtoan")),
+                            PaymentMethod = reader.IsDBNull(reader.GetOrdinal("phuongthucthanhtoan")) ? null : reader.GetString(reader.GetOrdinal("phuongthucthanhtoan")),
                             CustomerID = reader.GetInt32(reader.GetOrdinal("khachhangid")),
                             EmployeeID = reader.GetInt32(reader.GetOrdinal("nhanvienid")),
                             Discount = reader.GetFloat(reader.GetOrdinal("giamgia")),

@@ -79,9 +79,9 @@ namespace POS.ViewModels
             {
                 Items.Add(new Order(info,quanlity));
             }
-            OnPropertyChanged(nameof(Tax));
-            OnPropertyChanged(nameof(Total));
-            OnPropertyChanged(nameof(SubTotal));
+            SubTotal = Items.Sum(item => item.Total);
+            Tax = SubTotal * 0.1;
+            Total = SubTotal + Tax;
         }
         public void Remove(Order item)
         {

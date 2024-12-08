@@ -67,11 +67,25 @@ namespace POS.Views
                 ViewModel.LoadProducts(1);
                 UpdatePagingInfo_bootstrap();
         }
+        
+        private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+           
+            var menuItem = sender as NavigationViewItem;
+
+
+            if (menuItem != null)
+            {
+                var accountWindow = new ShellWindow();
+                accountWindow.Activate();
+            }
+        }
         //================================================================
+        //Pagination
         //Next and Previous button
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (pagesComboBox.SelectedIndex < ViewModel.TotalPages-1)
+            if (pagesComboBox.SelectedIndex < ViewModel.TotalPages - 1)
             {
                 pagesComboBox.SelectedIndex++;
             }
@@ -84,20 +98,6 @@ namespace POS.Views
                 pagesComboBox.SelectedIndex--;
             }
         }
-        //================================================================
-        private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            // Lấy NavigationViewItem từ sender
-            var menuItem = sender as NavigationViewItem;
-
-            // Kiểm tra xem menuItem có hợp lệ không
-            if (menuItem != null)
-            {
-                var accountWindow = new ShellWindow();
-                accountWindow.Activate();
-            }
-        }
-
         void UpdatePagingInfo_bootstrap()
         {
             var infoList = new List<object>();
@@ -122,6 +122,7 @@ namespace POS.Views
                 ViewModel.LoadProducts(item.Page);
             }
         }
+        //================================================================================================
 
         private void itemListBox_selectionChanged(object sender, TappedRoutedEventArgs e)
         {

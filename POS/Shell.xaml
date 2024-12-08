@@ -33,7 +33,7 @@
                         IsBackButtonVisible="Collapsed" 
                         IsSettingsVisible="False"
                         Margin="0"
-                        PaneTitle="POS" PaneDisplayMode="Top" Background="Wheat">
+                        PaneTitle="POS" PaneDisplayMode="Top" >
             <NavigationView.Resources>
                 <!-- Custom colors -->
                 <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
@@ -45,18 +45,18 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Menu"
                                     Tag="POS.Views.Menu"
-                                    ToolTipService.ToolTip=""
+                                    ToolTipService.ToolTip="Thực đơn"
                                     Icon="Home">
                 </NavigationViewItem>
 
                 <NavigationViewItem Content="Hóa đơn"
-                                    Tag="POS.Views.HoaDon"
-                                    ToolTipService.ToolTip=""
+                                    Tag="POS.Views.InvoiceView"
+                                    ToolTipService.ToolTip="Hóa đơn"
                                     Icon="Document">
                 </NavigationViewItem>
                 <NavigationViewItem Content="Kho hàng"
                                     Tag="POS.Views.WarehouseView"
-                                    ToolTipService.ToolTip=""
+                                    ToolTipService.ToolTip="Kho hàng"
                                     Icon="AllApps">
                 </NavigationViewItem>
                 <NavigationViewItem Content="Thực đơn"
@@ -84,13 +84,11 @@
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Tài khoản"
-                                    Tag="POS.Views.TaiKhoan"
+                                    Tag="POS.ChangeAccountPage"
                                     ToolTipService.ToolTip=""
                                     Icon="Account"
 
-
                     />
-
 
                 <NavigationViewItem Content="Quản trị"
                                     Tag="POS.Views.QuanTri"
@@ -152,7 +150,7 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>-->
             <Frame x:Name="ContentFrame"
-                   Padding="16 0 16 16">
+                   >
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition>
