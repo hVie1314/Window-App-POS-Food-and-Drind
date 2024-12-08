@@ -6,10 +6,19 @@ using Microsoft.UI.Xaml;
 
 namespace POS.Views
 {
+    /// <summary>
+    /// Giao diện thanh toán.
+    /// </summary>
     public sealed partial class PaymentView : Page
     {
+        /// <summary>
+        /// ViewModel quản lý logic và dữ liệu của giao diện thanh toán.
+        /// </summary>
         public PaymentViewModel ViewModel { get; set; }
 
+        /// <summary>
+        /// Khởi tạo giao diện thanh toán.
+        /// </summary>
         public PaymentView()
         {
             this.InitializeComponent();
@@ -17,6 +26,11 @@ namespace POS.Views
             this.DataContext = ViewModel;
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi nhấn nút thanh toán.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void OnPaymentButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -25,11 +39,21 @@ namespace POS.Views
             _ = PaymentDialog.ShowAsync();
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi nhấn nút hủy thanh toán.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnCancelPayment(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             sender.Hide();
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi nhấn nút xác nhận thanh toán.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnSubmitPayment(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             if (ViewModel.SelectedPaymentMethod == "Tiền mặt")
@@ -51,6 +75,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Hiển thị dialog thanh toán qua MoMo.
+        /// </summary>
         private async void ShowMoMoPaymentDialog()
         {
             ContentDialogResult result = await MoMoPaymentDialog.ShowAsync();
@@ -79,6 +106,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Hiển thị dialog hóa đơn.
+        /// </summary>
         private async void ShowInvoiceDialog()
         {
             // Hiển thị dialog hóa đơn
@@ -92,6 +122,11 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi nhấn nút đóng dialog hóa đơn.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnCloseInvoiceDialog(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             // Đóng dialog
