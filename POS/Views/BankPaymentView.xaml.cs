@@ -9,6 +9,9 @@ using POS.Models;
 
 namespace POS.Views
 {
+    /// <summary>
+    /// BankPaymentView
+    /// </summary>
     public sealed partial class BankPaymentView : Page
     {
         public BankPayment ViewModel { get; set; }

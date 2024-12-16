@@ -33,10 +33,9 @@ namespace POS
         public INavigation navigate => m_window;
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            Window window = new ShellWindow ();
             m_window = new Shell();
             //m_window.Activate();
-            window.Activate();
+            m_window.Activate();
         }
 
         //protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)

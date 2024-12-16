@@ -43,5 +43,12 @@ namespace POS.Views.UserControls
             ViewModel.SubTotal = 0;
             ViewModel.Tax = 0;
         }
+        private void PayInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            var navigation = (Application.Current as App).navigate;
+            var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
+            navigation.SetCurrentNavigationViewItem(festivalItem);
+
+        }
     }
 }

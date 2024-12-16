@@ -15,6 +15,9 @@ namespace POS.ViewModels
         public int Quantity { get; set; }
         public int Price { get; set; }
     }
+    /// <summary>
+    /// View model for Payment
+    /// </summary>
     public class PaymentViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<string> PaymentMethods { get; set; }

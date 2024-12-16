@@ -22,6 +22,10 @@ using Windows.Foundation.Collections;
 
 namespace POS.Views
 {
+    /// <summary>
+    /// Menu
+    /// 
+    /// </summary>
     public sealed partial class Menu : Page
     {
         public ProductViewModel ViewModel { get; set; }

@@ -6,6 +6,9 @@ using Microsoft.UI.Xaml;
 
 namespace POS.Views
 {
+    /// <summary>
+    /// PaymentView
+    /// </summary>
     public sealed partial class PaymentView : Page
     {
         public PaymentViewModel ViewModel { get; set; }

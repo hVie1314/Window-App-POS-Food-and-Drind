@@ -14,6 +14,9 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace POS.ViewModels
 {
+    /// <summary>
+    /// View model for Warehouse
+    /// </summary>
     public sealed partial class WarehouseViewModel : INotifyPropertyChanged
     {
         private IWarehouseDao _warehouseDao = new PostgresWarehouseDao();
