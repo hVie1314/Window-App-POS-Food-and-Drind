@@ -43,10 +43,10 @@ namespace POS.Services.DAO
                     sql += $" ORDER BY {sortColumn} {sortDirection}";
                 }
 
-                sql += @" LIMIT @RowsPerPage OFFSET @Offset";
+                sql += @" LIMIT @ItemsPerPage OFFSET @Offset";
                 var command = new NpgsqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@SearchKeyword", $"%{searchKeyword}%");
-                command.Parameters.AddWithValue("@RowsPerPage", rowsPerPage);
+                command.Parameters.AddWithValue("@ItemsPerPage", rowsPerPage);
                 command.Parameters.AddWithValue("@Offset", (page - 1) * rowsPerPage);
 
                 using (var reader = command.ExecuteReader())

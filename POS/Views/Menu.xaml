@@ -20,10 +20,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Styles/CustomStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <!-- Converter -->
             <local4:NumberToVnCurrencyConverter x:Key="currencyFormatter"/>
-            
+            <local4:BoolToStatusProductConverter x:Key="statusFormatter"/>
+
             <!-- Vertical Layout Template -->
             <!--update later-->
             <DataTemplate x:Key="VerticalLayout" x:DataType="models:Product">
@@ -43,6 +44,10 @@
                     </Grid>
                 </Border>
             </DataTemplate>
+            <SolidColorBrush 
+                        x:Key="SystemControlPageBackgroundBaseMediumBrush" 
+                        Color="#99000000"
+                        />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -53,12 +58,12 @@
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="3*" />
 
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-
 
         <!--mid side-->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
@@ -78,10 +83,10 @@
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
 
                 <!--category-->
-                <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category"  Width="70"  Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
+                <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category"  Width="70"  Margin="0 40 40 0" Foreground="Black" Background="BurlyWood">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag="Tất cả"/>
+                            <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag=""/>
                             <MenuFlyoutItem Text="Khai vị" Click="MenuFlyoutItem_Click" Tag="Khai vị"/>
                             <MenuFlyoutItem Text="Món chính" Click="MenuFlyoutItem_Click" Tag="Món chính"/>
                             <MenuFlyoutItem Text="Tráng miệng" Click="MenuFlyoutItem_Click" Tag="Tráng miệng"/>
@@ -92,7 +97,7 @@
                 </AppBarButton>
 
                 <!--sort-->
-                <AppBarButton Icon="Sort" IsCompact="True" ToolTipService.ToolTip="Sắp xếp" AutomationProperties.Name="Sort" Width="70" Margin="0 35 40 0" Foreground="Black" Background="BurlyWood">
+                <AppBarButton Icon="Sort" Margin="40" IsCompact="True" ToolTipService.ToolTip="Sắp xếp" AutomationProperties.Name="Sort" Foreground="Black" Background="BurlyWood">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="Mặc định" Click="Sort_Item_Click" Tag="0"/>
@@ -114,31 +119,77 @@
             <!--items-->
             <StackPanel Padding="50">
                 <!--list view-->
-                <ListBox SelectionChanged="itemListBox_selectionChanged" VerticalAlignment="Center" HorizontalAlignment="Center" Name="itemsListBox" ItemsSource="{x:Bind ViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource VerticalLayout}"  Background="Beige">
+                <ListBox Tapped="itemListBox_selectionChanged" VerticalAlignment="Center" HorizontalAlignment="Center" Name="itemsListBox" ItemsSource="{x:Bind ViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource VerticalLayout}"  Background="Beige">
                     <!--Style="{StaticResource CustomListBoxItemStyle}"-->
                     <FlyoutBase.AttachedFlyout>
-                        <Flyout x:Name="CenteredFlyout" Placement="Full">
+
+                        <Flyout x:Name="CenteredFlyout" Placement="Full" LightDismissOverlayMode="On">
                             <Flyout.FlyoutPresenterStyle>
                                 <Style TargetType="FlyoutPresenter">
                                     <Setter Property="CornerRadius" Value="10"/>
-                                    <Setter Property="MinWidth" Value="300"/>
-                                    <Setter Property="MaxHeight" Value="300"/>
-                                    <Setter Property="MinHeight" Value="200"/>
-                                    <Setter Property="Padding" Value="20"/>
+                                    <Setter Property="MinWidth" Value="700"/>
+                                    <Setter Property="MaxWidth" Value="700"/>
+                                    <Setter Property="MaxHeight" Value="500"/>
+                                    <Setter Property="MinHeight" Value="500"/>
+                                    <Setter Property="Padding" Value="30"/>
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="7*"/>
+
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                <Image Grid.Column="0" MaxHeight="100" Source="{Binding ImagePath}"/>
-                                <NumberBox Minimum="1" Value="1" 
-                                SmallChange="1"
-                                LargeChange="10"
-                                SpinButtonPlacementMode="Compact" />
-                                </StackPanel>
+                                <Grid Grid.Column="0" Margin="0 0 20 0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image MaxHeight="200" MaxWidth="200" Name="SelectedProductImage" Stretch="Uniform"/>
+                                    <NumberBox Grid.Row="1" Minimum="1" Value="1" 
+                                            HorizontalAlignment="Left"
+                                            SmallChange="1"
+                                            LargeChange="10"
+                                            Margin="0 20"
+                                            SpinButtonPlacementMode="Compact"
+                                            Width="100"
+                                            Name="QuanlityBox"/>
+                                    <Button Grid.Row="2" BorderBrush="Transparent" Background="#99ffcc" FontSize="20" Padding="30 10" Content="Đặt món" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                            Click="AddToBillClick"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="{x:Bind SelectedProduct.Name, Mode=OneWay}" FontSize="25" FontWeight="Bold" Foreground="Black" />
+                                    
+                                    <StackPanel Grid.Row="1" Margin="0 20 0 0">
+                                        <TextBlock Text="{x:Bind SelectedProduct.Description, Mode=OneWay}" FontSize="15" Foreground="Black"/>
+                                        <Border BorderThickness="0.5" BorderBrush="Gray" Opacity="0.5" Margin="0 20 0 20"></Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="2">
+                                        <TextBlock FontWeight="SemiBold" FontSize="20" Text="Tình trạng: " Margin="0 0 0 10"/>
+                                        <TextBlock Text="{x:Bind SelectedProduct.Status, Converter={StaticResource statusFormatter}, Mode=OneWay}" FontSize="15" Foreground="Black"/>
+                                        <Border BorderThickness="0.5" BorderBrush="Gray" Opacity="0.5" Margin="0 20 0 20"></Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="3">
+                                        <TextBlock FontWeight="SemiBold" FontSize="20" Text="Yêu cầu thêm: " Margin="0 0 0 10"/>
+                                        <TextBox AcceptsReturn="True" Background="Transparent" BorderBrush="Black" BorderThickness="0 0 0 0.5">
+                                            
+                                        </TextBox>
+                                        <Border BorderThickness="0.5" BorderBrush="Gray" Opacity="0.5" Margin="0 20 0 20"></Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <TextBlock Text="Đơn giá: "/>
+                                        <TextBlock Text="{x:Bind SelectedProduct.Price, Converter={StaticResource currencyFormatter}, Mode=OneWay}" FontSize="30" Foreground="Black"/>
+                                    </StackPanel>
+                                </Grid>
 
                             </Grid>
                         </Flyout>
@@ -167,7 +218,9 @@
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
-                                <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+
+                         <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+
                             </TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
@@ -178,6 +231,28 @@
         
         <!--right side-->
         <uc:OrdersUserConstrol Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="OrdersUserControl" Margin="0 0 0 0"/>
+
+        <!--<ContentDialog
+            x:Name="ProductSelectDialog"
+            Title=""
+            PrimaryButtonText="Hủy"
+            SecondaryButtonText="Thêm vào Order"
+            PrimaryButtonClick="OrderDiaglogCancelClick"
+            SecondaryButtonClick="AddOrderClick"
+            CornerRadius="10"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+            <DataTemplate x:DataType="models:Product">
+            <StackPanel Spacing="10" Padding="20" Orientation="Vertical">
+                <Image Source="{x:Bind ImagePath}" Stretch="Fill"/>
+                <TextBlock Text="{x:Bind Name}" FontSize="20" IsColorFontEnabled="True" Foreground="Red"/>
+                <TextBlock Text="{x:Bind Price, Converter={StaticResource currencyFormatter}}" FontSize="20"/>
+                <TextBlock Text="Số lượng:" FontSize="20"/>
+                    <NumberBox x:Name="QuantityNumberBox" Value="1" Minimum="1" SpinButtonPlacementMode="Inline" SmallChange="1" Width="100" Foreground="Black" Background="BurlyWood"/>
+                </StackPanel>
+            </DataTemplate>
+        </ContentDialog>-->
+
 
     </Grid>
     

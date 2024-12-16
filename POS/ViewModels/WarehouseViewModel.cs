@@ -4,6 +4,7 @@ using POS.Models;
 
 using POS.Services.DAO;
 
+
 using POS.Interfaces;
 using System;
 using System.Linq;
@@ -14,7 +15,7 @@ using System.Reflection.Metadata.Ecma335;
 namespace POS.ViewModels
 {
     /// <summary>
-    /// ViewModel quản lý logic và dữ liệu của giao diện quản lý kho hàng.
+    /// View model for Warehouse
     /// </summary>
     public sealed partial class WarehouseViewModel : INotifyPropertyChanged
     {

@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <local1:NumberToVnCurrencyConverter x:Key="CurrencyConverter"/>
+            <local1:DoubleToVnCurrencyConverter x:Key="DoubleToCurrencyConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -84,12 +85,45 @@
             </AppBarButton.Flyout>
         </AppBarButton>-->
         <StackPanel Grid.Row="2" Padding="10">
-            <TextBlock>Tạm tính: </TextBlock>
-            <TextBlock>Thuế: </TextBlock>
-            <TextBlock>Tổng cộng:</TextBlock>
+            <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0">
+                    Tạm tính: 
+                </TextBlock>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                    <Run Text="{x:Bind ViewModel.SubTotal, Converter={StaticResource DoubleToCurrencyConverter}, Mode=OneWay}"/>
+                </TextBlock>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0">
+                Thuế:
+                </TextBlock>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                    <Run Text="{x:Bind ViewModel.Tax, Converter={StaticResource DoubleToCurrencyConverter}, Mode=OneWay}"/>
+                </TextBlock>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0">
+                Tổng cộng:
+                </TextBlock>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                    <Run Text="{x:Bind ViewModel.Total, Converter={StaticResource DoubleToCurrencyConverter}, Mode=OneWay}"/>
+                </TextBlock>
+            </Grid>
             <StackPanel Margin="15" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button CornerRadius="6" Content="Lưu hóa đơn" Height="40" HorizontalAlignment="Center"/>
-                <Button CornerRadius="6" Content="Thanh toán" Height="40" HorizontalAlignment="Center"/>
+                <Button HorizontalContentAlignment="Stretch" CornerRadius="6" Content="Lưu hóa đơn" Height="40" HorizontalAlignment="Center" Click="SaveInvoice_Click"/>
+                <Button CornerRadius="6" Content="Thanh toán" Height="40" HorizontalAlignment="Center" Click="PayInvoice_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>

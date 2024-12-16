@@ -15,9 +15,8 @@ namespace POS.ViewModels
         public int Quantity { get; set; }
         public int Price { get; set; }
     }
-
     /// <summary>
-    /// ViewModel quản lý logic và dữ liệu của giao diện thanh toán.
+    /// View model for Payment
     /// </summary>
     public class PaymentViewModel : INotifyPropertyChanged
     {

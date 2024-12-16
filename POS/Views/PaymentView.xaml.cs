@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml;
 namespace POS.Views
 {
     /// <summary>
-    /// Giao diện thanh toán.
+    /// PaymentView
     /// </summary>
     public sealed partial class PaymentView : Page
     {

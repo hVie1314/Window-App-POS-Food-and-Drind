@@ -39,11 +39,16 @@ namespace POS.Models
             }
         }
 
-        public Order(Product product)
+        public Order(Product product,int quanlity)
         {
+            ProductID = product.ProductID;
             Name = product.Name;
+            Category = product.Category;
             Price = product.Price;
-            Quantity = 1;
+            Description = product.Description;
+            ImagePath = product.ImagePath;
+            Status = product.Status;
+            Quantity = quanlity;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

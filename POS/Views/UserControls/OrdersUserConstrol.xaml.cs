@@ -27,13 +27,28 @@ namespace POS.Views.UserControls
     {
         public OrderDetailViewModel ViewModel { get; set; } = new OrderDetailViewModel();
 
-        public void AddToOrder(Product info)
+        public void AddToOrder(Product info,int quanlity)
         {
-            ViewModel.Add(info);
+            ViewModel.Add(info,quanlity);
         }
         public OrdersUserConstrol()
         {
             this.InitializeComponent();
+        }
+        private void SaveInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SaveToDatabase();
+            ViewModel.Items.Clear();
+            ViewModel.Total = 0;
+            ViewModel.SubTotal = 0;
+            ViewModel.Tax = 0;
+        }
+        private void PayInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            var navigation = (Application.Current as App).navigate;
+            var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
+            navigation.SetCurrentNavigationViewItem(festivalItem);
+
         }
     }
 }
