@@ -30,6 +30,7 @@ namespace POS
             this.InitializeComponent();
         }
 
+        public PaymentViewModel PaymentViewModel { get; set; } = new PaymentViewModel();
         public INavigation navigate => m_window;
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {

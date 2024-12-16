@@ -5,104 +5,41 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using POS.Interfaces;
+using POS.Models;
+using POS.Services.DAO;
 
 namespace POS.ViewModels
 {
-    // temporary class
-    public class InvoiceItem
-    {
-        public string Name { get; set; }
-        public int Quantity { get; set; }
-        public int Price { get; set; }
-    }
+
     /// <summary>
     /// View model for Payment
     /// </summary>
     public class PaymentViewModel : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Danh sách các phương thức thanh toán.
-        /// </summary>
+        private IInvoiceDao _invoiceDao = new PostgresInvoiceDao();
+        private IInvoiceDetailDao _invoiceDetailDao = new PostgresInvoiceDetailDao();
+
         public ObservableCollection<string> PaymentMethods { get; set; }
-
-        /// <summary>
-        /// Phương thức thanh toán được chọn.
-        /// </summary>
+        public ObservableCollection<Order> Items { get; set; }
         public string SelectedPaymentMethod { get; set; }
-
-        /// <summary>
-        /// Tổng tiền cần thanh toán.
-        /// </summary>
-        public int TotalCost { get; set; }
-
-        /// <summary>
-        /// Thuế VAT.
-        /// </summary>
         public float VAT { get; set; } = 10.0f;
-
-        /// <summary>
-        /// Giảm giá.
-        /// </summary>
-        public int Discount { get; set; } = 0;
-
-        /// <summary>
-        /// Tổng tiền cần thanh toán sau khi đã tính thuế và giảm giá.
-        /// </summary>
+        public int TotalCost { get; set; }
         public int TotalPayable { get; private set; }
+        public int Discount { get; set; } = 0;
+        public int InvoiceId { get; set; }
 
-        /// <summary>
-        /// Thông tin tài khoản Momo.
-        /// </summary>
-        public string MomoAcountInfo { get; set; } = "HCMUS";
-
-        /// <summary>
-        /// Đường dẫn ảnh mã QR của Momo.
-        /// </summary>
-        public string MomoQRCodeImagePath { get; set; } = "ms-appx:///Assets/Image/MomoQR.jpg";
-
-        /// <summary>
-        /// Số tiền khách hàng trả.
-        /// </summary>
         private int _receivedAmount;
-
-        /// <summary>
-        /// Số tiền thừa hoặc thiếu sau khi đã thanh toán.
-        /// </summary>
         private int _change;
 
-        /// <summary>
-        /// ID hóa đơn.
-        /// </summary>
-        public string InvoiceId { get; set; }
-
-        /// <summary>
-        /// Ngày thanh toán.
-        /// </summary>
         public DateTime PaymentDate { get; set; }
-
-        /// <summary>
-        /// Địa chỉ cửa hàng.
-        /// </summary>
+        public string MomoAcountInfo { get; set; } = "HCMUS";
+        public string MomoQRCodeImagePath { get; set; } = "ms-appx:///Assets/Image/MomoQR.jpg";
         public string Address { get; set; } = "227 Nguyễn Văn Cừ, Quận 5, TP.HCM";
-
-        /// <summary>
-        /// Email cửa hàng.
-        /// </summary>
         public string Email { get; set; } = "pos@gmail.com";
-
-        /// <summary>
-        /// Số điện thoại cửa hàng.
-        /// </summary>
         public string PhoneNumber { get; set; } = "078.491.6454";
 
-        /// <summary>
-        /// Danh sách sản phẩm trong hóa đơn.
-        /// </summary>
-        public ObservableCollection<InvoiceItem> InvoiceItems { get; set; }
 
-        /// <summary>
-        /// Khởi tạo ViewModel với dữ liệu mẫu.
-        /// </summary>
         public PaymentViewModel()
         {
             PaymentMethods = new ObservableCollection<string>
@@ -112,26 +49,20 @@ namespace POS.ViewModels
                 };
             SelectedPaymentMethod = "Tiền mặt";
 
-            // Sample values, will be replaced by actual values in database
-            TotalCost = 300000;
-            CalculateTotalPayment();
-
-
-            /// temporary code
-            InvoiceId = "HD001"; // ID mẫu
             PaymentDate = DateTime.Now; // Ngày thanh toán hiện tại
 
-            // Danh sách sản phẩm mẫu
-            InvoiceItems = new ObservableCollection<InvoiceItem>
-            {
-                new InvoiceItem { Name = "Sản phẩm 1", Quantity = 1, Price = 100000 },
-                new InvoiceItem { Name = "Sản phẩm 2", Quantity = 2, Price = 200000 }
-            };
         }
 
-        /// <summary>
-        /// Tính tổng tiền cần thanh toán sau khi đã tính thuế và giảm giá.
-        /// </summary>
+        public void SetItems(ObservableCollection<Order> items, double total)
+        {
+            Items = new ObservableCollection<Order>(items);
+            OnPropertyChanged(nameof(Items));
+            TotalCost = (int)total;
+            OnPropertyChanged(nameof(TotalCost));
+            CalculateTotalPayment();
+            OnPropertyChanged(nameof(TotalPayable));
+        }
+
         public int ReceivedAmount
         {
             get => _receivedAmount;
@@ -146,9 +77,6 @@ namespace POS.ViewModels
             }
         }
 
-        /// <summary>
-        /// Tính số tiền thừa hoặc thiếu sau khi đã thanh toán.
-        /// </summary>
         public int Change
         {
             get => _change;
@@ -162,17 +90,11 @@ namespace POS.ViewModels
             }
         }
 
-        /// <summary>
-        /// Tính tổng tiền cần thanh toán sau khi đã tính thuế và giảm giá.
-        /// </summary>
         public void CalculateTotalPayment()
         {
             TotalPayable = (int)(TotalCost + (TotalCost * (VAT / 100)) - Discount);
         }
 
-        /// <summary>
-        /// Tính số tiền thừa hoặc thiếu sau khi đã thanh toán.
-        /// </summary>
         public void CalculateChange()
         {
             if (ReceivedAmount < TotalPayable)
@@ -181,6 +103,35 @@ namespace POS.ViewModels
                 return;
             }
             Change = ReceivedAmount - TotalPayable;
+        }
+
+
+        // Save invoice an detail to database
+        public int SaveToDB()
+        {
+            Invoice invoice = new Invoice()
+            {
+                TotalAmount = TotalCost,
+                Tax = 10.00,
+                InvoiceDate = PaymentDate,
+                PaymentMethod = SelectedPaymentMethod
+
+            };
+            int newInvoiceId = _invoiceDao.InsertInvoice(invoice);
+
+            foreach (var item in Items)
+            {
+                InvoiceDetail invoiceDetail = new InvoiceDetail()
+                {
+                    InvoiceID = newInvoiceId,
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                };
+                _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
+            }
+
+            return newInvoiceId;
         }
 
 

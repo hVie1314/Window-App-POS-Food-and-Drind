@@ -74,12 +74,18 @@
                                     ToolTipService.ToolTip=""
                                     Icon="Contact">
                 </NavigationViewItem>
-                <!--//////////////////////////////////////////-->
-                <NavigationViewItem Content="temp (payment)"
+                <NavigationViewItem Content="Thanh toán"
                                     Tag="POS.Views.PaymentView"
                                     ToolTipService.ToolTip=""
                                     Icon="Contact">
                 </NavigationViewItem>
+
+                <NavigationViewItem Content="Mã giảm giá"
+                    Tag="POS.Views.DiscountView"
+                    ToolTipService.ToolTip=""
+                    Icon="Contact">
+                </NavigationViewItem>
+                <!--//////////////////////////////////////////-->
 
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>

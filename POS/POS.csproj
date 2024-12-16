@@ -22,6 +22,7 @@
     <None Remove="DetailProductWindow.xaml" />
     <None Remove="Styles\customStyles.xaml" />
     <None Remove="Views\BankPaymentView.xaml" />
+    <None Remove="Views\DiscountView.xaml" />
     <None Remove="Views\InvoiceView.xaml" />
     <None Remove="Views\Menu.xaml" />
 
@@ -80,6 +81,9 @@
     <None Update="Assets\Image\logo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\DiscountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\InvoiceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
