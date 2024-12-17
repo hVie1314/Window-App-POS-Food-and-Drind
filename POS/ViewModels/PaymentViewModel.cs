@@ -164,7 +164,7 @@ namespace POS.ViewModels
         {
             Invoice invoice = new Invoice()
             {
-                TotalAmount = TotalCost,
+                TotalAmount = TotalPayable,
                 Tax = VAT,
                 InvoiceDate = PaymentDate,
                 PaymentMethod = SelectedPaymentMethod,

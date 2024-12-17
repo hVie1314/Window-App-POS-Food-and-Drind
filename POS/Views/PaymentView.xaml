@@ -129,7 +129,7 @@
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Mã giảm giá" FontSize="16" Margin="10 20 0 0"/>
-                            <TextBlock Text="{x:Bind ViewModel.DiscountStatus}" Foreground="OrangeRed" FontStyle="Italic" FontSize="16" Margin="10 20 0 0"/>
+                            <TextBlock Text="{x:Bind ViewModel.DiscountStatus, Mode=TwoWay}" Foreground="OrangeRed" FontStyle="Italic" FontSize="16" Margin="10 20 0 0"/>
                         </StackPanel>
                         
                         <TextBox x:Name="DiscountCodeTextBox"  
