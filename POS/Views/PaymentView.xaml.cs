@@ -6,6 +6,8 @@ using Microsoft.UI.Xaml.Navigation;
 using POS.Interfaces;
 using POS.Models;
 using System.Linq;
+using Microsoft.UI.Xaml.Input;
+using System.Threading.Tasks;
 
 
 namespace POS.Views
@@ -40,7 +42,7 @@ namespace POS.Views
             if (ViewModel.SelectedPaymentMethod == "Tiền mặt")
             {
                 ViewModel.InvoiceId = ViewModel.SaveToDB();
-
+                ViewModel.DeleteUsedDiscountCode();
                 // Show invoice dialog
                 ShowInvoiceDialog();
             }
@@ -60,6 +62,7 @@ namespace POS.Views
             if (result == ContentDialogResult.Primary)
             {
                 ViewModel.InvoiceId = ViewModel.SaveToDB();
+                ViewModel.DeleteUsedDiscountCode();
 
                 // Show Invoice dialog
                 ShowInvoiceDialog();
@@ -88,17 +91,28 @@ namespace POS.Views
             ContentDialogResult result = await InvoiceDialog.ShowAsync();
         }
 
-        /// <summary>
-        /// Xử lý sự kiện khi nhấn nút đóng dialog hóa đơn.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+
         private void OnCloseInvoiceDialog(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            // Reset lại dữ liệu
+            ViewModel.ResetData();
             // Về trang Menu
             var navigation = (Application.Current as App).navigate;
             var festivalItem = navigation.GetNavigationViewItems(typeof(Menu)).First();
             navigation.SetCurrentNavigationViewItem(festivalItem);
+        }
+
+        private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Lấy NavigationViewItem từ sender
+            var menuItem = sender as NavigationViewItem;
+
+            // Kiểm tra xem menuItem có hợp lệ không
+            if (menuItem != null)
+            {
+                var accountWindow = new ShellWindow();
+                accountWindow.Activate();
+            }
         }
     }
 }

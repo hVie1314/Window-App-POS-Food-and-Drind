@@ -18,6 +18,17 @@ namespace POS.Converters
 
             return formattedCurrency;
         }
-        public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            if (value is string strValue)
+            {
+                strValue = strValue.Replace("₫", "").Trim();
+                if (int.TryParse(strValue, NumberStyles.Currency, new CultureInfo("vi-VN"), out int result))
+                {
+                    return result;
+                }
+            }
+            throw new NotImplementedException();
+        }
     }
 }

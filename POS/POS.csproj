@@ -21,7 +21,6 @@
   <ItemGroup>
     <None Remove="DetailProductWindow.xaml" />
     <None Remove="Styles\customStyles.xaml" />
-    <None Remove="Views\BankPaymentView.xaml" />
     <None Remove="Views\DiscountView.xaml" />
     <None Remove="Views\InvoiceView.xaml" />
     <None Remove="Views\Menu.xaml" />

@@ -1,10 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using POS.Models;
-
 using POS.Services.DAO;
-
-
 using POS.Interfaces;
 using System;
 using System.Linq;

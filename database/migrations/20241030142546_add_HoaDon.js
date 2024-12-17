@@ -7,11 +7,11 @@ exports.up = async function(knex) {
         CREATE TABLE HoaDon (
             HoaDonID SERIAL PRIMARY KEY,  
             NgayLapHoaDon DATE NOT NULL,  
-            TongTien DECIMAL(15, 2) NOT NULL,  
+            TongTien INT NOT NULL,  
             PhuongThucThanhToan VARCHAR(50),  
             KhachHangID INT,  
             NhanVienID INT,  
-            GiamGia DECIMAL(5, 2) DEFAULT 0,  
+            GiamGia INT DEFAULT 0,  
             ThueVAT DECIMAL(5, 2) DEFAULT 10,  
             GhiChu VARCHAR(255)  
         );

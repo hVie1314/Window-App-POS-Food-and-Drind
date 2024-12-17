@@ -117,4 +117,14 @@ namespace POS.Interfaces
         bool UpdateRevenueReport(RevenueReport revenueReport);
         void RemoveRevenueReportById(int revenueReportId);
     }
+
+    public interface IDiscountDao
+    {
+        Tuple<int, List<Discount>> GetAllDiscount(
+            int page = 1,
+            int rowsPerPage = 10
+        );
+        int InsertDiscount(string discountCode, int discountValue);
+        void RemoveDiscountByCode(string discountCode);
+    }
 }
