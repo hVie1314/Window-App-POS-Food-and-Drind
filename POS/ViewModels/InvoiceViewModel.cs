@@ -14,6 +14,9 @@ using System.Runtime.CompilerServices;
 
 namespace POS.ViewModels
 {
+    /// <summary>
+    /// View model for Invoice
+    /// </summary>
     public class InvoiceViewModel:INotifyPropertyChanged
     {
         private ObservableCollection<WholeInvoice> _invoices;

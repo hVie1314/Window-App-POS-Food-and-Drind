@@ -5,101 +5,44 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using POS.Helpers;
+using POS.Interfaces;
+using POS.Models;
+using POS.Services.DAO;
 
 namespace POS.ViewModels
 {
-    // temporary class
-    public class InvoiceItem
-    {
-        public string Name { get; set; }
-        public int Quantity { get; set; }
-        public int Price { get; set; }
-    }
-
     /// <summary>
-    /// ViewModel quản lý logic và dữ liệu của giao diện thanh toán.
+    /// View model for Payment
     /// </summary>
     public class PaymentViewModel : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Danh sách các phương thức thanh toán.
-        /// </summary>
+        private IInvoiceDao _invoiceDao = new PostgresInvoiceDao();
+        private IInvoiceDetailDao _invoiceDetailDao = new PostgresInvoiceDetailDao();
+        private IDiscountDao _discountDao = new PostgresDiscountDao();
+        private FeistelCipher _feistelCipher = new FeistelCipher(8, "winui3_discount_key");
+
         public ObservableCollection<string> PaymentMethods { get; set; }
-
-        /// <summary>
-        /// Phương thức thanh toán được chọn.
-        /// </summary>
+        public ObservableCollection<Order> Items { get; set; }
         public string SelectedPaymentMethod { get; set; }
-
-        /// <summary>
-        /// Tổng tiền cần thanh toán.
-        /// </summary>
-        public int TotalCost { get; set; }
-
-        /// <summary>
-        /// Thuế VAT.
-        /// </summary>
         public float VAT { get; set; } = 10.0f;
-
-        /// <summary>
-        /// Giảm giá.
-        /// </summary>
-        public int Discount { get; set; } = 0;
-
-        /// <summary>
-        /// Tổng tiền cần thanh toán sau khi đã tính thuế và giảm giá.
-        /// </summary>
-        public int TotalPayable { get; private set; }
-
-        /// <summary>
-        /// Thông tin tài khoản Momo.
-        /// </summary>
-        public string MomoAcountInfo { get; set; } = "HCMUS";
-
-        /// <summary>
-        /// Đường dẫn ảnh mã QR của Momo.
-        /// </summary>
-        public string MomoQRCodeImagePath { get; set; } = "ms-appx:///Assets/Image/MomoQR.jpg";
-
-        /// <summary>
-        /// Số tiền khách hàng trả.
-        /// </summary>
+        public int TotalCost { get; set; }
+        public int TotalPayable { get; set; }
+        public int InvoiceId { get; set; }
+        
         private int _receivedAmount;
-
-        /// <summary>
-        /// Số tiền thừa hoặc thiếu sau khi đã thanh toán.
-        /// </summary>
         private int _change;
+        private string _discountCode;
+        private int _discountValue = 0;
+        private string _discountStatus = "";
 
-        /// <summary>
-        /// ID hóa đơn.
-        /// </summary>
-        public string InvoiceId { get; set; }
 
-        /// <summary>
-        /// Ngày thanh toán.
-        /// </summary>
         public DateTime PaymentDate { get; set; }
-
-        /// <summary>
-        /// Địa chỉ cửa hàng.
-        /// </summary>
+        public string MomoAcountInfo { get; set; } = "HCMUS";
+        public string MomoQRCodeImagePath { get; set; } = "ms-appx:///Assets/Image/MomoQR.jpg";
         public string Address { get; set; } = "227 Nguyễn Văn Cừ, Quận 5, TP.HCM";
-
-        /// <summary>
-        /// Email cửa hàng.
-        /// </summary>
         public string Email { get; set; } = "pos@gmail.com";
-
-        /// <summary>
-        /// Số điện thoại cửa hàng.
-        /// </summary>
         public string PhoneNumber { get; set; } = "078.491.6454";
-
-        /// <summary>
-        /// Danh sách sản phẩm trong hóa đơn.
-        /// </summary>
-        public ObservableCollection<InvoiceItem> InvoiceItems { get; set; }
 
         /// <summary>
         /// Khởi tạo ViewModel với dữ liệu mẫu.
@@ -113,21 +56,18 @@ namespace POS.ViewModels
                 };
             SelectedPaymentMethod = "Tiền mặt";
 
-            // Sample values, will be replaced by actual values in database
-            TotalCost = 300000;
-            CalculateTotalPayment();
-
-
-            /// temporary code
-            InvoiceId = "HD001"; // ID mẫu
             PaymentDate = DateTime.Now; // Ngày thanh toán hiện tại
 
-            // Danh sách sản phẩm mẫu
-            InvoiceItems = new ObservableCollection<InvoiceItem>
-            {
-                new InvoiceItem { Name = "Sản phẩm 1", Quantity = 1, Price = 100000 },
-                new InvoiceItem { Name = "Sản phẩm 2", Quantity = 2, Price = 200000 }
-            };
+        }
+
+        public void SetItems(ObservableCollection<Order> items, double total)
+        {
+            Items = new ObservableCollection<Order>(items);
+            OnPropertyChanged(nameof(Items));
+            TotalCost = (int)total;
+            OnPropertyChanged(nameof(TotalCost));
+            CalculateTotalPayment();
+            OnPropertyChanged(nameof(TotalPayable));
         }
 
         /// <summary>
@@ -163,12 +103,57 @@ namespace POS.ViewModels
             }
         }
 
-        /// <summary>
-        /// Tính tổng tiền cần thanh toán sau khi đã tính thuế và giảm giá.
-        /// </summary>
+        public string DiscountCode
+        {
+            get => _discountCode;
+            set
+            {
+                if (_discountCode != value)
+                {
+                    _discountCode = value;
+                    OnPropertyChanged(nameof(DiscountCode));
+                    // Gọi hàm CheckDiscountCode khi DiscountCode thay đổi
+                    CheckDiscountCode(_discountCode);
+                }
+            }
+        }
+
+        public int DiscountValue
+        {
+            get => _discountValue;
+            set
+            {
+                if (_discountValue != value)
+                {
+                    _discountValue = value;
+                    OnPropertyChanged(nameof(DiscountValue));
+                    // Tính toán lại TotalPayable khi DiscountValue thay đổi
+                    CalculateTotalPayment();
+                }
+            }
+        }
+
+        public string DiscountStatus
+        {
+            get => _discountStatus;
+            set
+            {
+                if (_discountStatus != value)
+                {
+                    _discountStatus = value;
+                    OnPropertyChanged(nameof(DiscountStatus));
+                }
+            }
+        }
+
         public void CalculateTotalPayment()
         {
-            TotalPayable = (int)(TotalCost + (TotalCost * (VAT / 100)) - Discount);
+            TotalPayable = (int)(TotalCost + (TotalCost * (VAT / 100)) - DiscountValue);
+
+            if (TotalPayable < 0)
+            {
+                TotalPayable = 0;
+            }
         }
 
         /// <summary>
@@ -184,6 +169,90 @@ namespace POS.ViewModels
             Change = ReceivedAmount - TotalPayable;
         }
 
+        // Save invoice an detail to database
+        public int SaveToDB()
+        {
+            Invoice invoice = new Invoice()
+            {
+                TotalAmount = TotalPayable,
+                Tax = VAT,
+                InvoiceDate = PaymentDate,
+                PaymentMethod = SelectedPaymentMethod,
+                Discount = DiscountValue
+            };
+            int newInvoiceId = _invoiceDao.InsertInvoice(invoice);
+
+            foreach (var item in Items)
+            {
+                InvoiceDetail invoiceDetail = new InvoiceDetail()
+                {
+                    InvoiceID = newInvoiceId,
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                };
+                _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
+            }
+
+            return newInvoiceId;
+        }
+
+        public void ResetData()
+        {
+            Items.Clear();
+            OnPropertyChanged(nameof(Items));
+            TotalCost = 0;
+            OnPropertyChanged(nameof(TotalCost));
+            TotalPayable = 0;
+            OnPropertyChanged(nameof(TotalPayable));
+            ReceivedAmount = 0;
+            OnPropertyChanged(nameof(ReceivedAmount));
+            Change = 0;
+            OnPropertyChanged(nameof(Change));
+            DiscountValue = 0;
+            OnPropertyChanged(nameof(DiscountValue));
+            DiscountCode = "";
+            OnPropertyChanged(nameof(DiscountCode));
+            DiscountStatus = "";
+            OnPropertyChanged(nameof(DiscountStatus));
+        }
+
+        public bool CheckDiscountCode(string discountCode)
+        {
+            List<int> discountValues = new List<int> { 10000, 20000, 50000, 100000, 200000, 500000 };
+            try
+            {
+                int discountValue = _feistelCipher.Decrypt(discountCode);
+
+                if (discountValues.Contains(discountValue))
+                {
+                    DiscountValue = discountValue;
+                    DiscountStatus = "Đã áp dụng mã giảm giá.";
+                    CalculateTotalPayment();
+                    OnPropertyChanged(nameof(TotalPayable));
+                    return true;
+                }
+                else
+                {
+                    DiscountValue = 0;
+                    DiscountStatus = "Mã giảm giá không hợp lệ.";
+                    CalculateTotalPayment();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                DiscountValue = 0;
+                CalculateTotalPayment();
+                System.Diagnostics.Debug.WriteLine($"Error decrypting code: {ex.Message}");
+                return false;
+            }
+        }
+
+        public void DeleteUsedDiscountCode()
+        {
+            _discountDao.RemoveDiscountByCode(DiscountCode);
+        }
 
         /// <summary>
         /// Sự kiện khi thuộc tính của ViewModel thay đổi.

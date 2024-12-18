@@ -2,6 +2,9 @@
 
 namespace POS.Models
 {
+    /// <summary>
+    /// Model for BankPayment
+    /// </summary>
     public class BankPayment : INotifyPropertyChanged
     {
         public string CardNumber { get; set; }

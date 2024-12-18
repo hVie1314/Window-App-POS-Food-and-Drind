@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS.Models;
 using POS.ViewModels;
+using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -42,6 +43,17 @@ namespace POS.Views.UserControls
             ViewModel.Total = 0;
             ViewModel.SubTotal = 0;
             ViewModel.Tax = 0;
+        }
+        private void PayInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            // Pass data to PaymentViewModel
+            var paymentViewModel = (Application.Current as App).PaymentViewModel;
+            paymentViewModel.SetItems(ViewModel.Items, ViewModel.SubTotal);
+
+            // Navigate to PaymentView
+            var navigation = (Application.Current as App).navigate;
+            var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
+            navigation.SetCurrentNavigationViewItem(festivalItem);
         }
     }
 }

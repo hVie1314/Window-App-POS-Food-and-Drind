@@ -74,12 +74,18 @@
                                     ToolTipService.ToolTip=""
                                     Icon="Contact">
                 </NavigationViewItem>
-                <!--//////////////////////////////////////////-->
-                <NavigationViewItem Content="temp (payment)"
+                <NavigationViewItem Content="Thanh toán"
                                     Tag="POS.Views.PaymentView"
                                     ToolTipService.ToolTip=""
                                     Icon="Contact">
                 </NavigationViewItem>
+
+                <NavigationViewItem Content="Mã giảm giá"
+                    Tag="POS.Views.DiscountView"
+                    ToolTipService.ToolTip=""
+                    Icon="Contact">
+                </NavigationViewItem>
+                <!--//////////////////////////////////////////-->
 
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
@@ -96,59 +102,6 @@
                                     Icon="Admin"
                                     />
             </NavigationView.FooterMenuItems>
-            <!--<NavigationViewItem Content="Beer"
-                                    Visibility="Collapsed"
-                                    Tag="XamlBrewer.WinUI3.Navigation.Sample.Views.BeerPage"
-                                    ToolTipService.ToolTip="Beer">
-                    <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/Beer.png"
-                                    ShowAsMonochrome="False" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem Content="Formula 1"
-                                    Tag="XamlBrewer.WinUI3.Navigation.Sample.Views.FormulaOnePage"
-                                    ToolTipService.ToolTip="Formula 1">
-                    <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/FormulaOne.png"
-                                    ShowAsMonochrome="False" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem Content="Festivals"
-                                    Tag="XamlBrewer.WinUI3.Navigation.Sample.Views.FestivalPage"
-                                    ToolTipService.ToolTip="Festivals">
-                    <NavigationViewItem.MenuItems>
-                        <NavigationViewItem Content="Tomorrowland"
-                                            Tag="XamlBrewer.WinUI3.Navigation.Sample.Views.FestivalDetailsPage"
-                                            ToolTipService.ToolTip="Tomorrowland">
-                            <NavigationViewItem.Icon>
-                                <BitmapIcon UriSource="/Assets/Tomorrowland.png"
-                                            ShowAsMonochrome="False" />
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-                        <NavigationViewItem Content="Rock Werchter"
-                                            Tag="XamlBrewer.WinUI3.Navigation.Sample.Views.FestivalDetailsPage"
-                                            ToolTipService.ToolTip="Rock Werchter">
-                            <NavigationViewItem.Icon>
-                                <BitmapIcon UriSource="/Assets/RockWerchter.png"
-                                            ShowAsMonochrome="False" />
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-                    </NavigationViewItem.MenuItems>
-                    <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/Festivals.png"
-                                    ShowAsMonochrome="False" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
-            <NavigationView.FooterMenuItems>
-                <NavigationViewItem Content="About"
-                                    Tag="XamlBrewer.WinUI3.Navigation.Sample.Views.AboutPage">
-                    <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/About.png"
-                                    ShowAsMonochrome="False" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-            </NavigationView.FooterMenuItems>-->
             <Frame x:Name="ContentFrame"
                    >
                 <Frame.ContentTransitions>

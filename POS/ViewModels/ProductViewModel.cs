@@ -14,6 +14,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace POS.ViewModels
 {
+    /// <summary>
+    /// View model for Product
+    /// </summary>
     public sealed partial class ProductViewModel : INotifyPropertyChanged
     {
         private IProductDao _productDao;

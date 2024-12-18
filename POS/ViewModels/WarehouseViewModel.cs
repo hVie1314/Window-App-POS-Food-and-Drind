@@ -1,10 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using POS.Models;
-
 using POS.Services.DAO;
-
-
 using POS.Interfaces;
 using System;
 using System.Linq;
@@ -16,6 +13,7 @@ namespace POS.ViewModels
 {
     /// <summary>
     /// ViewModel quản lý logic và dữ liệu của giao diện quản lý kho hàng.
+
     /// </summary>
     public sealed partial class WarehouseViewModel : INotifyPropertyChanged
     {

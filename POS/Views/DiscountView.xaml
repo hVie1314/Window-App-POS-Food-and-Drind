@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS.Views.DiscountView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS.Models"
+    xmlns:local2="using:POS.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:primitives="using:CommunityToolkit.WinUI.UI.Controls.Primitives" 
+    xmlns:muxc="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <!-- Import Resources -->
+    <Page.Resources>
+        <ResourceDictionary>
+            <!--<ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>-->
+            
+            <!-- Converters -->
+            <local2:NumberToVnCurrencyConverter x:Key="currencyFormatter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Btn -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0">
+            <Button Content="Tạo mã giảm giá" Click="CreateDiscount_Click" 
+                    FontSize="16" Width="200" Height="40"  Margin="0 20 60 0" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="CornflowerBlue" Foreground="White"/>
+            <Button Content="Xóa" Click="DeleteDiscount_Click"
+                    FontSize="16" Width="200" Height="40"  Margin="0 20 0 0" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="CornflowerBlue" Foreground="White"/>
+        </StackPanel>
+        
+        <!-- header table -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 50 0 0">
+            <TextBlock Text="Mã giảm giá" Width="210" TextAlignment="Center" FontSize="16" FontWeight="SemiBold"/>
+            <TextBlock Text="Giá trị" Width="210" TextAlignment="Center" FontSize="16" FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <!-- Danh sách mã giảm giá-->
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 10 0 0" Background="Beige">
+            <ListView ItemsSource="{x:Bind ViewModel.Discounts}"
+                      SelectionMode="Single" 
+                      SelectedItem="{x:Bind ViewModel.SelectedDiscount, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Discount">
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <TextBlock Text="{x:Bind DiscountCode}" Width="210" Height="30" TextAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind DiscountValue, Converter={StaticResource currencyFormatter}}" Width="210" Height="30" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
+        <!-- Phân trang -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Name="previousButton" Width="80" Height="35" Content="&lt; Back" Click="previousButton_Click"/>
+            <!--combobox phân trang-->
+            <ComboBox Name="pagesComboBox" Width="100" Height="35" SelectionChanged="pagesComboBox_SelectionChanged" HorizontalAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                    <Run Text="{Binding Page}"/> / <Run Text="{Binding Total}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Button Name="nextButton" Width="80" Height="35" Content="Next &gt;" Click="nextButton_Click"/>
+        </StackPanel>
+
+        <!-- Dialog để tạo mã giảm giá-->
+        <ContentDialog x:Name="CreateDiscountDialog"
+               Title="Tạo mã giảm giá"
+               PrimaryButtonText="Tạo"
+               PrimaryButtonClick="OnCreateDiscount_Click"
+               CloseButtonText="Hủy"
+               CloseButtonClick="OnCancel_Click"
+               DefaultButton="Primary"
+               >
+
+            <StackPanel>
+                <ComboBox Header="Giá trị (VND)" Name="DiscountValueComboBox" PlaceholderText="Chọn giá trị của mã giảm giá muốn tạo" Margin="0 20 0 20">
+                    <ComboBoxItem Content="10000" />
+                    <ComboBoxItem Content="20000" />
+                    <ComboBoxItem Content="50000" />
+                    <ComboBoxItem Content="100000" />
+                    <ComboBoxItem Content="200000" />
+                    <ComboBoxItem Content="500000" />
+                </ComboBox>
+                <TextBox Header="Số lượng" Name="QuantityTextBox" PlaceholderText="Số lượng mã giảm giá muốn tạo" />
+            </StackPanel>
+        </ContentDialog>
+
+        
+        <!-- TeachingTip để thông báo tạo thành công -->
+        <muxc:TeachingTip
+            x:Name="AddSuccessTeachingTip"
+            Subtitle="Mã giảm giá đã được tạo thành công!"
+            Background="LightBlue"
+            IsOpen="False" />
+
+        <!-- TeachingTip để thông báo xóa thành công -->
+        <muxc:TeachingTip
+            x:Name="DeleteSuccessTeachingTip"
+            Subtitle="Mã giảm giá đã được xóa khỏi hệ thống."
+            Background="LightBlue"
+            IsOpen="False" />
+    </Grid>
+</Page>
