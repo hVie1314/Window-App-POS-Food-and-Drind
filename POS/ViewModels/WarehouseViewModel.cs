@@ -12,7 +12,8 @@ using System.Reflection.Metadata.Ecma335;
 namespace POS.ViewModels
 {
     /// <summary>
-    /// View model for Warehouse
+    /// ViewModel quản lý logic và dữ liệu của giao diện quản lý kho hàng.
+
     /// </summary>
     public sealed partial class WarehouseViewModel : INotifyPropertyChanged
     {

@@ -12,7 +12,6 @@ using POS.Services.DAO;
 
 namespace POS.ViewModels
 {
-
     /// <summary>
     /// View model for Payment
     /// </summary>
@@ -30,12 +29,13 @@ namespace POS.ViewModels
         public int TotalCost { get; set; }
         public int TotalPayable { get; set; }
         public int InvoiceId { get; set; }
-
+        
         private int _receivedAmount;
         private int _change;
         private string _discountCode;
         private int _discountValue = 0;
         private string _discountStatus = "";
+
 
         public DateTime PaymentDate { get; set; }
         public string MomoAcountInfo { get; set; } = "HCMUS";
@@ -44,7 +44,9 @@ namespace POS.ViewModels
         public string Email { get; set; } = "pos@gmail.com";
         public string PhoneNumber { get; set; } = "078.491.6454";
 
-
+        /// <summary>
+        /// Khởi tạo ViewModel với dữ liệu mẫu.
+        /// </summary>
         public PaymentViewModel()
         {
             PaymentMethods = new ObservableCollection<string>
@@ -68,6 +70,9 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(TotalPayable));
         }
 
+        /// <summary>
+        /// Tính tổng tiền cần thanh toán sau khi đã tính thuế và giảm giá.
+        /// </summary>
         public int ReceivedAmount
         {
             get => _receivedAmount;
@@ -82,6 +87,9 @@ namespace POS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Tính số tiền thừa hoặc thiếu sau khi đã thanh toán.
+        /// </summary>
         public int Change
         {
             get => _change;
@@ -148,6 +156,9 @@ namespace POS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Tính số tiền thừa hoặc thiếu sau khi đã thanh toán.
+        /// </summary>
         public void CalculateChange()
         {
             if (ReceivedAmount < TotalPayable)
@@ -157,7 +168,6 @@ namespace POS.ViewModels
             }
             Change = ReceivedAmount - TotalPayable;
         }
-
 
         // Save invoice an detail to database
         public int SaveToDB()
