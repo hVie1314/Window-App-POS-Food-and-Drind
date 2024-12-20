@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace POS.Views
 {
     /// <summary>
-    /// PaymentView
+    /// Giao diện thanh toán.
     /// </summary>
     public sealed partial class PaymentView : Page
     {
@@ -132,6 +132,11 @@ namespace POS.Views
         }
 
 
+        /// <summary>
+        /// Xử lý sự kiện khi nhấn nút đóng dialog hóa đơn.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnCloseInvoiceDialog(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             // Reset lại dữ liệu
