@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using POS.Helpers;
 using POS.Interfaces;
 using POS.Models;
 using POS.Services.DAO;
+using System.Net.Http;
+using System.Text.Json;
+using Newtonsoft.Json.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.UI.Xaml.Controls;
+using System.Threading.Tasks;
 
 namespace POS.ViewModels
 {
@@ -22,9 +26,10 @@ namespace POS.ViewModels
         private IInvoiceDetailDao _invoiceDetailDao = new PostgresInvoiceDetailDao();
         private IDiscountDao _discountDao = new PostgresDiscountDao();
         private FeistelCipher _feistelCipher = new FeistelCipher(8, "winui3_discount_key");
-
+        private static readonly HttpClient client = new HttpClient();
         public ObservableCollection<string> PaymentMethods { get; set; }
         public ObservableCollection<Order> Items { get; set; }
+
         public string SelectedPaymentMethod { get; set; }
         public float VAT { get; set; } = 10.0f;
         public int TotalCost { get; set; }
@@ -38,12 +43,14 @@ namespace POS.ViewModels
         private string _discountStatus = "";
 
         public DateTime PaymentDate { get; set; }
-        public string MomoAcountInfo { get; set; } = "HCMUS";
-        public string MomoQRCodeImagePath { get; set; } = "ms-appx:///Assets/Image/MomoQR.jpg";
         public string Address { get; set; } = "227 Nguyễn Văn Cừ, Quận 5, TP.HCM";
         public string Email { get; set; } = "pos@gmail.com";
         public string PhoneNumber { get; set; } = "078.491.6454";
 
+        //MoMo API config infomation
+        string accessKey = "F8BBA842ECF85"; // change your business access key here
+        string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"; // change your business secret key here
+        string ipnUrl = "https://webhook.site/4cb43743-df24-494e-839d-c6cc184d872c"; // change your business ipnUrl here
 
         public PaymentViewModel()
         {
@@ -242,6 +249,70 @@ namespace POS.ViewModels
         public void DeleteUsedDiscountCode()
         {
             _discountDao.RemoveDiscountByCode(DiscountCode);
+        }
+
+        private static String getSignature(String text, String key)
+        {
+            // change according to your needs, an UTF8Encoding
+            // could be more suitable in certain situations
+            ASCIIEncoding encoding = new ASCIIEncoding();
+
+            Byte[] textBytes = encoding.GetBytes(text);
+            Byte[] keyBytes = encoding.GetBytes(key);
+
+            Byte[] hashBytes;
+
+            using (HMACSHA256 hash = new HMACSHA256(keyBytes))
+                hashBytes = hash.ComputeHash(textBytes);
+
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+        }
+
+        public async Task<string> RequestMoMoPayment()
+        {
+            // Generate UUID for requestId and orderId
+            Guid myuuid = Guid.NewGuid();
+            string myuuidAsString = myuuid.ToString();
+
+            QuickPayResquest request = new QuickPayResquest();
+            request.orderInfo = "Thanh_toan_hoa_don_POS_HCMUS";
+            request.partnerCode = "MOMO";
+            request.redirectUrl = "";
+            request.ipnUrl = "https://webhook.site/4cb43743-df24-494e-839d-c6cc184d872c";
+            request.amount = (long)TotalPayable;
+            request.orderId = myuuidAsString;
+            request.requestId = myuuidAsString;
+            request.extraData = "";
+            request.partnerName = "MOMO";
+            request.storeId = "POS HCMUS";
+            request.orderGroupId = "";
+            request.autoCapture = true;
+            request.lang = "vi"; // en or vi
+            request.requestType = "captureWallet"; // captureWallet or captureMoMo
+
+            var rawSignature = "accessKey=" + accessKey +
+                               "&amount=" + request.amount +
+                               "&extraData=" + request.extraData +
+                               "&ipnUrl=" + request.ipnUrl +
+                               "&orderId=" + request.orderId +
+                               "&orderInfo=" + request.orderInfo +
+                               "&partnerCode=" + request.partnerCode +
+                               "&redirectUrl=" + request.redirectUrl +
+                               "&requestId=" + request.requestId +
+                               "&requestType=" + request.requestType;
+            request.signature = getSignature(rawSignature, secretKey);
+
+            // Call MoMo API
+            StringContent httpContent = new StringContent(JsonSerializer.Serialize(request), System.Text.Encoding.UTF8, "application/json");
+            var quickPayResponse = await client.PostAsync("https://test-payment.momo.vn/v2/gateway/api/create", httpContent);
+            System.Diagnostics.Debug.WriteLine("Response: " + quickPayResponse);
+            // Read response
+            var contents = await quickPayResponse.Content.ReadAsStringAsync();
+            JObject jMessage = JObject.Parse(contents);
+            System.Diagnostics.Debug.WriteLine("Response: " + jMessage);
+            System.Diagnostics.Debug.WriteLine("payUrl: " + jMessage["payUrl"].ToString());
+            // Return the payUrl
+            return jMessage["payUrl"].ToString();
         }
 
         /// <summary>

@@ -37,41 +37,81 @@ namespace POS.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnSubmitPayment(object sender, RoutedEventArgs e)
+        private async void OnSubmitPayment(object sender, RoutedEventArgs e)
         {
             if (ViewModel.SelectedPaymentMethod == "Tiền mặt")
             {
                 ViewModel.InvoiceId = ViewModel.SaveToDB();
-                ViewModel.DeleteUsedDiscountCode();
+                if (ViewModel.DiscountCode != null)
+                {
+                    ViewModel.DeleteUsedDiscountCode();
+                }
+
                 // Show invoice dialog
                 ShowInvoiceDialog();
             }
             else if (ViewModel.SelectedPaymentMethod == "Momo")
             {
-                // Show the MoMo payment dialog
-                ShowMoMoPaymentDialog();
+                string payUrl = await ViewModel.RequestMoMoPayment();
+
+                if (payUrl != null)
+                {
+                    // Chuyển đến trang thanh toán MoMo
+                    Uri uri = new Uri(payUrl);
+                    await Windows.System.Launcher.LaunchUriAsync(uri);
+
+                    // Hiển thị dialog xác nhận
+                    ShowPaymentConfirmDialog();
+                }
+                else
+                {
+                    // Show error dialog
+                    ShowErrorDialog();
+                }
             }
         }
 
-        /// <summary>
-        /// Hiển thị dialog thanh toán qua MoMo.
-        /// </summary>
-        private async void ShowMoMoPaymentDialog()
+        private async void ShowPaymentConfirmDialog()
         {
-            ContentDialogResult result = await MoMoPaymentDialog.ShowAsync();
+            ContentDialog paymentConfirmDialog = new ContentDialog
+            {
+                Title = "Xác nhận đã thanh toán qua Momo",
+                PrimaryButtonText = "Xác nhận",
+                CloseButtonText = "Hủy",
+                XamlRoot = this.XamlRoot
+            };
+
+            ContentDialogResult result = await paymentConfirmDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
                 ViewModel.InvoiceId = ViewModel.SaveToDB();
-                ViewModel.DeleteUsedDiscountCode();
+                if (ViewModel.DiscountCode != null)
+                {
+                    ViewModel.DeleteUsedDiscountCode();
+                }
 
                 // Show Invoice dialog
                 ShowInvoiceDialog();
             }
             else
             {
-                // Cancel, no action needed
+                // Do nothing
             }
         }
+
+        private async void ShowErrorDialog()
+        {
+            ContentDialog errorDialog = new ContentDialog
+            {
+                Title = "Lỗi",
+                Content = "Chức năng này đang gặp lỗi. Bạn vui lòng thử lại sau.",
+                CloseButtonText = "Đóng",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.XamlRoot
+            };
+            await errorDialog.ShowAsync();
+        }
+
 
         // Handle case text box is empty
         private void ReceivedAmountTextBox_TextChanged(object sender, TextChangedEventArgs e)

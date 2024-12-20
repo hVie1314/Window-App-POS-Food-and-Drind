@@ -96,8 +96,8 @@
 
                     />
 
-                <NavigationViewItem Content="Quản trị"
-                                    Tag="POS.Views.QuanTri"
+                <NavigationViewItem Content="Cài đặt"
+                                    Tag="POS.Views.SettingView"
                                     ToolTipService.ToolTip=""
                                     Icon="Admin"
                                     />
