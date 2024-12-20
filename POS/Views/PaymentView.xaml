@@ -161,30 +161,6 @@
             DefaultButton="Primary"
             />
 
-        <!--Momo payment info dialog-->
-        <ContentDialog
-            x:Name="MoMoPaymentDialog"
-            Title="Thanh toán qua MoMo"
-            PrimaryButtonText="Đã thanh toán"
-            CloseButtonText="Hủy"
-            DefaultButton="Primary">
-
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="10">
-                <!-- QR Code -->
-                <TextBlock Text="Quét mã QR để thanh toán" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
-                <Border BorderBrush="Black" BorderThickness="1" Width="200" Height="200" HorizontalAlignment="Center">
-                    <Image Source="{x:Bind ViewModel.MomoQRCodeImagePath}" Stretch="Uniform"/>
-                </Border>
-
-                <TextBlock Text="Số tiền cần thanh toán" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
-                <TextBlock Text="{x:Bind ViewModel.TotalPayable, Mode=OneWay, Converter={StaticResource currencyFormatter}}" 
-                           FontSize="16" Foreground="OrangeRed" FontWeight="Bold" TextAlignment="Center"/>
-                <TextBlock Text="Thông tin tài khoản MoMo" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
-                <TextBlock Text="{x:Bind ViewModel.MomoAcountInfo}" FontSize="16" Foreground="Blue" FontWeight="Bold" TextAlignment="Center"/>
-            </StackPanel>
-        </ContentDialog>
-        
-        
         <!--Print Invoice-->
         <ContentDialog
             x:Name="InvoiceDialog"
