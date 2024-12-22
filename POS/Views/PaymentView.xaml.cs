@@ -30,6 +30,7 @@ namespace POS.Views
             this.InitializeComponent();
             ViewModel = (Application.Current as App).PaymentViewModel;
             this.DataContext = ViewModel;
+            ViewModel.LoadLocalSettings();
         }
 
         /// <summary>
