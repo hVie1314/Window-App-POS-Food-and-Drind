@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Navigation;
 using POS.Models;
 using POS.ViewModels;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,9 +29,9 @@ namespace POS.Views.UserControls
     {
         public OrderDetailViewModel ViewModel { get; set; } = new OrderDetailViewModel();
 
-        public void AddToOrder(Product info,int quanlity)
+        public void AddToOrder(Product info, int quanlity)
         {
-            ViewModel.Add(info,quanlity);
+            ViewModel.Add(info, quanlity);
         }
         public OrdersUserConstrol()
         {
@@ -43,6 +44,7 @@ namespace POS.Views.UserControls
             ViewModel.Total = 0;
             ViewModel.SubTotal = 0;
             ViewModel.Tax = 0;
+            ShowSaveSuccessTeachingTip();
         }
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -54,6 +56,18 @@ namespace POS.Views.UserControls
             var navigation = (Application.Current as App).navigate;
             var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
             navigation.SetCurrentNavigationViewItem(festivalItem);
+        }
+        //================================================================================================
+        //Notification
+        private void ShowSaveSuccessTeachingTip()
+        {
+            SaveSuccessTeachingTip.IsOpen = true;
+
+            // Auto close after 3s
+            _ = Task.Delay(3000).ContinueWith(_ =>
+            {
+                DispatcherQueue.TryEnqueue(() => SaveSuccessTeachingTip.IsOpen = false);
+            });
         }
     }
 }

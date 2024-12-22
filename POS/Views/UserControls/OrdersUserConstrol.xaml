@@ -7,6 +7,8 @@
     xmlns:local3="using:POS.Styles"
     xmlns:local1="using:POS.Converters"
     xmlns:model="using:POS.Models"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:primitives="using:CommunityToolkit.WinUI.UI.Controls.Primitives" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -65,7 +67,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0">
-                            <Run Text="{x:Bind Name}"/>: <Run Text="{x:Bind Price, Converter={StaticResource CurrencyConverter}}"/> x <Run Text="{x:Bind Quantity, Mode=OneWay}"/>
+                            <Run Text="{x:Bind Name, Mode=OneWay}"/>: <Run Text="{x:Bind Price, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/> x <Run Text="{x:Bind Quantity, Mode=OneWay}"/>
                         </TextBlock>
                         <TextBlock Grid.Column="1" HorizontalAlignment="Right">
                             <Run Text="{x:Bind Total, Converter={StaticResource CurrencyConverter}}"/>
@@ -125,6 +127,14 @@
                 <Button HorizontalContentAlignment="Stretch" CornerRadius="6" Content="Lưu hóa đơn" Height="40" HorizontalAlignment="Center" Click="SaveInvoice_Click"/>
                 <Button CornerRadius="6" Content="Thanh toán" Height="40" HorizontalAlignment="Center" Click="PayInvoice_Click"/>
             </StackPanel>
+            <Grid>
+            <TeachingTip
+         x:Name="SaveSuccessTeachingTip"
+         Subtitle="Hóa đơn đã được lưu thành công."
+         Background="LightBlue"
+         IsOpen="False"/>
+            </Grid>
         </StackPanel>
+        
     </Grid>
 </UserControl>
