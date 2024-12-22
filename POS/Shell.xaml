@@ -4,8 +4,11 @@
         xmlns:local="using:POS"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
         mc:Ignorable="d">
+        
     <Grid Background="Transparent">
+        
         <!--<Grid.Resources>
             <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground" 
                           TintColor="{StaticResource SystemChromeMediumLowColor}"
@@ -99,9 +102,21 @@
                 <NavigationViewItem Content="Cài đặt"
                                     Tag="POS.Views.SettingView"
                                     ToolTipService.ToolTip=""
-                                    Icon="Admin"
-                                    />
+                                    >
+                    <NavigationViewItem.Icon>
+                        <AnimatedIcon x:Name='AnimatedIcon'>
+                            <AnimatedIcon.Source>
+                                <animatedvisuals:AnimatedSettingsVisualSource/>
+                            </AnimatedIcon.Source>
+                            <AnimatedIcon.FallbackIconSource>
+                                <FontIconSource Glyph="&#xE713;"/>
+                            </AnimatedIcon.FallbackIconSource>
+                        </AnimatedIcon>
+                    </NavigationViewItem.Icon>
+
+                </NavigationViewItem>
             </NavigationView.FooterMenuItems>
+           
             <Frame x:Name="ContentFrame"
                    >
                 <Frame.ContentTransitions>
