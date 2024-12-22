@@ -74,6 +74,7 @@ namespace POS.ViewModels
             if (foundItem != null)
             {
                 foundItem.Quantity += quanlity;
+                foundItem.Total = foundItem.Quantity * foundItem.Price;
             }
             else
             {
