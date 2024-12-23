@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:POS.Views"
     xmlns:model="using:POS.Models"
+    xmlns:local4="using:POS.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -14,6 +15,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Styles/CustomStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <local4:DateTimeToDateConverter x:Key="DateTimeToDateConverter"/>
+            <local4:PaymentMethodToStatusInvoiceConverter x:Key="PaymentMethodToStatusInvoiceConverter"/>
+            <local4:PaymentMethodToBackgroundColorConverter x:Key="PaymentMethodToBackgroundColorConverter"/>
             <SolidColorBrush 
                     x:Key="SystemControlPageBackgroundBaseMediumBrush" 
                     Color="#99000000"
@@ -46,8 +50,8 @@
             <Button Content="Xóa hóa đơn" Padding="8"  Margin="0 0 20 0" HorizontalAlignment="Center"/>
             <Button Content="Thanh toán"  Padding="8" Margin="0 0 20 0" HorizontalAlignment="Center" Background="#99ffcc"/>
         </StackPanel>
-        
-        <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Invoices, Mode=OneWay}" HorizontalAlignment="Center">
+
+        <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Invoices, Mode=OneWay}" HorizontalAlignment="Center" SelectionChanged="InvoiceSelectionChanged">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:WholeInvoice">
                     <Grid Width="180" Height="250" Background="White" Margin="10" CornerRadius="10">
@@ -56,9 +60,25 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid Background= "#ccffdd" Padding="10" Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
                             <TextBlock FontWeight="Bold">
                                 #<Run Text="{x:Bind Invoice.InvoiceID, Mode=OneWay}"/>
                             </TextBlock>
+                            <StackPanel HorizontalAlignment="Right" Grid.Row="0">
+                            <TextBlock FontWeight="SemiBold">
+                                <Run Text="{x:Bind Invoice.InvoiceDate,Converter={StaticResource DateTimeToDateConverter}, Mode=OneWay}"/>
+                            </TextBlock>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Grid.Row="1" 
+                                        Background="{x:Bind Invoice.PaymentMethod,Converter={StaticResource PaymentMethodToBackgroundColorConverter}}"
+                                        CornerRadius="5" Padding="4" Margin="0 8 0 0">
+                                <TextBlock>
+                                    <Run Text="{x:Bind Invoice.PaymentMethod,Converter={StaticResource PaymentMethodToStatusInvoiceConverter}, Mode=OneWay}"/>
+                                </TextBlock>
+                            </StackPanel>
                         </Grid>
                         <ListView ItemsSource="{x:Bind InvoiceDetailsWithProductInfo}" Grid.Row="1">
                             <ListView.ItemTemplate>

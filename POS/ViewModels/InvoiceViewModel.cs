@@ -44,7 +44,7 @@ namespace POS.ViewModels
         public int TotalPages { get; set; } = 0;
         public int TotalItems { get; set; } = 0;
 
-
+        public WholeInvoice SelectedInvoice { get; set; }
         public InvoiceViewModel()
         {
             _invoiceDao = new PostgresInvoiceDao();

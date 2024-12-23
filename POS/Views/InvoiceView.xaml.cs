@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS.ViewModels;
+using POS.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -76,6 +77,10 @@ namespace POS.Views
             }
         }
         //================================================================================================
-
+        private void InvoiceSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var invoice = sender as WholeInvoice;
+            ViewModel.SelectedInvoice = invoice;
+        }
     }
 }
