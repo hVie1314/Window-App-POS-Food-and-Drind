@@ -57,6 +57,11 @@ namespace POS.Views.UserControls
             var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
             navigation.SetCurrentNavigationViewItem(festivalItem);
         }
+        private void DeleteOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (sender as Button).DataContext as Order;
+            ViewModel.Remove(item);
+        }
         //================================================================================================
         //Notification
         private void ShowSaveSuccessTeachingTip()
@@ -69,5 +74,7 @@ namespace POS.Views.UserControls
                 DispatcherQueue.TryEnqueue(() => SaveSuccessTeachingTip.IsOpen = false);
             });
         }
+        //================================================================================================
+
     }
 }
