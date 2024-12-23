@@ -68,7 +68,7 @@
         <!--mid side-->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
             <!--head-->
-            <StackPanel Orientation="Horizontal" BorderBrush="BurlyWood" >
+            <StackPanel Orientation="Horizontal" BorderBrush="BurlyWood">
                 <!--search bar-->
                 <AutoSuggestBox 
                     x:Name="SearchBox"
@@ -83,7 +83,7 @@
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
 
                 <!--category-->
-                <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category"  Width="70"  Margin="0 40 40 0" Foreground="Black" Background="BurlyWood">
+                <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category" Width="70" Margin="0 40 40 0" Foreground="Black" Background="BurlyWood">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag=""/>
@@ -146,7 +146,9 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Image MaxHeight="200" MaxWidth="200" Name="SelectedProductImage" Stretch="Uniform"/>
+                                    <StackPanel CornerRadius="10">
+                                    <Image Height="200" Width="200" Name="SelectedProductImage" Stretch="Uniform"/>
+                                    </StackPanel>
                                     <NumberBox Grid.Row="1" Minimum="1" Value="1" 
                                             HorizontalAlignment="Left"
                                             SmallChange="1"
@@ -180,7 +182,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="3">
                                         <TextBlock FontWeight="SemiBold" FontSize="20" Text="Yêu cầu thêm: " Margin="0 0 0 10"/>
-                                        <TextBox AcceptsReturn="True" Background="Transparent" BorderBrush="Black" BorderThickness="0 0 0 0.5">
+                                        <TextBox Name="NoteTextBox" AcceptsReturn="True" Background="Transparent" BorderBrush="Black" BorderThickness="0 0 0 0.5">
                                             
                                         </TextBox>
                                         <Border BorderThickness="0.5" BorderBrush="Gray" Opacity="0.5" Margin="0 20 0 20"></Border>
@@ -230,7 +232,7 @@
         </Grid>
         
         <!--right side-->
-        <uc:OrdersUserConstrol Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="OrdersUserControl" Margin="0 0 0 0"/>
+        <uc:OrdersUserControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="OrdersUserControl" Margin="0 0 0 0"/>
 
         <!--<ContentDialog
             x:Name="ProductSelectDialog"

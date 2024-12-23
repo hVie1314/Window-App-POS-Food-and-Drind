@@ -25,15 +25,20 @@ namespace POS.Views.UserControls
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class OrdersUserConstrol : UserControl
+    public sealed partial class OrdersUserControl : UserControl
     {
         public OrderDetailViewModel ViewModel { get; set; } = new OrderDetailViewModel();
 
-        public void AddToOrder(Product info, int quanlity)
+        public void LoadInvoice()
         {
-            ViewModel.Add(info, quanlity);
+
         }
-        public OrdersUserConstrol()
+        
+        public void AddToOrder(Product info, int quanlity, string note)
+        {
+            ViewModel.Add(info, quanlity, note);
+        }
+        public OrdersUserControl()
         {
             this.InitializeComponent();
         }

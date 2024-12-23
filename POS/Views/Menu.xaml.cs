@@ -156,7 +156,7 @@ namespace POS.Views
         }
         private void AddToBillClick(object sender, RoutedEventArgs args)
         {
-            OrdersUserControl.AddToOrder(SelectedProduct,((int)QuanlityBox.Value));
+            OrdersUserControl.AddToOrder(SelectedProduct,((int)QuanlityBox.Value), NoteTextBox.Text);
             CenteredFlyout.Hide();
             QuanlityBox.Value = 1;
         }

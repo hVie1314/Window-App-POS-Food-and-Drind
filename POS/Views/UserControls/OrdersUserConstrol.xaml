@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UserControl
-    x:Class="POS.Views.UserControls.OrdersUserConstrol"
+    x:Class="POS.Views.UserControls.OrdersUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:POS.Views.UserControls"
@@ -63,13 +63,22 @@
                 <DataTemplate x:DataType="model:Order">
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0">
-                            <Run Text="{x:Bind Name, Mode=OneWay}"/>: <Run Text="{x:Bind Price, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/> x <Run Text="{x:Bind Quantity, Mode=OneWay}"/>
-                        </TextBlock>
-                        <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <StackPanel CornerRadius="10" Margin="0 0 8 0"> 
+                        <Image Grid.Column="0" Source="{x:Bind ImagePath}" MaxHeight="50" MaxWidth="50" Name="SelectedProductImage" Stretch="Uniform"/>
+                        </StackPanel>
+                            <StackPanel Grid.Column="1">
+                            <TextBlock>
+                                <Run Text="{x:Bind Name, Mode=OneWay}"/>: <Run Text="{x:Bind Price, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/> x <Run Text="{x:Bind Quantity, Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock Foreground="Gray">
+                                <Run Text="{x:Bind Note, Mode=OneWay}"/>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel  Grid.Column="2" HorizontalAlignment="Right" Orientation="Vertical">
                             <TextBlock>
                                 <Run Text="{x:Bind Total, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                             </TextBlock>

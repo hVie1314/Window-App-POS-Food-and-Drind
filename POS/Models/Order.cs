@@ -11,6 +11,20 @@ namespace POS.Models
     {
         private int _quantity;
         private int _total;
+        private string _note;
+
+        public string Note
+        {
+            get => _note;
+            set
+            {
+                if (_note != value)
+                {
+                    _note = value;
+                    OnPropertyChanged(nameof(Note));
+                }
+            }
+        }
 
         public int Quantity
         {
@@ -39,7 +53,7 @@ namespace POS.Models
             }
         }
 
-        public Order(Product product,int quanlity)
+        public Order(Product product,int quanlity, string note)
         {
             ProductID = product.ProductID;
             Name = product.Name;
@@ -49,6 +63,7 @@ namespace POS.Models
             ImagePath = product.ImagePath;
             Status = product.Status;
             Quantity = quanlity;
+            Note = note;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

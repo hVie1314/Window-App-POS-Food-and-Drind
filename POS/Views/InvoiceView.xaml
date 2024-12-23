@@ -9,40 +9,77 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/CustomStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush 
+                    x:Key="SystemControlPageBackgroundBaseMediumBrush" 
+                    Color="#99000000"
+                    />
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid Background="Beige">
         <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" BorderBrush="BurlyWood" Grid.Row="0" Margin="20">
+            <!--search bar-->
+            <AutoSuggestBox 
+        x:Name="SearchBox"
+        PlaceholderText="Tìm kiếm" 
+        FontSize="12" 
+        Width="360"  
+        Height="40" 
+        Margin="60 0 40 0" 
+        VerticalContentAlignment="Center" 
+        QueryIcon="Find" 
+       />
 
-            <GridView Grid.Row="0" ItemsSource="{x:Bind ViewModel.Invoices, Mode=OneWay}">
+
+            <!--add, edit, remove-->
+            <!--Update later-->
+            <Button Content="Đặt thêm món" Margin="88 0 20 0" Padding="10" HorizontalAlignment="Center"/>
+            <Button Content="Xóa hóa đơn" Padding="8"  Margin="0 0 20 0" HorizontalAlignment="Center"/>
+            <Button Content="Thanh toán"  Padding="8" Margin="0 0 20 0" HorizontalAlignment="Center" Background="#99ffcc"/>
+        </StackPanel>
+        
+        <GridView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Invoices, Mode=OneWay}" HorizontalAlignment="Center">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:WholeInvoice">
-                    <StackPanel Width="200" Height="300" Background="White" Margin="10" CornerRadius="10">
-                        <Grid Background= "#ccffdd" Padding="10">
+                    <Grid Width="180" Height="250" Background="White" Margin="10" CornerRadius="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Background= "#ccffdd" Padding="10" Grid.Row="0">
                             <TextBlock FontWeight="Bold">
                                 #<Run Text="{x:Bind Invoice.InvoiceID, Mode=OneWay}"/>
                             </TextBlock>
                         </Grid>
-                        <ListView ItemsSource="{x:Bind InvoiceDetailsWithProductInfo}">
+                        <ListView ItemsSource="{x:Bind InvoiceDetailsWithProductInfo}" Grid.Row="1">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="model:InvoiceDetailWithProductInfo">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock FontSize="20" Text="{x:Bind InvoiceDetailProperty.Quantity, Mode=OneWay}"/>
-                                        <TextBlock FontSize="20" Text=". "/>
-                                        <TextBlock FontSize="20" Text="{x:Bind ProductName, Mode=OneWay}"/>
+                                        <StackPanel Width="150">
+                                            <TextBlock Grid.Row="0" Margin="10 0" FontSize="20" Text="{x:Bind ProductName, Mode=OneWay}" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.Row="1" Foreground="Red" Margin="10 0" Text="{x:Bind InvoiceDetailProperty.Note, Mode=OneWay}" TextWrapping="Wrap"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
    
         <!--paging-->
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="2">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                 <TextBlock>
      Tổng hóa đơn: <Run Text="{x:Bind ViewModel.TotalItems}"></Run>

@@ -68,17 +68,18 @@ namespace POS.ViewModels
                 }
             }
         }
-        public void Add(Product info, int quanlity)
+        public void Add(Product info, int quanlity, string note)
         {
-            var foundItem = Items.FirstOrDefault(item => item.Name == info.Name);
+            var foundItem = Items.FirstOrDefault(item => item.Name == info.Name && item.Note==note);
             if (foundItem != null)
             {
                 foundItem.Quantity += quanlity;
                 foundItem.Total = foundItem.Quantity * foundItem.Price;
+                foundItem.Note = note;
             }
             else
             {
-                Items.Add(new Order(info,quanlity));
+                Items.Add(new Order(info,quanlity,note));
             }
             SubTotal = Items.Sum(item => item.Total);
             Tax = SubTotal * 0.1;
@@ -115,7 +116,8 @@ namespace POS.ViewModels
                     InvoiceID = newInvoiceId,
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
-                    Price = item.Price
+                    Price = item.Price,
+                    Note = item.Note
                 };
                 _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
             }
