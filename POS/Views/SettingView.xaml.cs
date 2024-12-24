@@ -17,11 +17,13 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using POS.Models;
 using POS.Services.DAO;
+
 using System.Net.Http;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using POS.ViewModels;
+
 
 namespace POS.Views
 {
@@ -32,6 +34,7 @@ namespace POS.Views
         public SettingView()
         {
             this.InitializeComponent();
+
             ViewModel = new SettingsViewModel();
 
             // Gán ViewModel vào DataContext để binding
@@ -98,5 +101,6 @@ namespace POS.Views
             };
             await dialog.ShowAsync();
         }
+
     }
 }

@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 
 namespace POS.ViewModels
 {
-
     /// <summary>
     /// View model for Payment
     /// </summary>
@@ -36,22 +35,26 @@ namespace POS.ViewModels
         public int TotalCost { get; set; }
         public int TotalPayable { get; set; }
         public int InvoiceId { get; set; }
+
         public DateTime PaymentDate { get; set; }
         public string accessKey { get; set; }
         public string secretKey { get; set; }
         public string ipnUrl { get; set; }
 
         private float _vat;
+
         private int _receivedAmount;
         private int _change;
         private string _discountCode;
         private int _discountValue = 0;
         private string _discountStatus = "";
 
+
         ////MoMo API config infomation
         //string accessKey = "F8BBA842ECF85"; // change your business access key here
         //string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"; // change your business secret key here
         //string ipnUrl = "https://webhook.site/4cb43743-df24-494e-839d-c6cc184d872c"; // change your business ipnUrl here
+
 
         public PaymentViewModel()
         {
@@ -76,6 +79,9 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(TotalPayable));
         }
 
+        /// <summary>
+        /// Tính tổng tiền cần thanh toán sau khi đã tính thuế và giảm giá.
+        /// </summary>
         public int ReceivedAmount
         {
             get => _receivedAmount;
@@ -90,6 +96,9 @@ namespace POS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Tính số tiền thừa hoặc thiếu sau khi đã thanh toán.
+        /// </summary>
         public int Change
         {
             get => _change;
@@ -156,6 +165,9 @@ namespace POS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Tính số tiền thừa hoặc thiếu sau khi đã thanh toán.
+        /// </summary>
         public void CalculateChange()
         {
             if (ReceivedAmount < TotalPayable)
@@ -165,7 +177,6 @@ namespace POS.ViewModels
             }
             Change = ReceivedAmount - TotalPayable;
         }
-
 
         // Save invoice an detail to database
         public int SaveToDB()
