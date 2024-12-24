@@ -24,17 +24,25 @@ namespace POS.ViewModels
         private IInvoiceDao _invoiceDao = new PostgresInvoiceDao();
         private IInvoiceDetailDao _invoiceDetailDao = new PostgresInvoiceDetailDao();
         private IDiscountDao _discountDao = new PostgresDiscountDao();
+        private SettingsViewModel _settingsViewModel = new SettingsViewModel();
         private FeistelCipher _feistelCipher = new FeistelCipher(8, "winui3_discount_key");
         private static readonly HttpClient client = new HttpClient();
         public ObservableCollection<string> PaymentMethods { get; set; }
         public ObservableCollection<Order> Items { get; set; }
 
         public string SelectedPaymentMethod { get; set; }
-        public float VAT { get; set; } = 10.0f;
+        public float VAT { get; set; }
         public int TotalCost { get; set; }
         public int TotalPayable { get; set; }
         public int InvoiceId { get; set; }
-        
+
+        public DateTime PaymentDate { get; set; }
+        public string accessKey { get; set; }
+        public string secretKey { get; set; }
+        public string ipnUrl { get; set; }
+
+        private float _vat;
+
         private int _receivedAmount;
         private int _change;
         private string _discountCode;
@@ -42,15 +50,11 @@ namespace POS.ViewModels
         private string _discountStatus = "";
 
 
-        public DateTime PaymentDate { get; set; }
-        public string Address { get; set; } = "227 Nguyễn Văn Cừ, Quận 5, TP.HCM";
-        public string Email { get; set; } = "pos@gmail.com";
-        public string PhoneNumber { get; set; } = "078.491.6454";
+        ////MoMo API config infomation
+        //string accessKey = "F8BBA842ECF85"; // change your business access key here
+        //string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"; // change your business secret key here
+        //string ipnUrl = "https://webhook.site/4cb43743-df24-494e-839d-c6cc184d872c"; // change your business ipnUrl here
 
-        //MoMo API config infomation
-        string accessKey = "F8BBA842ECF85"; // change your business access key here
-        string secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"; // change your business secret key here
-        string ipnUrl = "https://webhook.site/4cb43743-df24-494e-839d-c6cc184d872c"; // change your business ipnUrl here
 
         public PaymentViewModel()
         {
@@ -313,14 +317,24 @@ namespace POS.ViewModels
             // Call MoMo API
             StringContent httpContent = new StringContent(JsonSerializer.Serialize(request), System.Text.Encoding.UTF8, "application/json");
             var quickPayResponse = await client.PostAsync("https://test-payment.momo.vn/v2/gateway/api/create", httpContent);
-            System.Diagnostics.Debug.WriteLine("Response: " + quickPayResponse);
+
             // Read response
             var contents = await quickPayResponse.Content.ReadAsStringAsync();
             JObject jMessage = JObject.Parse(contents);
-            System.Diagnostics.Debug.WriteLine("Response: " + jMessage);
-            System.Diagnostics.Debug.WriteLine("payUrl: " + jMessage["payUrl"].ToString());
+            //System.Diagnostics.Debug.WriteLine("Response: " + jMessage);
+            //System.Diagnostics.Debug.WriteLine("payUrl: " + jMessage["payUrl"].ToString());
+            
             // Return the payUrl
             return jMessage["payUrl"].ToString();
+        }
+
+        public void LoadLocalSettings()
+        {
+            VAT = _settingsViewModel.VAT;
+            OnPropertyChanged(nameof(VAT));
+            accessKey = _settingsViewModel.AccessKey;
+            secretKey = _settingsViewModel.SecretKey;
+            ipnUrl = _settingsViewModel.IpnUrl;
         }
 
         /// <summary>
