@@ -89,5 +89,18 @@ namespace POS.Views
             ViewModel.LoadInvoices(1);
             UpdatePagingInfo_bootstrap();
         }
+        private void OrderMoreDishes_Click(object sender, RoutedEventArgs e)
+        {
+            var wholeInvoice = ViewModel.SelectedInvoice;
+            if (wholeInvoice != null)
+            {
+                var invoice = wholeInvoice.Invoice;
+                var invoiceDetails = wholeInvoice.InvoiceDetailsWithProductInfo;
+                foreach (var invoiceDetail in invoiceDetails)
+                {
+                    var productId = invoiceDetail.InvoiceDetailProperty.ProductID;
+                }
+            }
+        }
     }
 }

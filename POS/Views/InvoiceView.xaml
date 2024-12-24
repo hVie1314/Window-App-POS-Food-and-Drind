@@ -19,6 +19,7 @@
             <local4:PaymentMethodToStatusInvoiceConverter x:Key="PaymentMethodToStatusInvoiceConverter"/>
             <local4:PaymentMethodToBackgroundColorConverter x:Key="PaymentMethodToBackgroundColorConverter"/>
             <local4:PaymentMethodToIconConverter x:Key="PaymentMethodToIconConverter"/>
+            <local4:PaymentMethodToBackgroundColorHeaderConverter x:Key="PaymentMethodToBackgroundColorHeaderConverter"/>
             <SolidColorBrush 
                     x:Key="SystemControlPageBackgroundBaseMediumBrush" 
                     Color="#99000000"
@@ -48,7 +49,7 @@
         <!--add, edit, remove-->
             <!--Update later-->
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="40 0 40 0">
-            <Button Content="Đặt thêm món" Margin="88 0 20 0" Padding="10" HorizontalAlignment="Center"/>
+            <Button Content="Đặt thêm món" Margin="88 0 20 0" Padding="10" HorizontalAlignment="Center" Click="OrderMoreDishes_Click"/>
             <Button Content="Xóa hóa đơn" Padding="8"  Margin="0 0 20 0" HorizontalAlignment="Center"/>
             <Button Content="Thanh toán"  Padding="8" Margin="0 0 20 0" HorizontalAlignment="Center" Background="#99ffcc"/>
             </StackPanel>
@@ -62,7 +63,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Grid Background= "#ccffdd" Padding="10" Grid.Row="0">
+                        <Grid Background= "{x:Bind Invoice.PaymentMethod, Converter={StaticResource PaymentMethodToBackgroundColorHeaderConverter}, Mode=OneWay}" Padding="10" Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
