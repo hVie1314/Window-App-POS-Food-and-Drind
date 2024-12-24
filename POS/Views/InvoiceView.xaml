@@ -18,6 +18,7 @@
             <local4:DateTimeToDateConverter x:Key="DateTimeToDateConverter"/>
             <local4:PaymentMethodToStatusInvoiceConverter x:Key="PaymentMethodToStatusInvoiceConverter"/>
             <local4:PaymentMethodToBackgroundColorConverter x:Key="PaymentMethodToBackgroundColorConverter"/>
+            <local4:PaymentMethodToIconConverter x:Key="PaymentMethodToIconConverter"/>
             <SolidColorBrush 
                     x:Key="SystemControlPageBackgroundBaseMediumBrush" 
                     Color="#99000000"
@@ -72,12 +73,15 @@
                                 <Run Text="{x:Bind Invoice.InvoiceDate,Converter={StaticResource DateTimeToDateConverter}, Mode=OneWay}"/>
                             </TextBlock>
                             </StackPanel>
-                            <StackPanel HorizontalAlignment="Right" Grid.Row="1" 
+                            <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right" Grid.Row="1" 
                                         Background="{x:Bind Invoice.PaymentMethod,Converter={StaticResource PaymentMethodToBackgroundColorConverter}}"
                                         CornerRadius="5" Padding="4" Margin="0 8 0 0">
                                 <TextBlock>
                                     <Run Text="{x:Bind Invoice.PaymentMethod,Converter={StaticResource PaymentMethodToStatusInvoiceConverter}, Mode=OneWay}"/>
                                 </TextBlock>
+                                <!--<ContentControl Content="{x:Bind Invoice.PaymentMethod, Converter={StaticResource PaymentMethodToIconConverter}}"/>-->
+                                <ContentControl Content="{x:Bind Invoice.PaymentMethod,Converter={StaticResource PaymentMethodToIconConverter},Mode=OneWay}"/>
                             </StackPanel>
                         </Grid>
                         <ListView ItemsSource="{x:Bind InvoiceDetailsWithProductInfo}" Grid.Row="1">
