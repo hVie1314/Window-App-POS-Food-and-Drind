@@ -61,7 +61,7 @@ namespace POS.Services.DAO
 
             var invoiceDetailsWithProductInformation = new List<InvoiceDetailWithProductInfo>();
             int totalRecords = 0;
-
+            var productDao = new PostgresProductDao();
             using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
             {
                 connection.Open();
@@ -104,6 +104,8 @@ namespace POS.Services.DAO
                             ProductName = reader.GetString(reader.GetOrdinal("tenmonan")),
                             CategoryName = reader.GetString(reader.GetOrdinal("loaimonan")),
                             Description = reader.IsDBNull(reader.GetOrdinal("mota")) ? null : reader.GetString(reader.GetOrdinal("mota"))
+                            ,
+                            ProductInfo = productDao.FindProductByID(reader.GetInt32(reader.GetOrdinal("monanid")))
                         };
                         invoiceDetailsWithProductInformation.Add(invoiceDetailWithProductInformation);
                     }

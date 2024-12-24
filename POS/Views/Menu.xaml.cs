@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
+using POS.DTOs;
 using POS.Models;
 using POS.ViewModels;
 using System;
@@ -161,6 +162,7 @@ namespace POS.Views
             QuanlityBox.Value = 1;
         }
 
+       
         //Dialog
         //private async void AddProductButton_Click(object sender, RoutedEventArgs e)
         //{
@@ -168,5 +170,18 @@ namespace POS.Views
         //    dialog.XamlRoot = this.XamlRoot;
         //    await dialog.ShowAsync();
         //}
+        //================================================================================================
+        //Load data from invoice to order more dishes
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter is List<InvoiceDetailToCartItemObject>)
+            {
+                foreach (var item in e.Parameter as List<InvoiceDetailToCartItemObject>)
+                {
+                    OrdersUserControl.AddToOrder(item.Product, item.Quantity, item.Note);
+                }
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace POS.Models
 
         public string Description
         { get; set; }
-        public Product Products { get; set; }
+        public Product ProductInfo { get; set;}
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

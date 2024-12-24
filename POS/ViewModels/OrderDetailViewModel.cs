@@ -70,7 +70,7 @@ namespace POS.ViewModels
         }
         public void Add(Product info, int quanlity, string note)
         {
-            var foundItem = Items.FirstOrDefault(item => item.Name == info.Name && item.Note==note);
+            var foundItem = Items.FirstOrDefault(item => item.Name == info.Name && item.Note==note &&item.Price==info.Price);
             if (foundItem != null)
             {
                 foundItem.Quantity += quanlity;

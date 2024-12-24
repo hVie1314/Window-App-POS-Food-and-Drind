@@ -29,11 +29,6 @@ namespace POS.Views.UserControls
     {
         public OrderDetailViewModel ViewModel { get; set; } = new OrderDetailViewModel();
 
-        public void LoadInvoice()
-        {
-
-        }
-        
         public void AddToOrder(Product info, int quanlity, string note)
         {
             ViewModel.Add(info, quanlity, note);
@@ -41,6 +36,7 @@ namespace POS.Views.UserControls
         public OrdersUserControl()
         {
             this.InitializeComponent();
+            this.DataContext = ViewModel;
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {

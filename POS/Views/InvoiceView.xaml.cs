@@ -14,6 +14,8 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS.ViewModels;
 using POS.Models;
+using System.Diagnostics;
+using POS.DTOs;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,7 +28,8 @@ namespace POS.Views
     public sealed partial class InvoiceView : Page
     {
         public InvoiceViewModel ViewModel { get; set; } = new InvoiceViewModel();
-
+        
+        
         public InvoiceView()
         {
             this.InitializeComponent();
@@ -94,12 +97,22 @@ namespace POS.Views
             var wholeInvoice = ViewModel.SelectedInvoice;
             if (wholeInvoice != null)
             {
-                var invoice = wholeInvoice.Invoice;
-                var invoiceDetails = wholeInvoice.InvoiceDetailsWithProductInfo;
-                foreach (var invoiceDetail in invoiceDetails)
+                var cart = new List<InvoiceDetailToCartItemObject>();
+                foreach (var item in wholeInvoice.InvoiceDetailsWithProductInfo)
                 {
-                    var productId = invoiceDetail.InvoiceDetailProperty.ProductID;
+                    var product = item.ProductInfo;
+                    product.Price = item.InvoiceDetailProperty.Price;//
+                    cart.Add(new InvoiceDetailToCartItemObject
+                    {
+                        Product = product,
+                        Quantity = item.InvoiceDetailProperty.Quantity,
+                        Note = item.InvoiceDetailProperty.Note
+                    }
+                    );
                 }
+                // Navigate to Menu
+                var navigation = (Application.Current as App).navigate;
+                navigation.SetCurrentNavigationViewItemForMenuWithArgument(cart);
             }
         }
     }

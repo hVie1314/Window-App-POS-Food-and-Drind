@@ -10,6 +10,7 @@ namespace POS
 {
     public sealed partial class Shell : Window, INavigation
     {
+        private bool _navigatedFlag = false;
         public Shell()
         {
             this.InitializeComponent();
@@ -39,7 +40,10 @@ namespace POS
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            SetCurrentNavigationViewItem(args.SelectedItemContainer as NavigationViewItem);
+            if (_navigatedFlag == false)
+            {
+                SetCurrentNavigationViewItem(args.SelectedItemContainer as NavigationViewItem);
+            }
         }
 
         public List<NavigationViewItem> GetNavigationViewItems()
@@ -92,6 +96,26 @@ namespace POS
         public void SetCurrentPage(Type type)
         {
             ContentFrame.Navigate(type);
+        }
+
+        public void SetCurrentNavigationViewItemForMenuWithArgument(object arg)
+        {
+            var menuItem = GetNavigationViewItems(typeof(Menu)).First();
+            if (menuItem == null)
+            {
+                return;
+            }
+
+            if (menuItem.Tag == null)
+            {
+                return;
+            }
+
+            ContentFrame.Navigate(Type.GetType(menuItem.Tag.ToString()), arg);
+            _navigatedFlag = true;
+            //NavigationView.Header = item.Content;
+            NavigationView.SelectedItem = menuItem;
+            _navigatedFlag = false;
         }
     }
 }

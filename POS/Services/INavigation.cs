@@ -17,5 +17,6 @@ namespace POS.Services
         void SetCurrentNavigationViewItem(NavigationViewItem item);
 
         void SetCurrentPage(Type type);
+        void SetCurrentNavigationViewItemForMenuWithArgument(object arg);
     }
 }
