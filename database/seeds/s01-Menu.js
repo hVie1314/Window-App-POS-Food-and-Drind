@@ -8,9 +8,9 @@ exports.seed = async function(knex) {
 
   // Inserts seed entries
   await knex('menu').insert([
-    { tenmonan: 'Phở Bò', loaimonan: 'Món chính', gia: 45000, mota: 'Phở bò tái chín', imagepath: 'ms-appx:///Assets/Image/pho_bo.jpg', trangthai: 1 },
-    { tenmonan: 'Bún Chả', loaimonan: 'Món chính', gia: 50000, mota: 'Bún chả', imagepath: 'ms-appx:///Assets/Image/bun_cha.jpg', trangthai: 1 },
-    { tenmonan: 'Trà Sữa', loaimonan: 'Đồ uống', gia: 30000, mota: 'Trà sữa trân châu', imagepath: 'ms-appx:///Assets/Image/tra_sua.jpg', trangthai: 1 },
+    { monanid:1,tenmonan: 'Phở Bò', loaimonan: 'Món chính', gia: 45000, mota: 'Phở bò tái chín', imagepath: 'ms-appx:///Assets/Image/pho_bo.jpg', trangthai: 1 },
+    { monanid:2,tenmonan: 'Bún Chả', loaimonan: 'Món chính', gia: 50000, mota: 'Bún chả', imagepath: 'ms-appx:///Assets/Image/bun_cha.jpg', trangthai: 1 },
+    { monanid:3,tenmonan: 'Trà Sữa', loaimonan: 'Đồ uống', gia: 30000, mota: 'Trà sữa trân châu', imagepath: 'ms-appx:///Assets/Image/tra_sua.jpg', trangthai: 1 },
     { tenmonan: 'Phở Gân', loaimonan: 'Món chính', gia: 45000, mota: 'Phở gân', imagepath: 'ms-appx:///Assets/Image/pho_gan.jpg', trangthai: 1 },
     { tenmonan: 'Bún Thịt Nướng', loaimonan: 'Món chính', gia: 50000, mota: 'Bún thịt nướng', imagepath: 'ms-appx:///Assets/Image/bun_thit_nuong.jpg', trangthai: 1 },
     { tenmonan: 'Trà Tắc', loaimonan: 'Đồ uống', gia: 10000, mota: 'Trà tắc', imagepath: 'ms-appx:///Assets/Image/tra_tac.jpg', trangthai: 1 },
