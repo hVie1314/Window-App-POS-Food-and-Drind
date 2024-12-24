@@ -95,7 +95,7 @@
                >
 
             <StackPanel>
-                <ComboBox Header="Giá trị (VND)" Name="DiscountValueComboBox" PlaceholderText="Chọn giá trị của mã giảm giá muốn tạo" Margin="0 20 0 20">
+                <ComboBox Header="Giá trị (VND)" Name="DiscountValueComboBox" PlaceholderText="Chọn giá trị của mã giảm giá muốn tạo" Width="300" Margin="0 20 0 20">
                     <ComboBoxItem Content="10000" />
                     <ComboBoxItem Content="20000" />
                     <ComboBoxItem Content="50000" />
@@ -103,7 +103,7 @@
                     <ComboBoxItem Content="200000" />
                     <ComboBoxItem Content="500000" />
                 </ComboBox>
-                <TextBox Header="Số lượng" Name="QuantityTextBox" PlaceholderText="Số lượng mã giảm giá muốn tạo" />
+                <TextBox Header="Số lượng" Name="QuantityTextBox" PlaceholderText="Số lượng mã giảm giá muốn tạo" Width="300"/>
             </StackPanel>
         </ContentDialog>
 
