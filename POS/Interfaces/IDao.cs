@@ -64,7 +64,7 @@ namespace POS.Interfaces
 
     public interface IInvoiceDao
     {
-        Tuple<int, List<Invoice>> GetAllInvoices(
+        Tuple<int, List<Invoice>> GetAllInvoices(string searchKeyword = "",
             int page = 1,
             int rowsPerPage = 10
         );

@@ -11,7 +11,7 @@ namespace POS.Services.DAO
     {
         public PostgresInvoiceDao() { }
 
-        public Tuple<int, List<Invoice>> GetAllInvoices(int page, int rowsPerPage)
+        public Tuple<int, List<Invoice>> GetAllInvoices(string hoadonID, int page, int rowsPerPage)
         {
             var invoices = new List<Invoice>();
             int totalItems = 0;
@@ -22,13 +22,22 @@ namespace POS.Services.DAO
 
                 var sql = @"
                 SELECT COUNT(*) OVER() AS TotalItems, hoadonid, ngaylaphoadon, tongtien, phuongthucthanhtoan, khachhangid, nhanvienid, giamgia, thuevat, ghichu
-                FROM hoadon
-                OFFSET @Skip LIMIT @Take";
+                FROM hoadon";
+                if (!string.IsNullOrEmpty(hoadonID))
+                {
+                    sql += " WHERE hoadonid = @hoadonID";
+                }
+                sql +=@" OFFSET @Skip LIMIT @Take";
+                
 
                 var skip = (page - 1) * rowsPerPage;
                 var command = new NpgsqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@Skip", skip);
                 command.Parameters.AddWithValue("@Take", rowsPerPage);
+                if (!string.IsNullOrEmpty(hoadonID))
+                {
+                    command.Parameters.AddWithValue("@hoadonID", Int32.Parse(hoadonID));
+                }
 
                 using (var reader = command.ExecuteReader())
                 {

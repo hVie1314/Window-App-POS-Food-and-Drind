@@ -79,8 +79,15 @@ namespace POS.Views
         //================================================================================================
         private void InvoiceSelectionChanged(object sender, RoutedEventArgs e)
         {
-            var invoice = sender as WholeInvoice;
-            ViewModel.SelectedInvoice = invoice;
+            var gridview = sender as GridView;
+            var wholeInvoice = gridview.SelectedItem as WholeInvoice;
+            ViewModel.SelectedInvoice = wholeInvoice;
+        }
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ViewModel.searchText = sender.Text;
+            ViewModel.LoadInvoices(1);
+            UpdatePagingInfo_bootstrap();
         }
     }
 }

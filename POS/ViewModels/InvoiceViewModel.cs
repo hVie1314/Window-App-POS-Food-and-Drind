@@ -55,7 +55,7 @@ namespace POS.ViewModels
 
         public void GetAllInvoices()
         {
-            var (totalItems, invoices) = _invoiceDao.GetAllInvoices(
+            var (totalItems, invoices) = _invoiceDao.GetAllInvoices(searchText,
 
                 CurrentPage, ItemsPerPage);
             var temp = new ObservableCollection<WholeInvoice>();
