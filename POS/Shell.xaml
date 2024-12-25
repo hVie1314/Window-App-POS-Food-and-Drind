@@ -62,13 +62,13 @@
                                     ToolTipService.ToolTip="Kho hàng"
                                     Icon="AllApps">
                 </NavigationViewItem>
-                <NavigationViewItem Content="Thực đơn"
-                                    Tag="POS.Views.ThucDon"
+                <NavigationViewItem Content="Khách hàng"
+                                    Tag="POS.Views.CustomerView"
                                     ToolTipService.ToolTip=""
                                     Icon="Contact">
                 </NavigationViewItem>
                 <NavigationViewItem Content="Nhân viên"
-                                    Tag="POS.Views.NhanVien"
+                                    Tag="POS.Views.EmployeeView"
                                     ToolTipService.ToolTip=""
                                     Icon="PhoneBook">
                 </NavigationViewItem>

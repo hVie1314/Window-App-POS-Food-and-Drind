@@ -58,7 +58,59 @@ namespace POS.Services.DAO
 
             return new Tuple<int, List<Customer>>(totalItems, customers);
         }
+        public Tuple<int, List<Customer>> GetAllCustomers(
+            int page = 1,
+            int rowsPerPage = 10,
+            string searchKeyword = "",
+            string position = "",
+            string sortDirection = null
+        )
+        {
+            var customers = new List<Customer>();
+            int totalItems = 0;
 
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var sql = @"
+                SELECT COUNT(*) OVER() AS TotalItems, khachhangid, tenkhachhang, sodienthoai, email, diachi, loaikhachhang
+                FROM khachhang
+                WHERE tenkhachhang ILIKE @SearchKeyword
+                OFFSET @Skip LIMIT @Take";
+
+                var skip = (page - 1) * rowsPerPage;
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@Skip", skip);
+                command.Parameters.AddWithValue("@Take", rowsPerPage);
+                command.Parameters.AddWithValue("@SearchKeyword", $"%{searchKeyword}%");
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (totalItems == 0)
+                        {
+                            totalItems = reader.GetInt32(reader.GetOrdinal("TotalItems"));
+                        }
+
+                        var customer = new Customer
+                        {
+                            CustomerID = reader.GetInt32(reader.GetOrdinal("khachhangid")),
+                            Name = reader.GetString(reader.GetOrdinal("tenkhachhang")),
+                            PhoneNumber = reader.GetString(reader.GetOrdinal("sodienthoai")),
+                            Email = reader.GetString(reader.GetOrdinal("email")),
+                            Address = reader.GetString(reader.GetOrdinal("diachi")),
+                            CustomerType = reader.GetString(reader.GetOrdinal("loaikhachhang"))
+                        };
+                        customers.Add(customer);
+                    }
+                }
+            }
+
+            return new Tuple<int, List<Customer>>(totalItems, customers);
+        }
+        //=======================================================================================================
         // Thêm sản phẩm mới
         public int InsertCustomer(Customer customer)
         {
