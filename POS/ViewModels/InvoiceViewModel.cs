@@ -19,6 +19,8 @@ namespace POS.ViewModels
     /// </summary>
     public class InvoiceViewModel:INotifyPropertyChanged
     {
+        public delegate void OrderMoreDishesEventHandler();
+        public event OrderMoreDishesEventHandler OrderMoreDishes;
         private ObservableCollection<WholeInvoice> _invoices;
         public ObservableCollection<WholeInvoice> Invoices
         {
@@ -44,7 +46,7 @@ namespace POS.ViewModels
         public int TotalPages { get; set; } = 0;
         public int TotalItems { get; set; } = 0;
 
-
+        public WholeInvoice SelectedInvoice { get; set; }
         public InvoiceViewModel()
         {
             _invoiceDao = new PostgresInvoiceDao();
@@ -55,17 +57,19 @@ namespace POS.ViewModels
 
         public void GetAllInvoices()
         {
-            var (totalItems, invoices) = _invoiceDao.GetAllInvoices(
+            var (totalItems, invoices) = _invoiceDao.GetAllInvoices(searchText,
 
                 CurrentPage, ItemsPerPage);
             var temp = new ObservableCollection<WholeInvoice>();
             foreach (var invoice in invoices)
             {
                 var (invoiceDetailsNumber, invoiceDetailsWithProductInfo) = _invoiceDetailDao.GetAllInvoiceDetailsWithProductInformation(invoice.InvoiceID);
+
                 var wholeInvoice = new WholeInvoice
                 {
                     Invoice = invoice,
                     InvoiceDetailsWithProductInfo = new FullObservableCollection<InvoiceDetailWithProductInfo>(invoiceDetailsWithProductInfo)
+
                 };
                 temp.Add(wholeInvoice);
             }

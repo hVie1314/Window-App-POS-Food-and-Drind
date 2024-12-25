@@ -11,7 +11,7 @@ namespace POS.Services.DAO
     {
         public PostgresInvoiceDao() { }
 
-        public Tuple<int, List<Invoice>> GetAllInvoices(int page, int rowsPerPage)
+        public Tuple<int, List<Invoice>> GetAllInvoices(string hoadonID, int page, int rowsPerPage)
         {
             var invoices = new List<Invoice>();
             int totalItems = 0;
@@ -22,13 +22,22 @@ namespace POS.Services.DAO
 
                 var sql = @"
                 SELECT COUNT(*) OVER() AS TotalItems, hoadonid, ngaylaphoadon, tongtien, phuongthucthanhtoan, khachhangid, nhanvienid, giamgia, thuevat, ghichu
-                FROM hoadon
-                OFFSET @Skip LIMIT @Take";
+                FROM hoadon";
+                if (!string.IsNullOrEmpty(hoadonID))
+                {
+                    sql += " WHERE hoadonid = @hoadonID";
+                }
+                sql +=@" OFFSET @Skip LIMIT @Take";
+                
 
                 var skip = (page - 1) * rowsPerPage;
                 var command = new NpgsqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@Skip", skip);
                 command.Parameters.AddWithValue("@Take", rowsPerPage);
+                if (!string.IsNullOrEmpty(hoadonID))
+                {
+                    command.Parameters.AddWithValue("@hoadonID", Int32.Parse(hoadonID));
+                }
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -58,6 +67,8 @@ namespace POS.Services.DAO
 
             return new Tuple<int, List<Invoice>>(totalItems, invoices);
         }
+        //=======================================================================================================
+        //Insert Invoice
 
         public int InsertInvoice(Invoice invoice)
         {
@@ -86,6 +97,36 @@ namespace POS.Services.DAO
 
             return newId;
         }
+
+        public int InsertInvoiceWithId(Invoice invoice)
+        {
+            int newId;
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var sql = @"
+                INSERT INTO hoadon (hoadonid ,ngaylaphoadon, tongtien, phuongthucthanhtoan, khachhangid, nhanvienid, giamgia, thuevat, ghichu)
+                VALUES (@InvoiceID, @InvoiceDate, @TotalAmount, @PaymentMethod, @CustomerID, @EmployeeID, @Discount, @VAT, @Note)
+                RETURNING hoadonid";
+
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@InvoiceID", invoice.InvoiceID);
+                command.Parameters.AddWithValue("@InvoiceDate", invoice.InvoiceDate);
+                command.Parameters.AddWithValue("@TotalAmount", invoice.TotalAmount);
+                command.Parameters.AddWithValue("@PaymentMethod", invoice.PaymentMethod ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@CustomerID", invoice.CustomerID);
+                command.Parameters.AddWithValue("@EmployeeID", invoice.EmployeeID);
+                command.Parameters.AddWithValue("@Discount", invoice.Discount);
+                command.Parameters.AddWithValue("@VAT", invoice.Tax);
+                command.Parameters.AddWithValue("@Note", invoice.Note ?? (object)DBNull.Value);
+
+                newId = Convert.ToInt32(command.ExecuteScalar());
+            }
+
+            return newId;
+        }
+        //=======================================================================================================
 
         public bool UpdateInvoice(Invoice invoice)
         {

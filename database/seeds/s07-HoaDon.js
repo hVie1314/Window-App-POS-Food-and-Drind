@@ -8,8 +8,8 @@ exports.seed = async function(knex) {
 
   // Inserts seed entries
   await knex('hoadon').insert([
-    { ngaylaphoadon: '2024-10-10', tongtien: 95000, phuongthucthanhtoan: 'Tiền mặt', khachhangid: 1, nhanvienid: 2, giamgia: 5, thuevat: 10, ghichu: 'Khách hàng VIP giảm giá' },
-    { ngaylaphoadon: '2024-10-10', tongtien: 30000, phuongthucthanhtoan: 'Thẻ', khachhangid: 2, nhanvienid: 1, giamgia: 0, thuevat: 10, ghichu: null }
+    { hoadonid:1, ngaylaphoadon: '2024-10-10', tongtien: 95000, phuongthucthanhtoan: 'Tiền mặt', khachhangid: 1, nhanvienid: 2, giamgia: 5, thuevat: 10, ghichu: 'Khách hàng VIP giảm giá' },
+    {hoadonid:2, ngaylaphoadon: '2024-10-10', tongtien: 30000, phuongthucthanhtoan: 'Thẻ', khachhangid: 2, nhanvienid: 1, giamgia: 0, thuevat: 10, ghichu: null }
   ]);
 };
 

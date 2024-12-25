@@ -23,6 +23,8 @@ namespace POS.ViewModels
         private double _subTotal;
         private double _total;
         private double _tax;
+
+        public int InvoiceID { get; set; } = -1;
         public double SubTotal
         {
             get
@@ -68,16 +70,18 @@ namespace POS.ViewModels
                 }
             }
         }
-        public void Add(Product info, int quanlity)
+        public void Add(Product info, int quanlity, string note)
         {
-            var foundItem = Items.FirstOrDefault(item => item.Name == info.Name);
+            var foundItem = Items.FirstOrDefault(item => item.Name == info.Name && item.Note==note &&item.Price==info.Price);
             if (foundItem != null)
             {
                 foundItem.Quantity += quanlity;
+                foundItem.Total = foundItem.Quantity * foundItem.Price;
+                foundItem.Note = note;
             }
             else
             {
-                Items.Add(new Order(info,quanlity));
+                Items.Add(new Order(info,quanlity,note));
             }
             SubTotal = Items.Sum(item => item.Total);
             Tax = SubTotal * 0.1;
@@ -97,24 +101,35 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(Total));
             OnPropertyChanged(nameof(SubTotal));
         }
-        public void SaveToDatabase()
+        public void SaveToDatabase(int invoiceID=-1)
         {
             // Save to database
             Invoice invoice = new Invoice()
             {
                 TotalAmount = Total,
                 Tax = 10.00,
-                InvoiceDate = DateTime.Now
+                InvoiceDate = DateTime.Now,
+                InvoiceID = invoiceID
             };
-            var newInvoiceId = _invoiceDao.InsertInvoice(invoice);
-            foreach(var item in Items)
+            int newInvoiceId;
+            if (invoiceID==-1)
+            { 
+                newInvoiceId = _invoiceDao.InsertInvoice(invoice); 
+            }
+            else
+            {
+                _invoiceDao.RemoveInvoiceById(invoiceID);
+                newInvoiceId = _invoiceDao.InsertInvoiceWithId(invoice);
+            }
+            foreach (var item in Items)
             {
                 InvoiceDetail invoiceDetail = new InvoiceDetail()
                 {
                     InvoiceID = newInvoiceId,
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
-                    Price = item.Price
+                    Price = item.Price,
+                    Note = item.Note
                 };
                 _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
             }

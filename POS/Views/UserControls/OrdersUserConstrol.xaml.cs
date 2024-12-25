@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Navigation;
 using POS.Models;
 using POS.ViewModels;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,25 +25,27 @@ namespace POS.Views.UserControls
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class OrdersUserConstrol : UserControl
+    public sealed partial class OrdersUserControl : UserControl
     {
         public OrderDetailViewModel ViewModel { get; set; } = new OrderDetailViewModel();
 
-        public void AddToOrder(Product info,int quanlity)
+        public void AddToOrder(Product info, int quanlity, string note)
         {
-            ViewModel.Add(info,quanlity);
+            ViewModel.Add(info, quanlity, note);
         }
-        public OrdersUserConstrol()
+        public OrdersUserControl()
         {
             this.InitializeComponent();
+            this.DataContext = ViewModel;
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.SaveToDatabase();
+            ViewModel.SaveToDatabase(ViewModel.InvoiceID);
             ViewModel.Items.Clear();
             ViewModel.Total = 0;
             ViewModel.SubTotal = 0;
             ViewModel.Tax = 0;
+            ShowSaveSuccessTeachingTip();
         }
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -55,5 +58,24 @@ namespace POS.Views.UserControls
             var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
             navigation.SetCurrentNavigationViewItem(festivalItem);
         }
+        private void DeleteOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (sender as Button).DataContext as Order;
+            ViewModel.Remove(item);
+        }
+        //================================================================================================
+        //Notification
+        private void ShowSaveSuccessTeachingTip()
+        {
+            SaveSuccessTeachingTip.IsOpen = true;
+
+            // Auto close after 3s
+            _ = Task.Delay(3000).ContinueWith(_ =>
+            {
+                DispatcherQueue.TryEnqueue(() => SaveSuccessTeachingTip.IsOpen = false);
+            });
+        }
+        //================================================================================================
+
     }
 }

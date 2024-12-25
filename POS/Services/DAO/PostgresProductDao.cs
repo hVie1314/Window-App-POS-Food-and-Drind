@@ -169,5 +169,34 @@ namespace POS.Services.DAO
                 command.ExecuteNonQuery();
             }
         }
+
+        public Product FindProductByID(int productID)
+        {
+            Product product = new Product();
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+                var sql = @"
+                SELECT monanid, tenmonan, loaimonan, gia, mota, imagepath, trangthai
+                FROM menu
+                WHERE monanid = @ProductID";
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@ProductID", productID);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        product.ProductID = reader.GetInt32(reader.GetOrdinal("monanid"));
+                        product.Name = reader.GetString(reader.GetOrdinal("tenmonan"));
+                        product.Category = reader.GetString(reader.GetOrdinal("loaimonan"));
+                        product.Price = reader.GetInt32(reader.GetOrdinal("gia"));
+                        product.Description = reader.IsDBNull(reader.GetOrdinal("mota")) ? null : reader.GetString(reader.GetOrdinal("mota"));
+                        product.ImagePath = reader.IsDBNull(reader.GetOrdinal("imagepath")) ? null : reader.GetString(reader.GetOrdinal("imagepath"));
+                        product.Status = reader.GetBoolean(reader.GetOrdinal("trangthai"));
+                    }
+                }
+            }
+            return product;
+        }
     }
 }

@@ -64,11 +64,12 @@ namespace POS.Interfaces
 
     public interface IInvoiceDao
     {
-        Tuple<int, List<Invoice>> GetAllInvoices(
+        Tuple<int, List<Invoice>> GetAllInvoices(string searchKeyword = "",
             int page = 1,
             int rowsPerPage = 10
         );
         int InsertInvoice(Invoice invoice);
+        int InsertInvoiceWithId(Invoice invoice);
         bool UpdateInvoice(Invoice invoice);
         void RemoveInvoiceById(int invoiceId);
     }

@@ -13,6 +13,9 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS.ViewModels;
+using POS.Models;
+using System.Diagnostics;
+using POS.DTOs;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -25,7 +28,8 @@ namespace POS.Views
     public sealed partial class InvoiceView : Page
     {
         public InvoiceViewModel ViewModel { get; set; } = new InvoiceViewModel();
-
+        
+        
         public InvoiceView()
         {
             this.InitializeComponent();
@@ -76,6 +80,42 @@ namespace POS.Views
             }
         }
         //================================================================================================
-
+        private void InvoiceSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var gridview = sender as GridView;
+            var wholeInvoice = gridview.SelectedItem as WholeInvoice;
+            ViewModel.SelectedInvoice = wholeInvoice;
+        }
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ViewModel.searchText = sender.Text;
+            ViewModel.LoadInvoices(1);
+            UpdatePagingInfo_bootstrap();
+        }
+        private void OrderMoreDishes_Click(object sender, RoutedEventArgs e)
+        {
+            var wholeInvoice = ViewModel.SelectedInvoice;
+            if (wholeInvoice != null)
+            {
+                var cart = new InvoiceToOrderObject();
+                 cart.InvoiceDetailToCartItemObjects= new List<InvoiceDetailToCartItemObject>();
+                cart.InvoiceId = wholeInvoice.Invoice.InvoiceID;
+                foreach (var item in wholeInvoice.InvoiceDetailsWithProductInfo)
+                {
+                    var product = item.ProductInfo;
+                    product.Price = item.InvoiceDetailProperty.Price;//
+                    cart.InvoiceDetailToCartItemObjects.Add(new InvoiceDetailToCartItemObject
+                    {
+                        Product = product,
+                        Quantity = item.InvoiceDetailProperty.Quantity,
+                        Note = item.InvoiceDetailProperty.Note
+                    }
+                    );
+                }
+                // Navigate to Menu
+                var navigation = (Application.Current as App).navigate;
+                navigation.SetCurrentNavigationViewItemForMenuWithArgument(cart);
+            }
+        }
     }
 }

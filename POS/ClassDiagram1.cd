@@ -88,7 +88,7 @@
   <Class Name="POS.App" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="5.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAA=</HashCode>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAQAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -188,7 +188,7 @@
   <Class Name="POS.Models.Order" Collapsed="true">
     <Position X="2.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAABIAAAAAAAgAAAQAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAQQAAAAAAAAAABIAAAAAAAgAAAQAAAAAAAgAEAAAA=</HashCode>
       <FileName>Models\Order.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -321,7 +321,7 @@
   <Class Name="POS.ViewModels.InvoiceViewModel" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAkAAAAAICAAAAQBgAQAAIAAAAAAACAAAAI=</HashCode>
+      <HashCode>AAAAAgAAAAkAAAAAICAAAAQBgAQAAIAAAAgAACAAAAI=</HashCode>
       <FileName>ViewModels\InvoiceViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -344,7 +344,7 @@
   <Class Name="POS.ViewModels.PaymentViewModel" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="17.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAIgCAAKFCAAAJYAAAQAAAwAAAAAACAgAEAARAAAA=</HashCode>
+      <HashCode>AoAAIpCgAGtACgAJcIAAQAAQwAAAAKAGAIADBARAAAA=</HashCode>
       <FileName>ViewModels\PaymentViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -384,7 +384,7 @@
   <Class Name="POS.Views.InvoiceView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="12.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAACAAAAAAAAAAAAAAAAkBAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAEAQAACAAAAAAAAAAAAAAAAkBAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\InvoiceView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -400,7 +400,7 @@
   <Class Name="POS.Views.PaymentView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="15.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAQAgAAAAEAAAAAAEABQAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAABABAAAAAEAgAAAAEAAAAAAEABAAAAAAACA=</HashCode>
       <FileName>Views\PaymentView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
