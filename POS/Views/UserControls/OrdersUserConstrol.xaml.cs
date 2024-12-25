@@ -40,7 +40,7 @@ namespace POS.Views.UserControls
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.SaveToDatabase();
+            ViewModel.SaveToDatabase(ViewModel.InvoiceID);
             ViewModel.Items.Clear();
             ViewModel.Total = 0;
             ViewModel.SubTotal = 0;

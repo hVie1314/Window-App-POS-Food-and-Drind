@@ -68,7 +68,7 @@
         <!--mid side-->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
             <!--head-->
-            <StackPanel Orientation="Horizontal" BorderBrush="BurlyWood">
+            <StackPanel Orientation="Horizontal" BorderBrush="BurlyWood" Margin="20">
                 <!--search bar-->
                 <AutoSuggestBox 
                     x:Name="SearchBox"
@@ -83,8 +83,9 @@
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
 
                 <!--category-->
-                <AppBarButton Name ="CategoryCombobox" Icon="Filter" IsCompact="True" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category" Width="70" Margin="0 40 40 0" Foreground="Black" Background="BurlyWood">
-                    <AppBarButton.Flyout>
+                <Button Name ="CategoryCombobox" Width="60" Height="40" Margin="20 0" ToolTipService.ToolTip="Chọn danh mục" AutomationProperties.Name="Category" Foreground="Black" Background="BurlyWood" Style="{StaticResource CustomButtonStyle}">
+                    <SymbolIcon Symbol="Filter"/>
+                    <Button.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="Tất cả" Click="MenuFlyoutItem_Click" Tag=""/>
                             <MenuFlyoutItem Text="Khai vị" Click="MenuFlyoutItem_Click" Tag="Khai vị"/>
@@ -93,27 +94,31 @@
                             <MenuFlyoutItem Text="Đồ uống" Click="MenuFlyoutItem_Click" Tag="Đồ uống"/>
                             <MenuFlyoutItem Text="Đồ uống có cồn" Click="MenuFlyoutItem_Click" Tag="Đồ uống có cồn"/>
                         </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
+                    </Button.Flyout>
+                </Button>
 
                 <!--sort-->
-                <AppBarButton Icon="Sort" Margin="40" IsCompact="True" ToolTipService.ToolTip="Sắp xếp" AutomationProperties.Name="Sort" Foreground="Black" Background="BurlyWood">
-                    <AppBarButton.Flyout>
+                <Button ToolTipService.ToolTip="Sắp xếp" Width="60" Height="40" AutomationProperties.Name="Sort" Foreground="Black" Background="BurlyWood" Style="{StaticResource CustomButtonStyle}">
+                    <SymbolIcon Symbol="Sort"/>
+                    <Button.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="Mặc định" Click="Sort_Item_Click" Tag="0"/>
                             <MenuFlyoutItem Text="Giá tăng dần" Click="Sort_Item_Click" Tag="1"/>
                             <MenuFlyoutItem Text="Giá giảm dần" Click="Sort_Item_Click" Tag="2"/>
                         </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
+                    </Button.Flyout>
+                </Button>
 
 
 
                 <!--add, edit, remove-->
                 <!--Update later-->
-                <Button Content="Thêm" Width="60" Height="40" Margin="90 0 20 0" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Content="Thêm" Width="60" Height="40" Margin="20 0 20 0" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
                 <Button Content="Xóa" Width="60" Height="40" Margin="0 0 20 0" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Sửa" Width="60" Height="40" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <Button Content="Sửa" Width="60" Height="40" Margin="0 0 20 0"  HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>
+                <!--<Button Content="Thêm hóa đơn mới" Width="160" Height="40" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}"/>-->
+                </StackPanel>
             </StackPanel>
             
             <!--items-->

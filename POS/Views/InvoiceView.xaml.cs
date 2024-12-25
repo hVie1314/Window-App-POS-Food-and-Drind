@@ -97,12 +97,14 @@ namespace POS.Views
             var wholeInvoice = ViewModel.SelectedInvoice;
             if (wholeInvoice != null)
             {
-                var cart = new List<InvoiceDetailToCartItemObject>();
+                var cart = new InvoiceToOrderObject();
+                 cart.InvoiceDetailToCartItemObjects= new List<InvoiceDetailToCartItemObject>();
+                cart.InvoiceId = wholeInvoice.Invoice.InvoiceID;
                 foreach (var item in wholeInvoice.InvoiceDetailsWithProductInfo)
                 {
                     var product = item.ProductInfo;
                     product.Price = item.InvoiceDetailProperty.Price;//
-                    cart.Add(new InvoiceDetailToCartItemObject
+                    cart.InvoiceDetailToCartItemObjects.Add(new InvoiceDetailToCartItemObject
                     {
                         Product = product,
                         Quantity = item.InvoiceDetailProperty.Quantity,

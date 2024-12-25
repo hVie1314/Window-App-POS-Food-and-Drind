@@ -69,6 +69,7 @@ namespace POS.Interfaces
             int rowsPerPage = 10
         );
         int InsertInvoice(Invoice invoice);
+        int InsertInvoiceWithId(Invoice invoice);
         bool UpdateInvoice(Invoice invoice);
         void RemoveInvoiceById(int invoiceId);
     }

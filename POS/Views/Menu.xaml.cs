@@ -175,9 +175,11 @@ namespace POS.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is List<InvoiceDetailToCartItemObject>)
+            if (e.Parameter is InvoiceToOrderObject)
             {
-                foreach (var item in e.Parameter as List<InvoiceDetailToCartItemObject>)
+                var cart = e.Parameter as InvoiceToOrderObject;
+                OrdersUserControl.ViewModel.InvoiceID = cart.InvoiceId;
+                foreach (var item in cart.InvoiceDetailToCartItemObjects)
                 {
                     OrdersUserControl.AddToOrder(item.Product, item.Quantity, item.Note);
                 }
