@@ -28,7 +28,7 @@ namespace POS.Interfaces
             int rowsPerPage = 10,
             string searchKeyword = "",
             string position = "",
-            int isSalarySort = 0 // 0: không sắp xếp, 1: sắp xếp tăng dần, 2: sắp xếp giảm dần
+            string sortDirection = null
         );
         int InsertEmployee(Employee employee);
         bool UpdateEmployee(Employee employee);
@@ -42,6 +42,13 @@ namespace POS.Interfaces
             int rowsPerPage = 10,
             string searchKeyword = "",
             string customerType = ""
+        );
+        Tuple<int, List<Customer>> GetAllCustomers(
+            int page = 1,
+            int rowsPerPage = 10,
+            string searchKeyword = "",
+            string position = "",
+            string sortDirection = null
         );
         int InsertCustomer(Customer customer);
         bool UpdateCustomer(Customer customer);

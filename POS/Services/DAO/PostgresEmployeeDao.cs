@@ -11,7 +11,7 @@ namespace POS.Services.DAO
     {
         public PostgresEmployeeDao() { }
 
-        public Tuple<int, List<Employee>> GetAllEmployees(int page, int rowsPerPage, string searchKeyword, string position, int isSalarySort = 0)
+        public Tuple<int, List<Employee>> GetAllEmployees(int page, int rowsPerPage, string searchKeyword, string position, string isSalarySort)
         {
             var employees = new List<Employee>();
             int totalItems = 0;
