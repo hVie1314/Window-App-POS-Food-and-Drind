@@ -49,9 +49,10 @@ namespace POS.Views.UserControls
         }
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
+            int payFromMenuInvoiceId = -1; // flag to indicate that this payment is from menu page
             // Pass data to PaymentViewModel
             var paymentViewModel = (Application.Current as App).PaymentViewModel;
-            paymentViewModel.SetItems(ViewModel.Items, ViewModel.SubTotal);
+            paymentViewModel.SetItems(ViewModel.Items, ViewModel.SubTotal, payFromMenuInvoiceId);
 
             // Navigate to PaymentView
             var navigation = (Application.Current as App).navigate;

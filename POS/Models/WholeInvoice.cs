@@ -12,6 +12,7 @@ namespace POS.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public Invoice Invoice { get; set; }
+        public bool IsPaid => Invoice.PaymentMethod != null;
         public ObservableCollection<InvoiceDetailWithProductInfo> InvoiceDetailsWithProductInfo { get; set; }
     }
 }

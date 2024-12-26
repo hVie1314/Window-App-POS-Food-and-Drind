@@ -128,6 +128,40 @@ namespace POS.Services.DAO
         }
         //=======================================================================================================
 
+        public Invoice GetInvoiceById(int invoiceId)
+        {
+            Invoice invoice = null;
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+                var sql = @"
+                SELECT hoadonid, ngaylaphoadon, tongtien, phuongthucthanhtoan, khachhangid, nhanvienid, giamgia, thuevat, ghichu
+                FROM hoadon
+                WHERE hoadonid = @InvoiceID";
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@InvoiceID", invoiceId);
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        invoice = new Invoice
+                        {
+                            InvoiceID = reader.GetInt32(reader.GetOrdinal("hoadonid")),
+                            InvoiceDate = reader.GetDateTime(reader.GetOrdinal("ngaylaphoadon")),
+                            TotalAmount = reader.GetDouble(reader.GetOrdinal("tongtien")),
+                            PaymentMethod = reader.IsDBNull(reader.GetOrdinal("phuongthucthanhtoan")) ? null : reader.GetString(reader.GetOrdinal("phuongthucthanhtoan")),
+                            CustomerID = reader.GetInt32(reader.GetOrdinal("khachhangid")),
+                            EmployeeID = reader.GetInt32(reader.GetOrdinal("nhanvienid")),
+                            Discount = reader.GetFloat(reader.GetOrdinal("giamgia")),
+                            Tax = reader.GetDouble(reader.GetOrdinal("thuevat")),
+                            Note = reader.IsDBNull(reader.GetOrdinal("ghichu")) ? null : reader.GetString(reader.GetOrdinal("ghichu"))
+                        };
+                    }
+                }
+            }
+            return invoice;
+        }
+
         public bool UpdateInvoice(Invoice invoice)
         {
             int rowsAffected;
