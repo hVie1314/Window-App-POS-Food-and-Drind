@@ -77,6 +77,7 @@ namespace POS.Interfaces
         );
         int InsertInvoice(Invoice invoice);
         int InsertInvoiceWithId(Invoice invoice);
+        Invoice GetInvoiceById(int invoiceId);
         bool UpdateInvoice(Invoice invoice);
         void RemoveInvoiceById(int invoiceId);
     }

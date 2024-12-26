@@ -16,6 +16,7 @@ using POS.ViewModels;
 using POS.Models;
 using System.Diagnostics;
 using POS.DTOs;
+using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -85,6 +86,13 @@ namespace POS.Views
             var gridview = sender as GridView;
             var wholeInvoice = gridview.SelectedItem as WholeInvoice;
             ViewModel.SelectedInvoice = wholeInvoice;
+
+            // Disable OrderMoreDishesButton and PayInvoiceButton if the invoice is paid
+            if (wholeInvoice != null)
+            {
+                OrderMoreDishesButton.IsEnabled = !wholeInvoice.IsPaid;
+                PayInvoiceButton.IsEnabled = !wholeInvoice.IsPaid;
+            }
         }
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -116,6 +124,46 @@ namespace POS.Views
                 var navigation = (Application.Current as App).navigate;
                 navigation.SetCurrentNavigationViewItemForMenuWithArgument(cart);
             }
+        }
+
+        private void PayInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            var wholeinvoice = ViewModel.SelectedInvoice;
+            if (wholeinvoice != null)
+            {
+                int totalCost = CalculateTotalCost();
+                var paymentViewModel = (Application.Current as App).PaymentViewModel;
+                var orderItems = new FullObservableCollection<Order>();
+
+                foreach (var item in wholeinvoice.InvoiceDetailsWithProductInfo)
+                {
+                    var order = new Order(item.ProductInfo, item.InvoiceDetailProperty.Quantity, item.InvoiceDetailProperty.Note)
+                    {
+                        Price = item.InvoiceDetailProperty.Price
+                    };
+                    orderItems.Add(order);
+                }
+
+                paymentViewModel.SetItems(orderItems, totalCost, wholeinvoice.Invoice.InvoiceID);
+                var navigation = (Application.Current as App).navigate;
+                var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
+                navigation.SetCurrentNavigationViewItem(festivalItem);
+            }
+        }
+
+
+        private int CalculateTotalCost()
+        {
+            int totalCost = 0;
+            var wholeinvoice = ViewModel.SelectedInvoice;
+            if (wholeinvoice != null)
+            {
+                foreach (var item in wholeinvoice.InvoiceDetailsWithProductInfo)
+                {
+                    totalCost += item.InvoiceDetailProperty.Price * item.InvoiceDetailProperty.Quantity;
+                }
+            }
+            return totalCost;
         }
     }
 }

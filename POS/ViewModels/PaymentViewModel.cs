@@ -69,7 +69,7 @@ namespace POS.ViewModels
 
         }
 
-        public void SetItems(ObservableCollection<Order> items, double total)
+        public void SetItems(ObservableCollection<Order> items, double total, int invoiceId)
         {
             Items = new ObservableCollection<Order>(items);
             OnPropertyChanged(nameof(Items));
@@ -77,6 +77,7 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(TotalCost));
             CalculateTotalPayment();
             OnPropertyChanged(nameof(TotalPayable));
+            InvoiceId = invoiceId;
         }
 
         /// <summary>
@@ -204,6 +205,31 @@ namespace POS.ViewModels
             }
 
             return newInvoiceId;
+        }
+
+        public void UpdateDB()
+        {
+            Invoice invoice = _invoiceDao.GetInvoiceById(InvoiceId);
+            // Update invoice
+            invoice.TotalAmount = TotalPayable;
+            invoice.Tax = VAT;
+            invoice.Discount = DiscountValue;
+            invoice.InvoiceDate = PaymentDate;
+            invoice.PaymentMethod = SelectedPaymentMethod;
+            invoice.Note = "NULL"; // cần cập nhật thêm
+            _invoiceDao.UpdateInvoice(invoice);
+
+            foreach (var item in Items)
+            {
+                InvoiceDetail invoiceDetail = new InvoiceDetail()
+                {
+                    InvoiceID = InvoiceId,
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                };
+                _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
+            }
         }
 
         public void ResetData()
