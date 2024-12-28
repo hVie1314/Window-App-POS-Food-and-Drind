@@ -7,10 +7,25 @@ using POS.Helpers;
 
 namespace POS.Services.DAO
 {
+    /// <summary>
+    /// DAO cho các thao tác liên quan đến Employee
+    /// </summary>
     public class PostgresEmployeeDao : IEmployeeDao
     {
+        /// <summary>
+        ///     
+        /// </summary>
         public PostgresEmployeeDao() { }
 
+        /// <summary>
+        /// Lấy tất cả các nhân viên
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="rowsPerPage"></param>
+        /// <param name="searchKeyword"></param>
+        /// <param name="position"></param>
+        /// <param name="isSalarySort"></param>
+        /// <returns></returns>
         public Tuple<int, List<Employee>> GetAllEmployees(int page, int rowsPerPage, string searchKeyword, string position, string isSalarySort)
         {
             var employees = new List<Employee>();
@@ -59,7 +74,11 @@ namespace POS.Services.DAO
             return new Tuple<int, List<Employee>>(totalItems, employees);
         }
 
-        // Thêm nhân viên mới
+        /// <summary>
+        /// Thêm một nhân viên mới
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
         public int InsertEmployee(Employee employee)
         {
             int newId;
@@ -85,7 +104,11 @@ namespace POS.Services.DAO
             return newId;
         }
 
-        // Cập nhật thông tin nhân viên
+        /// <summary>
+        /// Cập nhật thông tin nhân viên
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
         public bool UpdateEmployee(Employee employee)
         {
             int rowsAffected;
@@ -123,7 +146,10 @@ namespace POS.Services.DAO
             return rowsAffected > 0;
         }
 
-        // Xóa nhân viên theo ID
+        /// <summary>
+        /// Xóa một nhân viên theo ID
+        /// </summary>
+        /// <param name="employeeId"></param>
         public void RemoveEmployeeById(int employeeId)
         {
             using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))

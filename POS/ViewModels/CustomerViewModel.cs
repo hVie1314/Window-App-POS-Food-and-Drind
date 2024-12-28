@@ -13,7 +13,6 @@ namespace POS.ViewModels
 {
     /// <summary>
     /// ViewModel quản lý logic và dữ liệu của giao diện quản lý khách hàng.
-
     /// </summary>
     public sealed partial class CustomerViewModel : INotifyPropertyChanged
     {
