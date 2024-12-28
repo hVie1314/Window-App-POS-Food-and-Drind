@@ -17,6 +17,7 @@ using POS.Models;
 using System.Diagnostics;
 using POS.DTOs;
 using System.Collections.ObjectModel;
+using Windows.ApplicationModel.VoiceCommands;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -100,6 +101,8 @@ namespace POS.Views
             ViewModel.LoadInvoices(1);
             UpdatePagingInfo_bootstrap();
         }
+        //================================================================================================
+        //Click handler
         private void OrderMoreDishes_Click(object sender, RoutedEventArgs e)
         {
             var wholeInvoice = ViewModel.SelectedInvoice;
@@ -144,14 +147,21 @@ namespace POS.Views
                     orderItems.Add(order);
                 }
 
-                paymentViewModel.SetItems(orderItems, totalCost, wholeinvoice.Invoice.InvoiceID);
+                paymentViewModel.SetItems(wholeinvoice.Invoice.CustomerID,orderItems, totalCost, wholeinvoice.Invoice.InvoiceID);
                 var navigation = (Application.Current as App).navigate;
                 var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
                 navigation.SetCurrentNavigationViewItem(festivalItem);
             }
         }
-
-
+        private void DeleteInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            var wholeinvoice = ViewModel.SelectedInvoice;
+            if (wholeinvoice != null)
+            {
+                ViewModel.DeleteInvoice();
+            }
+        }
+        //================================================================================================
         private int CalculateTotalCost()
         {
             int totalCost = 0;

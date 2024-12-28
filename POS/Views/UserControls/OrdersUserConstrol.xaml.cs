@@ -42,16 +42,22 @@ namespace POS.Views.UserControls
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
-            int newID = ViewModel.SaveToDatabase(ViewModel.InvoiceID, ViewModel.CustomerID);
+            if(ViewModel.Items.Count == 0 )
+            {
+                EmptyCartSavingErrorDialog();
+            }
+            else
+            {int newID = ViewModel.SaveToDatabase(ViewModel.InvoiceID, ViewModel.CustomerID);
             resetCart();
-            DisplayIDInvoiceDialog(newID);
+                DisplayIDInvoiceDialog(newID);
+            }
         }
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
             int payFromMenuInvoiceId = -1; // flag to indicate that this payment is from menu page
             // Pass data to PaymentViewModel
             var paymentViewModel = (Application.Current as App).PaymentViewModel;
-            paymentViewModel.SetItems(ViewModel.Items, ViewModel.SubTotal, payFromMenuInvoiceId);
+            paymentViewModel.SetItems(ViewModel.CustomerID, ViewModel.Items, ViewModel.SubTotal, payFromMenuInvoiceId);
 
             // Navigate to PaymentView
             var navigation = (Application.Current as App).navigate;
@@ -78,14 +84,26 @@ namespace POS.Views.UserControls
         //Notification
         private async void DisplayIDInvoiceDialog(int newID)
         {
-            ContentDialog noWifiDialog = new ContentDialog()
+            ContentDialog IDinvoiceDialog = new ContentDialog()
             {
                 Title = "Lưu hóa đơn thành công!",
                 Content = $"Mã hóa đơn: {newID}",
                 CloseButtonText = "Đóng",
                 XamlRoot = this.XamlRoot
             };
-            ContentDialogResult result = await noWifiDialog.ShowAsync();
+            ContentDialogResult result = await IDinvoiceDialog.ShowAsync();
+        }
+
+        private async void EmptyCartSavingErrorDialog()
+        {
+            ContentDialog Dialog = new ContentDialog()
+            {
+                Title = "Lỗi",
+                Content = "Vui lòng chọn món trước khi lưu hóa đơn.",
+                CloseButtonText = "Đóng",
+                XamlRoot = this.XamlRoot
+            };
+            ContentDialogResult result = await Dialog.ShowAsync();
         }
         //================================================================================================
         private void resetCart()

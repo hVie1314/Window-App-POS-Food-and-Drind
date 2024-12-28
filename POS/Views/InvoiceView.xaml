@@ -50,7 +50,7 @@
             <!--Update later-->
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="40 0 40 0">
             <Button Content="Đặt thêm món" x:Name="OrderMoreDishesButton" Margin="88 0 20 0" Padding="10" HorizontalAlignment="Center" Click="OrderMoreDishes_Click"/>
-            <Button Content="Xóa hóa đơn" Padding="8"  Margin="0 0 20 0" HorizontalAlignment="Center"/>
+            <Button Content="Xóa hóa đơn" Padding="8"  Margin="0 0 20 0" HorizontalAlignment="Center" Click="DeleteInvoice_Click"/>
             <Button Content="Thanh toán" x:Name="PayInvoiceButton" Padding="8" Margin="0 0 20 0" HorizontalAlignment="Center" Background="#99ffcc" Click="PayInvoice_Click"/>
             </StackPanel>
         
