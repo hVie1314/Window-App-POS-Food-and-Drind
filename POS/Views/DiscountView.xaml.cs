@@ -29,6 +29,42 @@ namespace POS.Views
 
         private async void OnCreateDiscount_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            // Kiểm tra nếu người dùng chưa nhập quantity hoặc value
+            if (string.IsNullOrEmpty(QuantityTextBox.Text) || DiscountValueComboBox.SelectedItem == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Lỗi",
+                    Content = "Vui lòng chọn giá trị và số lượng mã giảm giá muốn tạo.",
+                    CloseButtonText = "OK",
+                    DefaultButton = ContentDialogButton.Close,
+                    XamlRoot = this.XamlRoot
+                };
+                // Close CreateDiscountDialog and show error dialog
+                CreateDiscountDialog.Hide();
+                await errorDialog.ShowAsync();
+                args.Cancel = true;
+                return;
+            }
+
+            // Kiểm tra số lượng là một số nguyên và lớn hơn 0
+            if (!int.TryParse(QuantityTextBox.Text, out int _quantity) || _quantity <= 0)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Lỗi",
+                    Content = "Số lượng phải là một số nguyên lớn hơn 0.",
+                    CloseButtonText = "OK",
+                    DefaultButton = ContentDialogButton.Close,
+                    XamlRoot = this.XamlRoot
+                };
+                // Close CreateDiscountDialog and show error dialog
+                CreateDiscountDialog.Hide();
+                await errorDialog.ShowAsync();
+                args.Cancel = true;
+                return;
+            }
+
             // Lấy dữ liệu từ ComboBox và TextBox và gán vào ViewModel
             ViewModel.Value = int.Parse((DiscountValueComboBox.SelectedItem as ComboBoxItem).Content.ToString());
             ViewModel.Quantity = int.Parse(QuantityTextBox.Text);

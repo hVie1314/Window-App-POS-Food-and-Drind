@@ -176,7 +176,7 @@
 
                 <StackPanel Spacing="10" Padding="20">
                     <TextBox x:Name="IngredientNameTextBox" PlaceholderText="Tên nguyên liệu" Margin="0 5" />
-                    <TextBox x:Name="StockQuantityTextBox" PlaceholderText="Số lượng tồn" Margin="0 5" />
+                    <TextBox x:Name="StockQuantityTextBox" PlaceholderText="Số lượng tồn kho" Margin="0 5" />
                     <TextBox x:Name="UnitTextBox" PlaceholderText="Đơn vị tính" Margin="0 5" />
                     <DatePicker x:Name="EntryDatePicker" Header="Ngày nhập kho" Margin="0 5" />
                     <DatePicker x:Name="ExpirationDatePicker" Header="Ngày hết hạn" Margin="0 5" />
