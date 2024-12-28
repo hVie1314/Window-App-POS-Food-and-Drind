@@ -179,6 +179,7 @@ namespace POS.Views
             {
                 var cart = e.Parameter as InvoiceToOrderObject;
                 OrdersUserControl.ViewModel.InvoiceID = cart.InvoiceId;
+                OrdersUserControl.ViewModel.InvoiceDate = DateTime.Now;
                 foreach (var item in cart.InvoiceDetailToCartItemObjects)
                 {
                     OrdersUserControl.AddToOrder(item.Product, item.Quantity, item.Note);

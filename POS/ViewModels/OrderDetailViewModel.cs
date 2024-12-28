@@ -1,6 +1,7 @@
 ﻿using POS.Interfaces;
 using POS.Models;
 using POS.Services.DAO;
+using POS.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,15 +17,21 @@ namespace POS.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private IInvoiceDao _invoiceDao = new PostgresInvoiceDao();
+        private ICustomerDao _customerDao = new PostgresCustomerDao();
         private IInvoiceDetailDao _invoiceDetailDao = new PostgresInvoiceDetailDao();
-
+        public List<Customer> AllCustomers { get; set; }
         public FullObservableCollection<Order> Items { get; set; }
             = new FullObservableCollection<Order>();
         private double _subTotal;
         private double _total;
         private double _tax;
 
+        public OrderDetailViewModel()
+        {
+            AllCustomers = _customerDao.GetAllCustomers();
+        }
         public int InvoiceID { get; set; } = -1;
+        public DateTime InvoiceDate { get; set; } = DateTime.Now;
         public double SubTotal
         {
             get

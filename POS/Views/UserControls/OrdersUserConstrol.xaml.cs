@@ -16,6 +16,7 @@ using POS.Models;
 using POS.ViewModels;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -41,10 +42,7 @@ namespace POS.Views.UserControls
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
             int newID = ViewModel.SaveToDatabase(ViewModel.InvoiceID);
-            ViewModel.Items.Clear();
-            ViewModel.Total = 0;
-            ViewModel.SubTotal = 0;
-            ViewModel.Tax = 0;
+            resetCart();
             DisplayIDInvoiceDialog(newID);
         }
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
@@ -89,6 +87,48 @@ namespace POS.Views.UserControls
             ContentDialogResult result = await noWifiDialog.ShowAsync();
         }
         //================================================================================================
+        private void resetCart()
+        {
+            ViewModel.Items.Clear();
+            ViewModel.Total = 0;
+            ViewModel.SubTotal = 0;
+            ViewModel.Tax = 0;
+            ViewModel.InvoiceID = -1;
+            ViewModel.InvoiceDate = DateTime.Now;
+        }
+        //================================================================================================
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            // Only get results when it was a user typing,
+            // otherwise assume the value got filled in by TextMemberPath
+            // or the handler for SuggestionChosen.
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                //Set the ItemsSource to be your filtered dataset
+                //sender.ItemsSource = dataset;
+            }
+        }
 
+
+        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            // Set sender.Text. You can use args.SelectedItem to build your text string.
+        }
+
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (args.ChosenSuggestion != null)
+            {
+                // User selected an item from the suggestion list, take an action on it here.
+            }
+            else
+            {
+                // Use args.QueryText to determine what to do.
+            }
+        }
     }
 }
+
+
+    
