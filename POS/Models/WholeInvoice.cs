@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace POS.Models
 {
+    /// <summary>
+    /// WholeInvoice class
+    /// </summary>
     public class WholeInvoice: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

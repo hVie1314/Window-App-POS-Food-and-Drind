@@ -8,10 +8,19 @@ using System.Threading.Tasks;
 
 namespace POS.Views
 {
+    /// <summary>
+    /// Giao diện quản lý khuyến mãi.
+    /// </summary>
     public sealed partial class DiscountView : Page
     {
+        /// <summary>
+        /// ViewModel quản lý logic và dữ liệu của giao diện quản lý khuyến mãi.
+        /// </summary>
         public DiscountViewModel ViewModel { get; set; }
 
+        /// <summary>
+        /// Khởi tạo giao diện quản lý khuyến mãi.
+        /// </summary>
         public DiscountView()
         {
             this.InitializeComponent();
@@ -20,6 +29,11 @@ namespace POS.Views
             UpdatePagingInfo_bootstrap();
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chuyển sang trang chức năng tài khoản.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void CreateDiscount_Click(object sender, RoutedEventArgs e)
         {
             // Reset các TextBox trước khi mở ContentDialog
@@ -27,6 +41,11 @@ namespace POS.Views
             await CreateDiscountDialog.ShowAsync();
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chọn tạo mã giảm giá.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private async void OnCreateDiscount_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             // Kiểm tra nếu người dùng chưa nhập quantity hoặc value
@@ -95,12 +114,21 @@ namespace POS.Views
             }
         }
 
-
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng hủy tạo mã giảm giá.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnCancel_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             // Do nothing
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chọn xóa mã giảm giá.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void DeleteDiscount_Click(object sender, RoutedEventArgs e)
         {
             var selectedDiscount = ViewModel.SelectedDiscount;
@@ -140,6 +168,11 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Hiển thị dialog thông báo lỗi.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private async Task ShowErrorDialog(string message)
         {
             var errorDialog = new ContentDialog
@@ -154,6 +187,9 @@ namespace POS.Views
             await errorDialog.ShowAsync();
         }
 
+        /// <summary>
+        /// Hiển thị TeachingTip thông báo tạo mã giảm giá thành công.
+        /// </summary>
         private void ShowAddSuccessTeachingTip()
         {
             AddSuccessTeachingTip.IsOpen = true;
@@ -165,6 +201,9 @@ namespace POS.Views
             });
         }
 
+        /// <summary>
+        /// Hiển thị TeachingTip thông báo xóa mã giảm giá thành công.
+        /// </summary>
         private void ShowDeleteSuccessTeachingTip()
         {
             DeleteSuccessTeachingTip.IsOpen = true;
@@ -196,6 +235,11 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chuyển sang trang chức năng sản phẩm.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.CurrentPage < ViewModel.TotalPages)
@@ -206,6 +250,11 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chuyển sang trang trước.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void previousButton_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.CurrentPage > 1)
@@ -236,7 +285,11 @@ namespace POS.Views
             pagesComboBox.SelectedIndex = 0;
         }
 
-
+        /// <summary>
+        /// Xử lý sự kiện khi người dùng chọn trang.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pagesComboBox.SelectedItem is not null)
@@ -247,6 +300,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Cập nhật trạng thái của nút phân trang.
+        /// </summary>
         private void UpdatePagingButtons()
         {
             previousButton.IsEnabled = ViewModel.CurrentPage > 1;

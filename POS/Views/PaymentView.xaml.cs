@@ -81,6 +81,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Hiển thị dialog xác nhận thanh toán qua MoMo.
+        /// </summary>
         private async void ShowPaymentConfirmDialog()
         {
             ContentDialog paymentConfirmDialog = new ContentDialog
@@ -117,6 +120,9 @@ namespace POS.Views
             }
         }
 
+        /// <summary>
+        /// Hiển thị dialog lỗi.
+        /// </summary>
         private async void ShowErrorDialog()
         {
             ContentDialog errorDialog = new ContentDialog
@@ -131,7 +137,11 @@ namespace POS.Views
         }
 
 
-        // Handle case text box is empty
+        /// <summary>
+        /// Xử lý sự kiện khi thay đổi số tiền nhận được.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReceivedAmountTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(ReceivedAmountTextBox.Text))
@@ -165,6 +175,11 @@ namespace POS.Views
             navigation.SetCurrentNavigationViewItem(festivalItem);
         }
 
+        /// <summary>
+        /// Xử lý sự kiện khi nhấn nút mở account.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AccountItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             // Lấy NavigationViewItem từ sender
