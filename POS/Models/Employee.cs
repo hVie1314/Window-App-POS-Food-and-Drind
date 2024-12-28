@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace POS.Models
 {
+    /// <summary>
+    /// Employee model class
+    /// </summary>
     public class Employee: INotifyPropertyChanged
     {
         public int EmployeeID { get; set; }

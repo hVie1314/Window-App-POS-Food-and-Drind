@@ -7,10 +7,24 @@ using POS.Helpers;
 
 namespace POS.Services.DAO
 {
+    /// <summary>
+    /// DAO cho các thao tác liên quan đến khách hàng
+    /// </summary>
     public class PostgresCustomerDao : ICustomerDao
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public PostgresCustomerDao() { }
 
+        /// <summary>
+        /// Lấy tất cả khách hàng
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="rowsPerPage"></param>
+        /// <param name="searchKeyword"></param>
+        /// <param name="customerType"></param>
+        /// <returns></returns>
         public Tuple<int, List<Customer>> GetAllCustomers(int page, int rowsPerPage, string searchKeyword, string customerType)
         {
             var customers = new List<Customer>();
@@ -58,6 +72,16 @@ namespace POS.Services.DAO
 
             return new Tuple<int, List<Customer>>(totalItems, customers);
         }
+
+        /// <summary>
+        /// Lấy tất cả khách hàng
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="rowsPerPage"></param>
+        /// <param name="searchKeyword"></param>
+        /// <param name="position"></param>
+        /// <param name="sortDirection"></param>
+        /// <returns></returns>
         public Tuple<int, List<Customer>> GetAllCustomers(
             int page = 1,
             int rowsPerPage = 10,
@@ -110,8 +134,12 @@ namespace POS.Services.DAO
 
             return new Tuple<int, List<Customer>>(totalItems, customers);
         }
-        //=======================================================================================================
-        // Thêm sản phẩm mới
+
+        /// <summary>
+        /// Thêm khách hàng mới
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public int InsertCustomer(Customer customer)
         {
             int newId;
@@ -137,7 +165,11 @@ namespace POS.Services.DAO
             return newId;
         }
 
-        // Cập nhật thông tin sản phẩm
+        /// <summary>
+        /// Cập nhật thông tin khách hàng
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public bool UpdateCustomer(Customer customer)
         {
             int rowsAffected;
@@ -175,7 +207,10 @@ namespace POS.Services.DAO
             return rowsAffected > 0;
         }
 
-        // Xóa khách hàng theo ID
+        /// <summary>
+        /// Xóa khách hàng theo ID
+        /// </summary>
+        /// <param name="customerId"></param>
         public void RemoveCustomerById(int customerId)
         {
             using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
