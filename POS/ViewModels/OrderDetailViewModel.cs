@@ -101,7 +101,7 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(Total));
             OnPropertyChanged(nameof(SubTotal));
         }
-        public void SaveToDatabase(int invoiceID=-1)
+        public int SaveToDatabase(int invoiceID=-1)
         {
             // Save to database
             Invoice invoice = new Invoice()
@@ -133,7 +133,7 @@ namespace POS.ViewModels
                 };
                 _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
             }
-            
+            return newInvoiceId;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -100,7 +100,12 @@
                 </MenuFlyout>
             </AppBarButton.Flyout>
         </AppBarButton>-->
-        <StackPanel Grid.Row="2" Padding="10">
+        <Grid Grid.Row="2" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel>
             <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -113,6 +118,7 @@
                     <Run Text="{x:Bind ViewModel.SubTotal, Converter={StaticResource DoubleToCurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
             </Grid>
+            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -137,18 +143,23 @@
                     <Run Text="{x:Bind ViewModel.Total, Converter={StaticResource DoubleToCurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
             </Grid>
-            <StackPanel Margin="15" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button HorizontalContentAlignment="Stretch" CornerRadius="6" Content="Lưu hóa đơn" Height="40" HorizontalAlignment="Center" Click="SaveInvoice_Click"/>
-                <Button CornerRadius="6" Content="Thanh toán" Height="40" HorizontalAlignment="Center" Click="PayInvoice_Click"/>
             </StackPanel>
-            <Grid>
-            <TeachingTip
-         x:Name="SaveSuccessTeachingTip"
-         Subtitle="Hóa đơn đã được lưu thành công."
-         Background="LightBlue"
-         IsOpen="False"/>
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" CornerRadius="6" Content="Lưu hóa đơn" Height="40" HorizontalAlignment="Stretch" Click="SaveInvoice_Click"/>
+                    <Button  Grid.Column="1" CornerRadius="6" Content="Thanh toán" Height="40" HorizontalAlignment="Stretch" Click="PayInvoice_Click"/>
             </Grid>
-        </StackPanel>
+            <Grid>
+                <TeachingTip
+                 x:Name="SaveSuccessTeachingTip"
+                 Subtitle="Hóa đơn đã được lưu thành công."
+                 Background="LightBlue"
+                 IsOpen="False"/>
+            </Grid>
+        </Grid>
         
     </Grid>
 </UserControl>

@@ -40,12 +40,12 @@ namespace POS.Views.UserControls
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.SaveToDatabase(ViewModel.InvoiceID);
+            int newID = ViewModel.SaveToDatabase(ViewModel.InvoiceID);
             ViewModel.Items.Clear();
             ViewModel.Total = 0;
             ViewModel.SubTotal = 0;
             ViewModel.Tax = 0;
-            ShowSaveSuccessTeachingTip();
+            DisplayIDInvoiceDialog(newID);
         }
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -75,6 +75,18 @@ namespace POS.Views.UserControls
             {
                 DispatcherQueue.TryEnqueue(() => SaveSuccessTeachingTip.IsOpen = false);
             });
+        }
+        //Notification
+        private async void DisplayIDInvoiceDialog(int newID)
+        {
+            ContentDialog noWifiDialog = new ContentDialog()
+            {
+                Title = "Lưu hóa đơn thành công!",
+                Content = $"Mã hóa đơn: {newID}",
+                CloseButtonText = "Đóng",
+                XamlRoot = this.XamlRoot
+            };
+            ContentDialogResult result = await noWifiDialog.ShowAsync();
         }
         //================================================================================================
 
