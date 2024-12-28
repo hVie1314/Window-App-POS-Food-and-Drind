@@ -25,10 +25,13 @@ namespace POS.ViewModels
         private double _subTotal;
         private double _total;
         private double _tax;
-
-        public OrderDetailViewModel()
+        public int CustomerID { get; set; } = -1;
+        public void getCustomersListForAutoSuggest()
         {
             AllCustomers = _customerDao.GetAllCustomers();
+        }
+        public OrderDetailViewModel()
+        {
         }
         public int InvoiceID { get; set; } = -1;
         public DateTime InvoiceDate { get; set; } = DateTime.Now;
@@ -108,7 +111,7 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(Total));
             OnPropertyChanged(nameof(SubTotal));
         }
-        public int SaveToDatabase(int invoiceID=-1)
+        public int SaveToDatabase(int invoiceID=-1,int customerID=-1)
         {
             // Save to database
             Invoice invoice = new Invoice()
@@ -116,7 +119,8 @@ namespace POS.ViewModels
                 TotalAmount = Total,
                 Tax = 10.00,
                 InvoiceDate = DateTime.Now,
-                InvoiceID = invoiceID
+                InvoiceID = invoiceID,
+                CustomerID = customerID,
             };
             int newInvoiceId;
             if (invoiceID==-1)

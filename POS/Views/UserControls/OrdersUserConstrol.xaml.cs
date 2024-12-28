@@ -38,10 +38,11 @@ namespace POS.Views.UserControls
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
+            ViewModel.getCustomersListForAutoSuggest();
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
-            int newID = ViewModel.SaveToDatabase(ViewModel.InvoiceID);
+            int newID = ViewModel.SaveToDatabase(ViewModel.InvoiceID, ViewModel.CustomerID);
             resetCart();
             DisplayIDInvoiceDialog(newID);
         }
@@ -104,8 +105,11 @@ namespace POS.Views.UserControls
             // or the handler for SuggestionChosen.
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
+                var fiteredCustomers = ViewModel.AllCustomers.
+                    Where(p => p.Name.ToLower().Contains(sender.Text.ToLower())).ToList();
                 //Set the ItemsSource to be your filtered dataset
                 //sender.ItemsSource = dataset;
+                    { sender.ItemsSource = fiteredCustomers; }
             }
         }
 
@@ -113,6 +117,8 @@ namespace POS.Views.UserControls
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             // Set sender.Text. You can use args.SelectedItem to build your text string.
+            sender.Text = (args.SelectedItem as Customer).Name;
+            ViewModel.CustomerID = (args.SelectedItem as Customer).CustomerID;
         }
 
 
@@ -121,10 +127,13 @@ namespace POS.Views.UserControls
             if (args.ChosenSuggestion != null)
             {
                 // User selected an item from the suggestion list, take an action on it here.
+                var customer = args.ChosenSuggestion as Customer;
+                sender.Text = customer?.Name;
             }
             else
             {
                 // Use args.QueryText to determine what to do.
+           
             }
         }
     }

@@ -66,14 +66,33 @@
             <Run Text="{x:Bind ViewModel.InvoiceDate, Converter={StaticResource DateTimeToDateConverter}}"></Run>
             </TextBlock>
             </Grid>
-            <TextBlock>Nhân viên: Quan Phan Tiến</TextBlock>
-            <StackPanel Orientation="Vertical">
+            <TextBlock Margin=" 0 4 0 4">Nhân viên: Quan Phan Tiến</TextBlock>
+            <StackPanel Orientation="Vertical" Margin=" 0 4 0 4">
             <TextBlock>Tên khách hàng: </TextBlock>
                 <AutoSuggestBox PlaceholderText="Nhập tên khách hàng"
         TextChanged="AutoSuggestBox_TextChanged"
         QueryIcon="Find"
         QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-        SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
+        SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:Customer">
+                            <StackPanel>
+                                <TextBlock Text="{x:Bind Name}"/>
+                                <TextBlock Text="{x:Bind Address}"/>
+                                <TextBlock Text="{x:Bind PhoneNumber}"/>
+                                <TextBlock Text="{x:Bind Email}"/>
+                                <TextBlock>Khách hàng:
+                                <Run Text="{x:Bind CustomerType}"/>
+                                </TextBlock>
+                                <Border Height="1" Background="Gray" Margin="0,5"/>
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+                <TextBlock x:Name="NoResultsText" Text="Không tìm thấy kết quả" Visibility="Collapsed" Margin="10"/>
             </StackPanel>
         </StackPanel>
         <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Items}" Background="#f8f8ea" BorderBrush="Beige" BorderThickness="0 5 0 5">
