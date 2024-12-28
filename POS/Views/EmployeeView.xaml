@@ -57,9 +57,9 @@
 
                 <!--add, remove btn-->
                 <Button Content="Thêm" Width="180" Height="40" Margin="430 0 40 0" HorizontalAlignment="Center" 
-                         Style="{StaticResource CustomButtonStyle}"/>
+                         Style="{StaticResource CustomButtonStyle}" Click="AddEmployee_Click"/>
                 <Button Content="Xóa" Width="180" Height="40" HorizontalAlignment="Center"
-                       Style="{StaticResource CustomButtonStyle}"/>
+                       Style="{StaticResource CustomButtonStyle}" Click="DeleteEmployee_Click"/>
 
                 <!--refresh btn-->
                 <!--<Button Width="40" Height="40" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}">
