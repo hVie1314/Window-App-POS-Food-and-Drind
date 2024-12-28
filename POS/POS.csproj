@@ -19,7 +19,6 @@
     <Content Remove="Assets\Image\pho_bo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="DetailProductWindow.xaml" />
     <None Remove="Styles\customStyles.xaml" />
     <None Remove="Views\DiscountView.xaml" />
     <None Remove="Views\InvoiceView.xaml" />
@@ -92,10 +91,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\InvoiceView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-
-    <Page Update="DetailProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
 

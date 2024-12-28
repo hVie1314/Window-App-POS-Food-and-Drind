@@ -91,13 +91,6 @@
       <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAQAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="POS.DetailProductWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.75" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DetailProductWindow.xaml.cs</FileName>
-    </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="POS.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
@@ -105,14 +98,6 @@
     <TypeIdentifier>
       <HashCode>AIEAAAAAAAAAAIAAAAAAAAAAEAACAAAACAAAAAgAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="POS.Shell" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12.25" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAABAAAAAAgAAAAACAQBABAAAAAAAAAAAAAAAAAAEA=</HashCode>
-      <FileName>Shell.xaml.Navigation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -410,6 +395,14 @@
     <TypeIdentifier>
       <HashCode>gABASAICAAAAAAAAAAAAAACAsBAAQAAAAAEAAAAAgHA=</HashCode>
       <FileName>Views\WarehouseView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="POS.Shell_Owner" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAABAAAAAAgAAAAACAQBABAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Shell\Shell-Owner.xaml..cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
