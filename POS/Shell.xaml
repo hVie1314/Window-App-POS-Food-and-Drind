@@ -36,7 +36,7 @@
                         IsBackButtonVisible="Collapsed" 
                         IsSettingsVisible="False"
                         Margin="0"
-                        PaneTitle="POS" PaneDisplayMode="Top" >
+                        PaneTitle="POS" PaneDisplayMode="LeftCompact">
             <NavigationView.Resources>
                 <!-- Custom colors -->
                 <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Black"/>
