@@ -48,8 +48,10 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Menu"
                                     Tag="POS.Views.Menu"
-                                    ToolTipService.ToolTip="Thực đơn"
-                                    Icon="Home">
+                                    ToolTipService.ToolTip="Thực đơn">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xED56;" />
+                    </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem Content="Hóa đơn"
@@ -74,19 +76,25 @@
                 </NavigationViewItem>
                 <NavigationViewItem Content="Báo cáo"
                                     Tag="POS.Views.BaoCao"
-                                    ToolTipService.ToolTip=""
-                                    Icon="Contact">
+                                    ToolTipService.ToolTip="">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE9F9;" />
+                    </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Content="Thanh toán"
                                     Tag="POS.Views.PaymentView"
-                                    ToolTipService.ToolTip=""
-                                    Icon="Contact">
+                                    ToolTipService.ToolTip="">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8C7;" />
+                    </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem Content="Mã giảm giá"
-                    Tag="POS.Views.DiscountView"
-                    ToolTipService.ToolTip=""
-                    Icon="Contact">
+                                    Tag="POS.Views.DiscountView"
+                                    ToolTipService.ToolTip="">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE94C;" />
+                    </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <!--//////////////////////////////////////////-->
 

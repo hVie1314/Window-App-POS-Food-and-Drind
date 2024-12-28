@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace POS.Interfaces
 {
+    /// <summary>
+    /// Interface cho các DAO liên quan đến Product
+    /// </summary>
     public interface IProductDao
     {
         Tuple<int, List<Product>> GetAllProducts(
@@ -21,6 +24,9 @@ namespace POS.Interfaces
         void RemoveProductById(int productId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến Employee
+    /// </summary>
     public interface IEmployeeDao
     {
         Tuple<int, List<Employee>> GetAllEmployees(
@@ -35,6 +41,9 @@ namespace POS.Interfaces
         void RemoveEmployeeById(int employeeId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến Customer
+    /// </summary>
     public interface ICustomerDao
     {
         Tuple<int, List<Customer>> GetAllCustomers(
@@ -56,6 +65,9 @@ namespace POS.Interfaces
         void RemoveCustomerById(int customerId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến Warehouse
+    /// </summary>
     public interface IWarehouseDao
     {
         Tuple<int, List<Warehouse>> GetAllWarehouses(
@@ -70,6 +82,9 @@ namespace POS.Interfaces
         void RemoveWarehouseById(int warehouseId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến Invoice
+    /// </summary>
     public interface IInvoiceDao
     {
         Tuple<int, List<Invoice>> GetAllInvoices(string searchKeyword = "",
@@ -83,6 +98,9 @@ namespace POS.Interfaces
         void RemoveInvoiceById(int invoiceId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến InvoiceDetail
+    /// </summary>
     public interface IInvoiceDetailDao
     {
         Tuple<int, List<InvoiceDetail>> GetAllInvoiceDetails(
@@ -95,6 +113,9 @@ namespace POS.Interfaces
         void RemoveInvoiceDetailById(int invoiceDetailId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến WorkShift
+    /// </summary>
     public interface IWorkShiftDao
     {
         Tuple<int, List<WorkShift>> GetAllWorkShifts(
@@ -106,6 +127,9 @@ namespace POS.Interfaces
         void RemoveWorkShiftById(int workShiftId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến InventoryReport
+    /// </summary>
     public interface IInventoryReportDao
     {
         Tuple<int, List<InventoryReport>> GetAllInventoryReports(
@@ -117,6 +141,9 @@ namespace POS.Interfaces
         void RemoveInventoryReportById(int inventoryReportId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến RevenueReport
+    /// </summary>
     public interface IRevenueReportDao
     {
         Tuple<int, List<RevenueReport>> GetAllRevenueReports(
@@ -128,6 +155,9 @@ namespace POS.Interfaces
         void RemoveRevenueReportById(int revenueReportId);
     }
 
+    /// <summary>
+    /// Interface cho các DAO liên quan đến Discount
+    /// </summary>
     public interface IDiscountDao
     {
         Tuple<int, List<Discount>> GetAllDiscount(
