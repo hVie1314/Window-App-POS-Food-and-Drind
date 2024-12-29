@@ -44,7 +44,7 @@ namespace POS.Views.UserControls
         {
             if(ViewModel.Items.Count == 0 )
             {
-                EmptyCartSavingErrorDialog();
+                EmptyCartSavingErrorDialog("Vui lòng chọn món trước khi lưu hóa đơn.");
             }
             else
             {int newID = ViewModel.SaveToDatabase(ViewModel.InvoiceID, ViewModel.CustomerID);
@@ -54,16 +54,24 @@ namespace POS.Views.UserControls
         }
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
-            int payFromMenuInvoiceId = -1; // flag to indicate that this payment is from menu page
-            // Pass data to PaymentViewModel
-            var paymentViewModel = (Application.Current as App).PaymentViewModel;
-            paymentViewModel.SetItems(ViewModel.CustomerID, ViewModel.Items, ViewModel.SubTotal, payFromMenuInvoiceId);
+            if (ViewModel.Items.Count == 0)
+            {
+                EmptyCartSavingErrorDialog("Vui lòng chọn món trước khi thanh toán hóa đơn.");
+            }
+            else
+            {
+                int payFromMenuInvoiceId = -1; // flag to indicate that this payment is from menu page
+                // Pass data to PaymentViewModel
+                var paymentViewModel = (Application.Current as App).PaymentViewModel;
+                paymentViewModel.SetItems(ViewModel.Items, ViewModel.SubTotal, ViewModel.CustomerID, payFromMenuInvoiceId);
 
-            // Navigate to PaymentView
-            var navigation = (Application.Current as App).navigate;
-            var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
-            navigation.SetCurrentNavigationViewItem(festivalItem);
+                // Navigate to PaymentView
+                var navigation = (Application.Current as App).navigate;
+                var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
+                navigation.SetCurrentNavigationViewItem(festivalItem);
+            }    
         }
+
         private void DeleteOrder_Click(object sender, RoutedEventArgs e)
         {
             var item = (sender as Button).DataContext as Order;
@@ -94,12 +102,12 @@ namespace POS.Views.UserControls
             ContentDialogResult result = await IDinvoiceDialog.ShowAsync();
         }
 
-        private async void EmptyCartSavingErrorDialog()
+        private async void EmptyCartSavingErrorDialog(string msg)
         {
             ContentDialog Dialog = new ContentDialog()
             {
                 Title = "Lỗi",
-                Content = "Vui lòng chọn món trước khi lưu hóa đơn.",
+                Content = msg,
                 CloseButtonText = "Đóng",
                 XamlRoot = this.XamlRoot
             };

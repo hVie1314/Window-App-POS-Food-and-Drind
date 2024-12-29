@@ -271,5 +271,33 @@ namespace POS.Services.DAO
                 command.ExecuteNonQuery();
             }
         }
+
+        /// <summary>
+        /// Lấy tên khách hàng theo ID
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public string GetCustomerNameById(int customerId)
+        {
+            string customerName = "";
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+                var sql = @"
+                SELECT tenkhachhang
+                FROM khachhang
+                WHERE khachhangid = @CustomerID";
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@CustomerID", customerId);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        customerName = reader.GetString(reader.GetOrdinal("tenkhachhang"));
+                    }
+                }
+            }
+            return customerName;
+        }
     }
 }
