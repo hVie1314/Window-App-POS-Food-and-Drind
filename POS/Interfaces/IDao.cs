@@ -63,6 +63,7 @@ namespace POS.Interfaces
         int InsertCustomer(Customer customer);
         bool UpdateCustomer(Customer customer);
         void RemoveCustomerById(int customerId);
+        string GetCustomerNameById(int customerId);
     }
 
     /// <summary>

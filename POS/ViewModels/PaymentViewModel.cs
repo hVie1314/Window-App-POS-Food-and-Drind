@@ -21,7 +21,6 @@ namespace POS.ViewModels
     /// </summary>
     public class PaymentViewModel : INotifyPropertyChanged
     {
-        public int CustomerID { get; set; }
         /// <summary>
         /// DAO for invoice
         /// </summary>
@@ -34,6 +33,10 @@ namespace POS.ViewModels
         /// DAO for discount
         /// </summary>
         private IDiscountDao _discountDao = new PostgresDiscountDao();
+        /// <summary>
+        /// DAO for customer
+        /// </summary>
+        private ICustomerDao _customerDao = new PostgresCustomerDao();
         /// <summary>
         /// View model for settings
         /// </summary>
@@ -75,6 +78,14 @@ namespace POS.ViewModels
         /// ID của hóa đơn
         /// </summary>
         public int InvoiceId { get; set; }
+        /// <summary>
+        /// ID của khách hàng
+        /// </summary>
+        public int CustomerID { get; set; } = -1;
+        /// <summary>
+        /// Tên khách hàng
+        /// </summary>
+        public string CustomerName { get; set; }
         /// <summary>
         /// Ngày thanh toán
         /// </summary>
@@ -140,7 +151,7 @@ namespace POS.ViewModels
         /// <param name="items"></param>
         /// <param name="total"></param>
         /// <param name="invoiceId"></param>
-        public void SetItems(int customerId, ObservableCollection<Order> items, double total, int invoiceId)
+        public void SetItems(ObservableCollection<Order> items, double total, int customerId, int invoiceId)
         {
             Items = new ObservableCollection<Order>(items);
             OnPropertyChanged(nameof(Items));
@@ -150,17 +161,6 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(TotalPayable));
             InvoiceId = invoiceId;
             CustomerID = customerId;
-        }
-        //testing
-        public void SetItems(ObservableCollection<Order> items, double total, int invoiceId)
-        {
-            Items = new ObservableCollection<Order>(items);
-            OnPropertyChanged(nameof(Items));
-            TotalCost = (int)total;
-            OnPropertyChanged(nameof(TotalCost));
-            CalculateTotalPayment();
-            OnPropertyChanged(nameof(TotalPayable));
-            InvoiceId = invoiceId;
         }
 
         /// <summary>
@@ -278,9 +278,8 @@ namespace POS.ViewModels
         /// Lưu hóa đơn vào cơ sở dữ liệu.
         /// </summary>
         /// <returns></returns>
-        public int SaveToDB(int invoiceID = -1, int customerID = -1)
+        public int SaveToDB()
         {
-            // Save to database
             Invoice invoice = new Invoice()
             {
                 TotalAmount = TotalPayable,
@@ -288,18 +287,10 @@ namespace POS.ViewModels
                 InvoiceDate = PaymentDate,
                 PaymentMethod = SelectedPaymentMethod,
                 Discount = DiscountValue,
-                CustomerID = customerID
+                CustomerID = this.CustomerID
             };
-            int newInvoiceId;
-            if (invoiceID == -1)
-            {
-                newInvoiceId = _invoiceDao.InsertInvoice(invoice);
-            }
-            else
-            {
-                _invoiceDao.RemoveInvoiceById(invoiceID);
-                newInvoiceId = _invoiceDao.InsertInvoiceWithId(invoice);
-            }
+            int newInvoiceId = _invoiceDao.InsertInvoice(invoice);
+
             foreach (var item in Items)
             {
                 InvoiceDetail invoiceDetail = new InvoiceDetail()
@@ -307,11 +298,11 @@ namespace POS.ViewModels
                     InvoiceID = newInvoiceId,
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
-                    Price = item.Price,
-                    Note = item.Note
+                    Price = item.Price
                 };
                 _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
             }
+
             return newInvoiceId;
         }
 
@@ -328,6 +319,7 @@ namespace POS.ViewModels
             invoice.InvoiceDate = PaymentDate;
             invoice.PaymentMethod = SelectedPaymentMethod;
             invoice.Note = "NULL"; // cần cập nhật thêm
+            CustomerID = this.CustomerID;
             _invoiceDao.UpdateInvoice(invoice);
 
             foreach (var item in Items)
@@ -485,6 +477,14 @@ namespace POS.ViewModels
             
             // Return the payUrl
             return jMessage["payUrl"].ToString();
+        }
+
+        /// <summary>
+        /// Gán tên khách hàng từ ID.
+        /// </summary>
+        public void GetCustomerName()
+        {
+            CustomerName = _customerDao.GetCustomerNameById(CustomerID);
         }
 
         /// <summary>

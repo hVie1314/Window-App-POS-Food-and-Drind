@@ -17,6 +17,7 @@ namespace POS.Views
     /// </summary>
     public sealed partial class PaymentView : Page
     {
+        bool isPaidInvoice = false;
         /// <summary>
         /// ViewModel quản lý logic và dữ liệu của giao diện thanh toán.
         /// </summary>
@@ -40,10 +41,29 @@ namespace POS.Views
         /// <param name="e"></param>
         private async void OnSubmitPayment(object sender, RoutedEventArgs e)
         {
+            if (ViewModel.TotalCost <= 0) 
+            {
+                ContentDialog errorDialog = new ContentDialog
+                {
+                    Title = "Lỗi",
+                    Content = "Không thể thanh toán khi chưa có đơn hàng.",
+                    CloseButtonText = "Đóng",
+                    DefaultButton = ContentDialogButton.Close,
+                    XamlRoot = this.XamlRoot
+                };
+                await errorDialog.ShowAsync();
+                return;
+            }
+
             if (ViewModel.SelectedPaymentMethod == "Tiền mặt")
             {
+                if (ViewModel.InvoiceId >= 0) // Pay from invoice
                 {
-                    ViewModel.InvoiceId = ViewModel.SaveToDB(ViewModel.InvoiceId,ViewModel.CustomerID);
+                    ViewModel.UpdateDB();
+                }
+                else // Pay from menu
+                {
+                    ViewModel.InvoiceId = ViewModel.SaveToDB();
                 }
 
                 // Delete used discount code
@@ -92,8 +112,13 @@ namespace POS.Views
             ContentDialogResult result = await paymentConfirmDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
+                if (ViewModel.InvoiceId >= 0) // Pay from invoice
                 {
-                    ViewModel.InvoiceId = ViewModel.SaveToDB(ViewModel.InvoiceId, ViewModel.CustomerID);
+                    ViewModel.UpdateDB();
+                }
+                else // Pay from menu
+                {
+                    ViewModel.InvoiceId = ViewModel.SaveToDB();
                 }
                 // Delete used discount code
                 if (ViewModel.DiscountCode != null)
@@ -145,6 +170,9 @@ namespace POS.Views
         /// </summary>
         private async void ShowInvoiceDialog()
         {
+            // Lấy tên khách hàng từ DB và lưu vào ViewModel
+            ViewModel.GetCustomerName();
+
             // Hiển thị dialog hóa đơn
             ContentDialogResult result = await InvoiceDialog.ShowAsync();
         }

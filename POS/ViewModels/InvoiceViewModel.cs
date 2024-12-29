@@ -41,7 +41,7 @@ namespace POS.ViewModels
         private IInvoiceDetailDao _invoiceDetailDao;
         public string searchText;       
         public int CurrentPage { get; set; } = 1;
-        public int ItemsPerPage { get; set; } = 10;
+        public int ItemsPerPage { get; set; } = 14;
         public int TotalPages { get; set; } = 0;
         public int TotalItems { get; set; } = 0;
 

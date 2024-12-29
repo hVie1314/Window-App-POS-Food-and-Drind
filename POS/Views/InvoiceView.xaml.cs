@@ -147,7 +147,7 @@ namespace POS.Views
                     orderItems.Add(order);
                 }
 
-                paymentViewModel.SetItems(wholeinvoice.Invoice.CustomerID,orderItems, totalCost, wholeinvoice.Invoice.InvoiceID);
+                paymentViewModel.SetItems(orderItems, totalCost, wholeinvoice.Invoice.CustomerID, wholeinvoice.Invoice.InvoiceID);
                 var navigation = (Application.Current as App).navigate;
                 var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
                 navigation.SetCurrentNavigationViewItem(festivalItem);
