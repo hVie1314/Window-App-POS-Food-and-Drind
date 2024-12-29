@@ -39,7 +39,6 @@ namespace POS.ViewModels
 
         private IInvoiceDao _invoiceDao;
         private IInvoiceDetailDao _invoiceDetailDao;
-
         public string searchText;       
         public int CurrentPage { get; set; } = 1;
         public int ItemsPerPage { get; set; } = 10;
@@ -55,6 +54,15 @@ namespace POS.ViewModels
             LoadInvoices(1);
         }
 
+        public void DeleteInvoice()
+        {
+            if (SelectedInvoice == null)
+            {
+                return;
+            }
+            _invoiceDao.RemoveInvoiceById(SelectedInvoice.Invoice.InvoiceID);
+            LoadInvoices(CurrentPage);
+        }
         public void GetAllInvoices()
         {
             var (totalItems, invoices) = _invoiceDao.GetAllInvoices(searchText,

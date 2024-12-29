@@ -73,6 +73,8 @@ namespace POS.Services.DAO
             return new Tuple<int, List<Customer>>(totalItems, customers);
         }
 
+        //=======================================================================================================
+        //Get all Customers
         /// <summary>
         /// Lấy tất cả khách hàng
         /// </summary>
@@ -135,11 +137,45 @@ namespace POS.Services.DAO
             return new Tuple<int, List<Customer>>(totalItems, customers);
         }
 
+        public List<Customer> GetAllCustomers()
+        {
+            var customers = new List<Customer>();
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+                var sql = @"
+                SELECT khachhangid, tenkhachhang, sodienthoai, email, diachi, loaikhachhang
+                FROM khachhang";
+                var command = new NpgsqlCommand(sql, connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var customer = new Customer
+                        {
+                            CustomerID = reader.GetInt32(reader.GetOrdinal("khachhangid")),
+                            Name = reader.GetString(reader.GetOrdinal("tenkhachhang")),
+                            PhoneNumber = reader.GetString(reader.GetOrdinal("sodienthoai")),
+                            Email = reader.GetString(reader.GetOrdinal("email")),
+                            Address = reader.GetString(reader.GetOrdinal("diachi")),
+                            CustomerType = reader.GetString(reader.GetOrdinal("loaikhachhang"))
+                        };
+                        customers.Add(customer);
+                    }
+                }
+            }
+            return customers;
+        }
+        //=======================================================================================================
+        // Thêm sản phẩm mới
+
+
         /// <summary>
         /// Thêm khách hàng mới
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
+
         public int InsertCustomer(Customer customer)
         {
             int newId;

@@ -42,13 +42,8 @@ namespace POS.Views
         {
             if (ViewModel.SelectedPaymentMethod == "Tiền mặt")
             {
-                if (ViewModel.InvoiceId >= 0) // Pay from invoice
                 {
-                    ViewModel.UpdateDB();
-                }
-                else // Pay from menu
-                {
-                    ViewModel.InvoiceId = ViewModel.SaveToDB();
+                    ViewModel.InvoiceId = ViewModel.SaveToDB(ViewModel.InvoiceId,ViewModel.CustomerID);
                 }
 
                 // Delete used discount code
@@ -97,13 +92,8 @@ namespace POS.Views
             ContentDialogResult result = await paymentConfirmDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                if (ViewModel.InvoiceId >= 0) // Pay from invoice
                 {
-                    ViewModel.UpdateDB();
-                }
-                else // Pay from menu
-                {
-                    ViewModel.InvoiceId = ViewModel.SaveToDB();
+                    ViewModel.InvoiceId = ViewModel.SaveToDB(ViewModel.InvoiceId, ViewModel.CustomerID);
                 }
                 // Delete used discount code
                 if (ViewModel.DiscountCode != null)

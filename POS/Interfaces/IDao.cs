@@ -52,6 +52,7 @@ namespace POS.Interfaces
             string searchKeyword = "",
             string customerType = ""
         );
+        List<Customer> GetAllCustomers();
         Tuple<int, List<Customer>> GetAllCustomers(
             int page = 1,
             int rowsPerPage = 10,

@@ -30,18 +30,16 @@
     </Page.Resources>
 
     <Grid Background="Beige">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
         <!--mid side-->
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+        <StackPanel Grid.Row="0" Orientation="Vertical">
             <!--head-->
-            <StackPanel Orientation="Horizontal" Height="120" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
+            <Grid Margin="8">
+                <StackPanel Orientation="Horizontal" BorderBrush="BurlyWood" BorderThickness="0 0 0 2">
                 <!--search bar-->
                 <AutoSuggestBox 
                     x:Name="SearchBox"
@@ -49,36 +47,37 @@
                     FontSize="12" 
                     Width="400"  
                     Height="40" 
-                    Margin="75 0 120 0" 
+                    Margin="8" 
                     VerticalContentAlignment="Center" 
                     Background="BurlyWood" 
                     QueryIcon="Find"  
                     QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
-
+            </StackPanel>
                 <!--add, remove btn-->
-                <Button Content="Thêm" Width="180" Height="40" Margin="430 0 40 0" HorizontalAlignment="Center" 
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button  Margin="8" Content="Thêm" Width="180" Height="40" HorizontalAlignment="Center" 
                         Click="AddCustomer_Click" Style="{StaticResource CustomButtonStyle}"/>
-                <Button Content="Xóa" Width="180" Height="40" HorizontalAlignment="Center"
+                    <Button Margin="8" Content="Xóa" Width="180" Height="40" HorizontalAlignment="Center"
                         Click="DeleteCustomer_Click" Style="{StaticResource CustomButtonStyle}"/>
-
-                <!--refresh btn-->
+                </StackPanel>
+            </Grid>
+            <!--refresh btn-->
                 <!--<Button Width="40" Height="40" HorizontalAlignment="Center" Style="{StaticResource CustomButtonStyle}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <FontIcon Glyph="&#xE72C;" />
                     </StackPanel>
                 </Button>-->
-            </StackPanel>
+
 
             <!--items-->
 
-            <StackPanel >
-
-
+            <StackPanel>
                 <controls:DataGrid
                     x:Name="itemsDataGrid"
                     ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}"
                     SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"
-                    Width="1350" Height="630"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     AutoGenerateColumns="False"
                     IsReadOnly="False"
                     Sorting="OnDataGridSorting">
@@ -113,7 +112,7 @@
                     </controls:DataGrid.RowStyle>
 
                     <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn Header="Mã nguyên liệu" Binding="{Binding CustomerID}" Width="*" IsReadOnly="True"/>
+                        <controls:DataGridTextColumn Header="Mã khách hàng" Binding="{Binding CustomerID}" Width="*" IsReadOnly="True"/>
                         <controls:DataGridTextColumn Header="Tên khách hàng" Binding="{Binding Name}" Width="*" />
                         <controls:DataGridTextColumn Header="Số điện thoại" Binding="{Binding PhoneNumber}" Width="*" />
                         <controls:DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />

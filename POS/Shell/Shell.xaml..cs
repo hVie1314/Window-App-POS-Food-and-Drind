@@ -14,20 +14,20 @@ namespace POS
         public Shell()
         {
             this.InitializeComponent();
-            this.SizeChanged += Shell_SizeChanged;
+            //this.SizeChanged += Shell_SizeChanged;
         }
         //Navigate from top to left for NavigationView
-        private void Shell_SizeChanged(object sender, WindowSizeChangedEventArgs e)
-            {
-                if (e.Size.Width > NavigationView.CompactModeThresholdWidth)
-                {
-                    NavigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.Top;
-                }
-                else
-                {
-                    NavigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.LeftCompact;
-                }
-            }
+        //private void Shell_SizeChanged(object sender, WindowSizeChangedEventArgs e)
+        //    {
+        //        if (e.Size.Width > 1100)
+        //        {
+        //            NavigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.Top;
+        //        }
+        //        else
+        //        {
+        //            NavigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.LeftCompact;
+        //        }
+        //    }
 
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
