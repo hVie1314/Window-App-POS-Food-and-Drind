@@ -38,6 +38,9 @@ namespace POS
             //m_window.Activate();
             //navigate = m_window;
             m_window2.Activate();
+
+            // Set the title for the app
+            m_window.Title = "POS HCMUS";
         }
 
         //protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
