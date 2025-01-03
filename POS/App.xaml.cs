@@ -31,12 +31,13 @@ namespace POS
         }
 
         public PaymentViewModel PaymentViewModel { get; set; } = new PaymentViewModel();
-        public INavigation navigate => m_window;
+        public INavigation navigate { get; set; }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new Shell();
+            m_window2 = new ShellWindow();
             //m_window.Activate();
-            m_window.Activate();
+            //navigate = m_window;
+            m_window2.Activate();
         }
 
         //protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
@@ -68,6 +69,7 @@ namespace POS
         //    throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         //}
 
-        internal Shell m_window;
+        internal Shell m_window { get; set; }
+        internal ShellWindow m_window2 { get; set; }
     }
 }

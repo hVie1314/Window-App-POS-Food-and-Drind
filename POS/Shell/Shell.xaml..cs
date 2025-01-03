@@ -8,7 +8,7 @@ using POS.Views;
 
 namespace POS
 {
-    public sealed partial class Shell : Window, INavigation
+    public partial class Shell : Window, INavigation
     {
         private bool _navigatedFlag = false;
         public Shell()

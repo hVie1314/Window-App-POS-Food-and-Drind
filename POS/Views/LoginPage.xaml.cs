@@ -5,7 +5,7 @@ using POS.Login;
 using POS.Views;
 using Windows.ApplicationModel.Store;
 
-namespace POS
+namespace POS.Views
 {
     public sealed partial class LoginPage : Page
     {
@@ -26,9 +26,11 @@ namespace POS
 
             if (inputUsername == storedUsername && inputPassword == storedPassword)
             {
-                Window window = new Shell();
+                Shell window = new Shell();
+                (Application.Current as App).navigate = window;
                 window.Activate();
-                
+                (Application.Current as App).m_window2.Close();
+
             }
             else
             {

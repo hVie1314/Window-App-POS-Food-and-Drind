@@ -61,8 +61,12 @@
         </Grid>-->
         <StackPanel Grid.Row="0" Padding="8">
             <Grid>
-                <TextBlock FontSize="20" FontWeight="Bold" Name="InvoiceID" Text="{x:Bind ViewModel.InvoiceID,Converter={StaticResource InvoiceIDToParagraphConverter},Mode=OneWay}"></TextBlock>
-                <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" FontWeight="SemiBold">Ngày: 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" FontSize="20" FontWeight="Bold" Name="InvoiceID" Text="{x:Bind ViewModel.InvoiceID,Converter={StaticResource InvoiceIDToParagraphConverter},Mode=OneWay}"></TextBlock>
+                <TextBlock Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontWeight="SemiBold">Ngày: 
             <Run Text="{x:Bind ViewModel.InvoiceDate, Converter={StaticResource DateTimeToDateConverter}}"></Run>
             </TextBlock>
             </Grid>
