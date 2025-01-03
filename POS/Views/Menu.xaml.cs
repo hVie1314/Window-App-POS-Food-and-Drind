@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using POS.DTOs;
 using POS.Models;
+using POS.Shells;
 using POS.ViewModels;
 using System;
 using System.Collections.Generic;

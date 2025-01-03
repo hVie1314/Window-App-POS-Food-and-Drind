@@ -9,8 +9,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="Beige">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -21,16 +21,21 @@
         <TextBox x:Name="UsernameTextBox" Header="Tài khoản"
                  HorizontalAlignment="Center" VerticalAlignment="Center"
                  Margin="10"
-                 Width="200"/>
+                 Width="200"
+                 BorderThickness="0 0 0 1"
+                CornerRadius="0"/>
 
         <PasswordBox x:Name="PasswordBox" Header="Mật khẩu"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
                      Margin="10" 
-                     Width="200"/>
+                     Width="200"
+                     BorderThickness="0 0 0 1"
+                     CornerRadius="0"/>
 
-        <Button Content="Login" 
+        <Button Content="Đăng nhập" 
                 HorizontalAlignment="Center" VerticalAlignment="Center"
-                Margin="10" Click="OnLoginClick"/>
+                Margin="10" Click="OnLoginClick"
+                Padding="12"/>
         </StackPanel>
     </Grid>
 </Page>

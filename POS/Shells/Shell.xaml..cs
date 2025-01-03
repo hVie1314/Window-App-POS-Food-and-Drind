@@ -6,7 +6,7 @@ using System.Linq;
 using POS.Services;
 using POS.Views;
 
-namespace POS
+namespace POS.Shells
 {
     public partial class Shell : Window, INavigation
     {

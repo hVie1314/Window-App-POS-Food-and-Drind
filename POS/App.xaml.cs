@@ -19,6 +19,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using POS.Services;
+using POS.Shells;
+using POS.Helpers;
 
 namespace POS
 {
@@ -40,7 +42,7 @@ namespace POS
             m_window2.Activate();
 
             // Set the title for the app
-            m_window.Title = "POS HCMUS";
+            m_window2.Title = "POS HCMUS";
         }
 
         //protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)

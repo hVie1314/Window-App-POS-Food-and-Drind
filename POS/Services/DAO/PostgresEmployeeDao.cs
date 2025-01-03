@@ -174,5 +174,21 @@ namespace POS.Services.DAO
                 command.ExecuteNonQuery();
             }
         }
+        public static void updateAccount(int id, byte[] username, byte[] iv_username, byte[] password, byte[] iv_password)
+        {
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+                var sql = "UPDATE nhanvien SET username = @Username,iv_username = @IV_username , password = @Password, iv_password = @IV_password " +
+                    "WHERE nhanvienid = @EmployeeID";
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@EmployeeID", id);
+                command.Parameters.AddWithValue("@Username", username);
+                command.Parameters.AddWithValue("@IV_username", iv_username);
+                command.Parameters.AddWithValue("@Password", password);
+                command.Parameters.AddWithValue("@IV_password", iv_password);
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

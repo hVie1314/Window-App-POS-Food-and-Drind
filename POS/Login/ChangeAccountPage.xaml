@@ -11,11 +11,9 @@
         <TextBox x:Name="NewUsernameTextBox" Header="New Username"
                  HorizontalAlignment="Center" VerticalAlignment="Center"
                  Width="200"/>
-
         <PasswordBox x:Name="NewPasswordBox" Header="New Password"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
                      Margin="0,50,0,0" Width="200"/>
-
         <Button Content="Save" 
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Margin="0,120,0,0" Click="OnSaveAccountClick"/>

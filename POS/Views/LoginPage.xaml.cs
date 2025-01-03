@@ -1,9 +1,15 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using POS;
+using POS.Helpers;
 using POS.Login;
 using POS.Views;
+using System.Text;
+using System;
+using POS.Shells;
 using Windows.ApplicationModel.Store;
+using System.Diagnostics;
+using System.IO;
 
 namespace POS.Views
 {
@@ -15,8 +21,7 @@ namespace POS.Views
         public LoginPage()
         {
             this.InitializeComponent();
-            LocalSettingSaveAccount.SaveAccount();
-            (storedUsername, storedPassword) = LocalSettingSaveAccount.GetAccount();
+            AccountCreator.CreateAccount("tien","tien",73);
         }
 
         private void OnLoginClick(object sender, RoutedEventArgs e)
@@ -29,6 +34,8 @@ namespace POS.Views
                 Shell window = new Shell();
                 (Application.Current as App).navigate = window;
                 window.Activate();
+                // Set the title for the app
+                window.Title = "POS HCMUS";
                 (Application.Current as App).m_window2.Close();
 
             }
@@ -36,9 +43,9 @@ namespace POS.Views
             {
                 ContentDialog dialog = new ContentDialog
                 {
-                    Title = "Login Failed",
-                    Content = "Incorrect username or password.",
-                    CloseButtonText = "OK",
+                    Title = "Đăng nhập thất bại",
+                    Content = "Tên đăng nhập hoặc mật khẩu không đúng.",
+                    CloseButtonText = "Đóng",
                     XamlRoot = this.XamlRoot // Ensure XamlRoot is set
                 };
                 _ = dialog.ShowAsync();
