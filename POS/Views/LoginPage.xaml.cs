@@ -10,46 +10,59 @@ using POS.Shells;
 using Windows.ApplicationModel.Store;
 using System.Diagnostics;
 using System.IO;
+using POS.ViewModels;
 
 namespace POS.Views
 {
     public sealed partial class LoginPage : Page
     {
-        private string storedUsername; 
-        private string storedPassword;
-       
+        public LoginViewModel ViewModel { get; set;}
 
         public LoginPage()
         {
             this.InitializeComponent();
+            ViewModel = new LoginViewModel();
         }
 
         private void OnLoginClick(object sender, RoutedEventArgs e)
         {
             string inputUsername = UsernameTextBox.Text;
             string inputPassword = PasswordBox.Password;
-
-            if (inputUsername == storedUsername && inputPassword == storedPassword)
+            foreach (var employee in ViewModel.Employees)
             {
-                Shell window = new Shell();
-                (Application.Current as App).navigate = window;
-                window.Activate();
-                // Set the title for the app
-                window.Title = "POS HCMUS";
-                (Application.Current as App).m_window2.Close();
-
-            }
-            else
-            {
-                ContentDialog dialog = new ContentDialog
+                if (inputUsername == employee.UsernameString && inputPassword == employee.PasswordString)
                 {
-                    Title = "Đăng nhập thất bại",
-                    Content = "Tên đăng nhập hoặc mật khẩu không đúng.",
-                    CloseButtonText = "Đóng",
-                    XamlRoot = this.XamlRoot // Ensure XamlRoot is set
-                };
-                _ = dialog.ShowAsync();
+                    (Application.Current as App).CurrentEmployee = employee;
+                    Shell window = new Shell();
+                    (Application.Current as App).navigate = window;
+                    window.Activate();
+                    // Set the title for the app
+                    window.Title = "POS HCMUS";
+                    (Application.Current as App).m_window2.Close();
+                    return;
+                }
+                else
+                {
+                    ContentDialog dialog1 = new ContentDialog
+                    {
+                        Title = "Đăng nhập thất bại",
+                        Content = "Tên đăng nhập hoặc mật khẩu không đúng.",
+                        CloseButtonText = "Đóng",
+                        XamlRoot = this.XamlRoot 
+                    };
+                    _ = dialog1.ShowAsync();
+                    return;
+                }
             }
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Đăng nhập thất bại",
+                Content = "Chưa có tài khoản trên vào hệ thống.",
+                CloseButtonText = "Đóng",
+                XamlRoot = this.XamlRoot 
+            };
+            _ = dialog.ShowAsync();
+
         }
     }
 }

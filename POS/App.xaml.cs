@@ -40,7 +40,7 @@ namespace POS
             0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF
         };  // 32 bytes
         }
-        public Employee CurrentEmployee { get; set; }
+        public EmployeeDataForLogin CurrentEmployee { get; set; }
         public PaymentViewModel PaymentViewModel { get; set; } = new PaymentViewModel();
         public INavigation navigate { get; set; }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)

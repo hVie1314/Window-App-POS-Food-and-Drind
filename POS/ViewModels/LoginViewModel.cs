@@ -1,4 +1,6 @@
-﻿using POS.Models;
+﻿using Microsoft.UI.Xaml;
+using POS.Helpers;
+using POS.Models;
 using POS.Services.DAO;
 using System;
 using System.Collections.Generic;
@@ -8,14 +10,19 @@ using System.Threading.Tasks;
 
 namespace POS.ViewModels
 {
-    internal class LoginViewModel
+    public class LoginViewModel
     {
-        public List<Employee> EmployeeDataForLogin { get; set; }
-        public 
+        public List<EmployeeDataForLogin> Employees { get; set; }
         private PostgresEmployeeDao DAO;
         public LoginViewModel()
         {
             DAO = new PostgresEmployeeDao();
+            Employees = DAO.GetAllEmployeesWithAccountData();
+            foreach (var employee in Employees)
+            {
+                employee.UsernameString = EncryptionHelper.DecryptString(employee.Username, (Application.Current as App).aesKey, employee.Username_iv);
+                employee.PasswordString = EncryptionHelper.DecryptString(employee.Password, (Application.Current as App).aesKey, employee.Password_iv);
+            }
         }
     }
 }

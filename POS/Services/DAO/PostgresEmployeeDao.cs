@@ -16,7 +16,8 @@ namespace POS.Services.DAO
         ///     
         /// </summary>
         public PostgresEmployeeDao() { }
-
+        //=======================================================================================================
+        //Get all employees
         /// <summary>
         /// Lấy tất cả các nhân viên
         /// </summary>
@@ -73,6 +74,47 @@ namespace POS.Services.DAO
 
             return new Tuple<int, List<Employee>>(totalItems, employees);
         }
+        public List<EmployeeDataForLogin> GetAllEmployeesWithAccountData()
+        {
+            var employees = new List<EmployeeDataForLogin>();
+            int totalItems = 0;
+
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var sql = @"
+                SELECT nhanvienid, tennhanvien, chucvu, luong, ngayvaolam, trangthai, username, iv_username, password, iv_password
+                FROM nhanvien Where username is not NULL";
+
+                var command = new NpgsqlCommand(sql, connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var employee = new EmployeeDataForLogin
+                        {
+                            EmployeeID = reader.GetInt32(reader.GetOrdinal("nhanvienid")),
+                            Name = reader.GetString(reader.GetOrdinal("tennhanvien")),
+                            Position = reader.GetString(reader.GetOrdinal("chucvu")),
+                            Salary = reader.GetDecimal(reader.GetOrdinal("luong")),
+                            HireDate = reader.GetDateTime(reader.GetOrdinal("ngayvaolam")),
+                            Status = reader.GetBoolean(reader.GetOrdinal("trangthai")),
+                            Username = reader["username"] as byte[],
+                            Username_iv = reader["iv_username"] as byte[],
+                            Password = reader["password"] as byte[],
+                            Password_iv = reader["iv_password"] as byte[]
+
+                        };
+                        employees.Add(employee);
+                    }
+                }
+            }
+
+            return employees;
+        }
+        //=======================================================================================================
 
         /// <summary>
         /// Thêm một nhân viên mới
