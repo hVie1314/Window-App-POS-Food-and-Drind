@@ -18,10 +18,10 @@ namespace POS.Views
         private string storedUsername; 
         private string storedPassword;
        
+
         public LoginPage()
         {
             this.InitializeComponent();
-            AccountCreator.CreateAccount("tien","tien",73);
         }
 
         private void OnLoginClick(object sender, RoutedEventArgs e)

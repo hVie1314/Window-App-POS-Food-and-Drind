@@ -1,4 +1,5 @@
-﻿using POS.Helpers;
+﻿using Microsoft.UI.Xaml;
+using POS.Helpers;
 using POS.Models;
 using POS.Services.DAO;
 using System;
@@ -14,13 +15,7 @@ namespace POS.Login
     {
         public static void CreateAccount(string username, string password, int employeeID)
         {
-            byte[] key = new byte[32]
-        {
-            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
-            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
-            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
-            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF
-        };  // 32 bytes
+            byte[] key = (Application.Current as App).aesKey;
             //Username encryption
             byte[] iv_username = KeyGenerator.GenerateRandomKey(16); // 16 bytes
             // Encrypt

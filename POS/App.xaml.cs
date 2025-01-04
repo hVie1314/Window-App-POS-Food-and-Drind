@@ -21,17 +21,26 @@ using Windows.Foundation.Collections;
 using POS.Services;
 using POS.Shells;
 using POS.Helpers;
+using POS.Models;
 
 namespace POS
 {
 
     public partial class App : Application
     {
+        public byte[] aesKey { get; set; } 
         public App()
         {
             this.InitializeComponent();
+            aesKey = new byte[32]
+        {
+            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
+            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
+            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
+            0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF
+        };  // 32 bytes
         }
-
+        public Employee CurrentEmployee { get; set; }
         public PaymentViewModel PaymentViewModel { get; set; } = new PaymentViewModel();
         public INavigation navigate { get; set; }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
