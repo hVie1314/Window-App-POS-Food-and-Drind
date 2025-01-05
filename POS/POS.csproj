@@ -84,6 +84,9 @@
     <None Update="Assets\Image\logo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\NotPaidInvoicesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\SettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

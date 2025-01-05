@@ -84,7 +84,7 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Content="Thanh toán"
-                                    Tag="POS.Views.PaymentView"
+                                    Tag="POS.Views.NotPaidInvoicesView"
                                     ToolTipService.ToolTip="">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE8C7;" />

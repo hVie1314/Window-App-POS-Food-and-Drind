@@ -81,6 +81,62 @@ namespace POS.Services.DAO
             return new Tuple<int, List<Invoice>>(totalItems, invoices);
         }
 
+        public Tuple<int, List<Invoice>> GetAllNotPaidInvoices(string hoadonID, int page, int rowsPerPage)
+        {
+            var invoices = new List<Invoice>();
+            int totalItems = 0;
+
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var sql = @"
+                SELECT COUNT(*) OVER() AS TotalItems, hoadonid, ngaylaphoadon, tongtien, phuongthucthanhtoan, khachhangid, nhanvienid, giamgia, thuevat, ghichu
+                FROM hoadon where phuongthucthanhtoan is null";
+                if (!string.IsNullOrEmpty(hoadonID))
+                {
+                    sql += " and hoadonid = @hoadonID";
+                }
+                sql += @" OFFSET @Skip LIMIT @Take";
+
+
+                var skip = (page - 1) * rowsPerPage;
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@Skip", skip);
+                command.Parameters.AddWithValue("@Take", rowsPerPage);
+                if (!string.IsNullOrEmpty(hoadonID))
+                {
+                    command.Parameters.AddWithValue("@hoadonID", Int32.Parse(hoadonID));
+                }
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (totalItems == 0)
+                        {
+                            totalItems = reader.GetInt32(reader.GetOrdinal("TotalItems"));
+                        }
+
+                        var invoice = new Invoice
+                        {
+                            InvoiceID = reader.GetInt32(reader.GetOrdinal("hoadonid")),
+                            InvoiceDate = reader.GetDateTime(reader.GetOrdinal("ngaylaphoadon")),
+                            TotalAmount = reader.GetDouble(reader.GetOrdinal("tongtien")),
+                            PaymentMethod = reader.IsDBNull(reader.GetOrdinal("phuongthucthanhtoan")) ? null : reader.GetString(reader.GetOrdinal("phuongthucthanhtoan")),
+                            CustomerID = reader.GetInt32(reader.GetOrdinal("khachhangid")),
+                            EmployeeID = reader.GetInt32(reader.GetOrdinal("nhanvienid")),
+                            Discount = reader.GetFloat(reader.GetOrdinal("giamgia")),
+                            Tax = reader.GetDouble(reader.GetOrdinal("thuevat")),
+                            Note = reader.IsDBNull(reader.GetOrdinal("ghichu")) ? null : reader.GetString(reader.GetOrdinal("ghichu"))
+                        };
+                        invoices.Add(invoice);
+                    }
+                }
+            }
+            return new Tuple<int, List<Invoice>>(totalItems, invoices);
+        }
+
         /// <summary>
         /// Thêm một hóa đơn mới
         /// </summary>

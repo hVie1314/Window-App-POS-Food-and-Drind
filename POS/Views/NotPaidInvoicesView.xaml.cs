@@ -18,6 +18,7 @@ using System.Diagnostics;
 using POS.DTOs;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.VoiceCommands;
+using Azure;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,15 +28,15 @@ namespace POS.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class InvoiceView : Page
+    public sealed partial class NotPaidInvoicesView : Page
     {
         public InvoiceViewModel ViewModel { get; set; } = new InvoiceViewModel();
         
         
-        public InvoiceView()
+        public NotPaidInvoicesView()
         {
             this.InitializeComponent();
-            ViewModel.GetAllInvoices();
+            ViewModel.GetAllNotPaidInvoices();
             UpdatePagingInfo_bootstrap();
         }
         //================================================================================================
@@ -78,7 +79,7 @@ namespace POS.Views
             dynamic item = pagesComboBox.SelectedItem;
             if (item != null)
             {
-                ViewModel.LoadInvoices(item.Page);
+                ViewModel.LoadNotPaidInvoices(item.Page);
             }
         }
         //================================================================================================
@@ -91,43 +92,41 @@ namespace POS.Views
             // Disable OrderMoreDishesButton and PayInvoiceButton if the invoice is paid
             if (wholeInvoice != null)
             {
-                OrderMoreDishesButton.IsEnabled = !wholeInvoice.IsPaid;
+                PayInvoiceButton.IsEnabled = !wholeInvoice.IsPaid;
             }
         }
         private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             ViewModel.searchText = sender.Text;
-            ViewModel.LoadInvoices(1);
+            ViewModel.LoadNotPaidInvoices(1);
             UpdatePagingInfo_bootstrap();
         }
         //================================================================================================
         //Click handler
-        private void OrderMoreDishes_Click(object sender, RoutedEventArgs e)
+
+        private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
-            var wholeInvoice = ViewModel.SelectedInvoice;
-            if (wholeInvoice != null)
+            var wholeinvoice = ViewModel.SelectedInvoice;
+            if (wholeinvoice != null)
             {
-                var cart = new InvoiceToOrderObject();
-                 cart.InvoiceDetailToCartItemObjects= new List<InvoiceDetailToCartItemObject>();
-                cart.InvoiceId = wholeInvoice.Invoice.InvoiceID;
-                foreach (var item in wholeInvoice.InvoiceDetailsWithProductInfo)
+                int totalCost = CalculateTotalCost();
+                var paymentViewModel = (Application.Current as App).PaymentViewModel;
+                var orderItems = new FullObservableCollection<Order>();
+
+                foreach (var item in wholeinvoice.InvoiceDetailsWithProductInfo)
                 {
-                    var product = item.ProductInfo;
-                    product.Price = item.InvoiceDetailProperty.Price;//
-                    cart.InvoiceDetailToCartItemObjects.Add(new InvoiceDetailToCartItemObject
+                    var order = new Order(item.ProductInfo, item.InvoiceDetailProperty.Quantity, item.InvoiceDetailProperty.Note)
                     {
-                        Product = product,
-                        Quantity = item.InvoiceDetailProperty.Quantity,
-                        Note = item.InvoiceDetailProperty.Note
-                    }
-                    );
+                        Price = item.InvoiceDetailProperty.Price
+                    };
+                    orderItems.Add(order);
                 }
-                // Navigate to Menu
+
+                paymentViewModel.SetItems(orderItems, totalCost, wholeinvoice.Invoice.CustomerID, wholeinvoice.Invoice.InvoiceID);
                 var navigation = (Application.Current as App).navigate;
-                navigation.SetCurrentNavigationViewItemForMenuWithArgument(cart);
+                navigation.SetCurrentPage(typeof(PaymentView));
             }
         }
-
         private void DeleteInvoice_Click(object sender, RoutedEventArgs e)
         {
             var wholeinvoice = ViewModel.SelectedInvoice;

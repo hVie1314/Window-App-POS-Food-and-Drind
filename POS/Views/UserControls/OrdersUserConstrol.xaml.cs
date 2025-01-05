@@ -67,8 +67,7 @@ namespace POS.Views.UserControls
 
                 // Navigate to PaymentView
                 var navigation = (Application.Current as App).navigate;
-                var festivalItem = navigation.GetNavigationViewItems(typeof(PaymentView)).First();
-                navigation.SetCurrentNavigationViewItem(festivalItem);
+                navigation.SetCurrentPage(typeof(PaymentView));
             }    
         }
 
