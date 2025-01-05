@@ -232,5 +232,39 @@ namespace POS.Services.DAO
                 command.ExecuteNonQuery();
             }
         }
+        //Get all accounts
+        public List<Account> GetAllAccounts()
+        {
+            var accounts = new List<Account>();
+
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var sql = @"
+                SELECT username, iv_username, password, iv_password
+                FROM nhanvien Where username is not NULL";
+
+                var command = new NpgsqlCommand(sql, connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var account = new Account()
+                        {
+                            Username = reader["username"] as byte[],
+                            Username_iv = reader["iv_username"] as byte[],
+                            Password = reader["password"] as byte[],
+                            Password_iv = reader["iv_password"] as byte[]
+
+                        };
+                        accounts.Add(account);
+                    }
+                }
+            }
+
+            return accounts;
+        }
     }
 }

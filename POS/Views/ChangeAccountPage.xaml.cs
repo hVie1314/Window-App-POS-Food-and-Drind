@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS.Login;
+using POS.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,9 +25,11 @@ namespace POS.Views
     /// </summary>
     public sealed partial class ChangeAccountPage : Page
     {
+        public ChangeAccountViewModel ChangeAccountViewModel { get; set; }
         public ChangeAccountPage()
         {
             this.InitializeComponent();
+            ChangeAccountViewModel = new ChangeAccountViewModel();
         }
         private async void OnSaveAccountClick(object sender, RoutedEventArgs e)
         {
@@ -57,14 +60,28 @@ namespace POS.Views
                 }.ShowAsync();
                 return;
             }
-                AccountCreator.CreateAccount(newUsername, newPassword, (Application.Current as App).CurrentEmployee.EmployeeID);
-            await new ContentDialog()
+            foreach (var account in ChangeAccountViewModel.Accounts)
             {
-                XamlRoot = this.XamlRoot,
-                Content = "Đổi tài khoản thành công",
-                Title = "Thành công",
-                CloseButtonText = "Đóng"
-            }.ShowAsync();
+                if (newUsername == account.UsernameString)
+                {
+                    await new ContentDialog()
+                    {
+                        XamlRoot = this.XamlRoot,
+                        Content = "Tên tài khoản đã tồn tại, vui lòng chọn một tên tài khoản khác",
+                        Title = "Thất bại",
+                        CloseButtonText = "Đóng"
+                    }.ShowAsync();
+                    return;
+                }
+            }
+                AccountCreator.CreateAccount(newUsername, newPassword, (Application.Current as App).CurrentEmployee.EmployeeID);
+                await new ContentDialog()
+                {
+                    XamlRoot = this.XamlRoot,
+                    Content = "Đổi tài khoản thành công",
+                    Title = "Thành công",
+                    CloseButtonText = "Đóng"
+                }.ShowAsync();
+            }
         }
     }
-}
