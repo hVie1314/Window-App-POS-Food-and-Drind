@@ -38,6 +38,7 @@ namespace POS.Views
                     window.Activate();
                     // Set the title for the app
                     window.Title = "POS HCMUS";
+                    (Application.Current as App).m_window = window;
                     (Application.Current as App).m_window2.Close();
                     return;
                 }

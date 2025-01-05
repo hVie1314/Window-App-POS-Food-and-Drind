@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Styles\customStyles.xaml" />
+    <None Remove="Views\AuthenticationPage.xaml" />
     <None Remove="Views\DiscountView.xaml" />
     <None Remove="Views\InvoiceView.xaml" />
     <None Remove="Views\Menu.xaml" />
@@ -84,6 +85,13 @@
     <None Update="Assets\Image\logo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\AuthenticationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\AccountPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\NotPaidInvoicesView.xaml">
       <SubType>Designer</SubType>
     </Page>

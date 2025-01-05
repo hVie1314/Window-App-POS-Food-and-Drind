@@ -9,8 +9,8 @@ namespace POS.Converters
 {
     internal class BoolToEmployeeStatus: IValueConverter
     {
-    private const string _trueString = "Chính thức";
-    private const string _falseString = "Không chính thức";
+    private const string _trueString = "Nhân viên chính thức";
+    private const string _falseString = "Nhân viên không chính thức";
             public object Convert(object value, Type targetType, object parameter, string language)
             {
                 if (value is bool boolValue)
