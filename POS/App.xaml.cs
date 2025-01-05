@@ -22,6 +22,9 @@ using POS.Services;
 using POS.Shells;
 using POS.Helpers;
 using POS.Models;
+using POS.Login;
+using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace POS
 {
@@ -39,6 +42,7 @@ namespace POS
             0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
             0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF
         };  // 32 bytes
+            //AccountCreator.GenarateBase64AccountData("tien", "tien");
         }
         public EmployeeDataForLogin CurrentEmployee { get; set; }
         public PaymentViewModel PaymentViewModel { get; set; } = new PaymentViewModel();
@@ -46,12 +50,14 @@ namespace POS
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window2 = new ShellWindow();
-            //m_window.Activate();
-            //navigate = m_window;
             m_window2.Activate();
-
             // Set the title for the app
             m_window2.Title = "POS HCMUS";
+
+            //m_window = new Shell();
+            //navigate = m_window;
+            //m_window.Activate();
+
         }
 
         //protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)

@@ -47,6 +47,7 @@
             </NavigationView.Resources>
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Menu"
+                                    Name="MenuItem"
                                     Tag="POS.Views.Menu"
                                     ToolTipService.ToolTip="Thực đơn">
                     <NavigationViewItem.Icon>
@@ -70,6 +71,7 @@
                                     Icon="Contact">
                 </NavigationViewItem>
                 <NavigationViewItem Content="Nhân viên"
+                                    Name="EmployeeMenuItem"
                                     Tag="POS.Views.EmployeeView"
                                     ToolTipService.ToolTip=""
                                     Icon="PhoneBook">
@@ -90,6 +92,7 @@
                 </NavigationViewItem>
 
                 <NavigationViewItem Content="Mã giảm giá"
+                                    Name="DiscountMenuItem"
                                     Tag="POS.Views.DiscountView"
                                     ToolTipService.ToolTip="">
                     <NavigationViewItem.Icon>
@@ -108,6 +111,7 @@
                     />
 
                 <NavigationViewItem Content="Cài đặt"
+                                    Name="SettingMenuItem"
                                     Tag="POS.Views.SettingView"
                                     ToolTipService.ToolTip=""
                                     >

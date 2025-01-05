@@ -41,28 +41,38 @@ namespace POS.Views
                     (Application.Current as App).m_window2.Close();
                     return;
                 }
-                else
-                {
-                    ContentDialog dialog1 = new ContentDialog
-                    {
-                        Title = "Đăng nhập thất bại",
-                        Content = "Tên đăng nhập hoặc mật khẩu không đúng.",
-                        CloseButtonText = "Đóng",
-                        XamlRoot = this.XamlRoot 
-                    };
-                    _ = dialog1.ShowAsync();
-                    return;
-                }
             }
+            if (ViewModel.Employees.Count == 0)
+            {
+                ShowNoAccountDialog();
+            }
+            else
+            {
+                ShowLoginFailedDialog();
+            }
+           
+        }
+        private void ShowLoginFailedDialog()
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Đăng nhập thất bại",
+                Content = "Tên đăng nhập hoặc mật khẩu không đúng.",
+                CloseButtonText = "Đóng",
+                XamlRoot = this.XamlRoot
+            };
+            _ = dialog.ShowAsync();
+        }
+        private void ShowNoAccountDialog()
+        {
             ContentDialog dialog = new ContentDialog
             {
                 Title = "Đăng nhập thất bại",
                 Content = "Chưa có tài khoản trên vào hệ thống.",
                 CloseButtonText = "Đóng",
-                XamlRoot = this.XamlRoot 
+                XamlRoot = this.XamlRoot
             };
             _ = dialog.ShowAsync();
-
         }
     }
 }

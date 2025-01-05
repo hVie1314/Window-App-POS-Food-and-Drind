@@ -14,6 +14,15 @@ namespace POS.Shells
         public Shell()
         {
             this.InitializeComponent();
+            if((Application.Current as App).CurrentEmployee != null)
+            {
+                if ((Application.Current as App).CurrentEmployee?.Position != "Quản lý")
+                {
+                    DiscountMenuItem.Visibility = Visibility.Collapsed;
+                    EmployeeMenuItem.Visibility = Visibility.Collapsed;
+                    SettingMenuItem.Visibility = Visibility.Collapsed;
+                }
+            }
             //this.SizeChanged += Shell_SizeChanged;
         }
         //Navigate from top to left for NavigationView
