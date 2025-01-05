@@ -70,7 +70,9 @@
             <Run Text="{x:Bind ViewModel.InvoiceDate, Converter={StaticResource DateTimeToDateConverter}}"></Run>
             </TextBlock>
             </Grid>
-            <TextBlock Margin=" 0 4 0 4">Nhân viên: Quan Phan Tiến</TextBlock>
+            <TextBlock Margin=" 0 4 0 4">
+                Tên nhân viên: <Run Text="{x:Bind CurrentEmployee.Name}"/>
+            </TextBlock>
             <StackPanel Orientation="Vertical" Margin=" 0 4 0 4">
             <TextBlock>Tên khách hàng: </TextBlock>
                 <AutoSuggestBox PlaceholderText="Nhập tên khách hàng"

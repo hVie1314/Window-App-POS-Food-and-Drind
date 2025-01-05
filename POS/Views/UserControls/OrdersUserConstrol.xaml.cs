@@ -28,6 +28,7 @@ namespace POS.Views.UserControls
     /// </summary>
     public sealed partial class OrdersUserControl : UserControl
     {
+        public EmployeeDataForLogin CurrentEmployee { get; set; }
         public OrderDetailViewModel ViewModel { get; set; } = new OrderDetailViewModel();
 
         public void AddToOrder(Product info, int quanlity, string note)
@@ -39,6 +40,7 @@ namespace POS.Views.UserControls
             this.InitializeComponent();
             this.DataContext = ViewModel;
             ViewModel.getCustomersListForAutoSuggest();
+            CurrentEmployee = (Application.Current as App).CurrentEmployee;
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
