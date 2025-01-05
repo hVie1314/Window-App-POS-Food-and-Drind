@@ -104,7 +104,7 @@
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Tài khoản"
-                                    Tag="POS.ChangeAccountPage"
+                                    Tag="POS.AccountPage"
                                     ToolTipService.ToolTip=""
                                     Icon="Account"
 

@@ -6,9 +6,9 @@ using System;
 
 namespace POS
 {
-    public sealed partial class ChangeAccountPage : Page
+    public sealed partial class AccountPage : Page
     {
-        public ChangeAccountPage()
+        public AccountPage()
         {
             this.InitializeComponent();
         }
