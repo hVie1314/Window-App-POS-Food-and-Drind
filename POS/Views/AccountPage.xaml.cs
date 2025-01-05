@@ -7,6 +7,7 @@ using POS.Login;
 using POS.Shells;
 using POS.ViewModels;
 using System;
+using System.Threading.Tasks;
 
 namespace POS.Views
 {
@@ -31,36 +32,10 @@ namespace POS.Views
 
         private void ChangeAccount_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(LoginPage));
+            AccountVerificationWindow window = new AccountVerificationWindow();
+            window.Activate();
         }
-        //private async void OnSaveAccountClick(object sender, RoutedEventArgs e)
-        //{
-        //    string newUsername = NewUsernameTextBox.Text;
-        //    string newPassword = NewPasswordBox.Password;
-
-        //    // Check if the username and password are valid
-
-        //    if (string.IsNullOrWhiteSpace(newUsername) || string.IsNullOrWhiteSpace(newPassword))
-        //    {
-        //        await new ContentDialog()
-        //        {
-        //            XamlRoot = this.XamlRoot,
-        //            Content = "Đổi tài khoản không thành công",
-        //            Title = "Thất bại",
-        //            CloseButtonText = "Đóng"
-        //        }.ShowAsync();
-        //        return;
-        //    }
-        //    AccountCreator.CreateAccount(newUsername, newPassword, AccountViewModel.Employee.EmployeeID);
-        //    await new ContentDialog()
-        //    {
-        //        XamlRoot = this.XamlRoot,
-        //        Content = "Đổi tài khoản thành công",
-        //        Title = "Thành công",
-        //        CloseButtonText = "Đóng"
-        //    }.ShowAsync();
-
 
     }
 
-    }
+}

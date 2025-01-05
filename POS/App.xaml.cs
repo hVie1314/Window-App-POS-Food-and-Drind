@@ -25,6 +25,7 @@ using POS.Models;
 using POS.Login;
 using System.Diagnostics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using POS.Views;
 
 namespace POS
 {
@@ -49,6 +50,8 @@ namespace POS
         public INavigation navigate { get; set; }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+
+
             m_window2 = new ShellWindow();
             m_window2.Activate();
             // Set the title for the app
