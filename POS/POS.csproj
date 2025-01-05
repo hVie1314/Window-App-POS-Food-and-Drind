@@ -88,6 +88,9 @@
     <Page Update="ViewModels\AccountVerificationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Views\ChangeAccountForManagerPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ChangeAccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

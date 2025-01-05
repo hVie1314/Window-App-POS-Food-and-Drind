@@ -63,6 +63,8 @@
              Click="AddEmployee_Click" Style="{StaticResource CustomButtonStyle}"/>
                     <Button Margin="8" Content="Xóa" Width="180" Height="40" HorizontalAlignment="Center"
              Click="DeleteEmployee_Click" Style="{StaticResource CustomButtonStyle}"/>
+                    <Button Margin="8" Content="Tạo/Đổi tài khoản" Width="180" Height="40" HorizontalAlignment="Center"
+Click="AddAccount_Click" Style="{StaticResource CustomButtonStyle}"/>
                 </StackPanel>
             </Grid>
 

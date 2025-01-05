@@ -25,10 +25,10 @@ namespace POS.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ChangeAccountPage : Page
+    public sealed partial class ChangeAccountForManagerPage : Page
     {
         public ChangeAccountViewModel ChangeAccountViewModel { get; set; }
-        public ChangeAccountPage()
+        public ChangeAccountForManagerPage()
         {
             this.InitializeComponent();
             ChangeAccountViewModel = new ChangeAccountViewModel();
@@ -84,9 +84,7 @@ namespace POS.Views
                 Title = "Thành công",
                 CloseButtonText = "Đóng"
             }.ShowAsync();
-            (Application.Current as App).CurrentEmployee.UsernameString = newUsername;
-            (Application.Current as App).CurrentEmployee.PasswordString = newPassword;
-
+            Frame.Navigate(typeof(EmployeeView));
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
