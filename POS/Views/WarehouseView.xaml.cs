@@ -8,6 +8,7 @@ using System;
 using POS.Models;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Data;
+using POS.Shells;
 
 
 namespace POS.Views

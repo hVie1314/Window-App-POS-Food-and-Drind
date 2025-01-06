@@ -16,7 +16,8 @@ namespace POS.Services.DAO
         ///     
         /// </summary>
         public PostgresEmployeeDao() { }
-
+        //=======================================================================================================
+        //Get all employees
         /// <summary>
         /// Lấy tất cả các nhân viên
         /// </summary>
@@ -73,6 +74,47 @@ namespace POS.Services.DAO
 
             return new Tuple<int, List<Employee>>(totalItems, employees);
         }
+        public List<EmployeeDataForLogin> GetAllEmployeesWithAccountData()
+        {
+            var employees = new List<EmployeeDataForLogin>();
+            int totalItems = 0;
+
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var sql = @"
+                SELECT nhanvienid, tennhanvien, chucvu, luong, ngayvaolam, trangthai, username, iv_username, password, iv_password
+                FROM nhanvien Where username is not NULL";
+
+                var command = new NpgsqlCommand(sql, connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var employee = new EmployeeDataForLogin
+                        {
+                            EmployeeID = reader.GetInt32(reader.GetOrdinal("nhanvienid")),
+                            Name = reader.GetString(reader.GetOrdinal("tennhanvien")),
+                            Position = reader.GetString(reader.GetOrdinal("chucvu")),
+                            Salary = reader.GetDecimal(reader.GetOrdinal("luong")),
+                            HireDate = reader.GetDateTime(reader.GetOrdinal("ngayvaolam")),
+                            Status = reader.GetBoolean(reader.GetOrdinal("trangthai")),
+                            Username = reader["username"] as byte[],
+                            Username_iv = reader["iv_username"] as byte[],
+                            Password = reader["password"] as byte[],
+                            Password_iv = reader["iv_password"] as byte[]
+
+                        };
+                        employees.Add(employee);
+                    }
+                }
+            }
+
+            return employees;
+        }
+        //=======================================================================================================
 
         /// <summary>
         /// Thêm một nhân viên mới
@@ -173,6 +215,56 @@ namespace POS.Services.DAO
 
                 command.ExecuteNonQuery();
             }
+        }
+        public static void updateAccount(int id, byte[] username, byte[] iv_username, byte[] password, byte[] iv_password)
+        {
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+                var sql = "UPDATE nhanvien SET username = @Username,iv_username = @IV_username , password = @Password, iv_password = @IV_password " +
+                    "WHERE nhanvienid = @EmployeeID";
+                var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@EmployeeID", id);
+                command.Parameters.AddWithValue("@Username", username);
+                command.Parameters.AddWithValue("@IV_username", iv_username);
+                command.Parameters.AddWithValue("@Password", password);
+                command.Parameters.AddWithValue("@IV_password", iv_password);
+                command.ExecuteNonQuery();
+            }
+        }
+        //Get all accounts
+        public List<Account> GetAllAccounts()
+        {
+            var accounts = new List<Account>();
+
+            using (var connection = new NpgsqlConnection(ConnectionHelper.BuildConnectionString()))
+            {
+                connection.Open();
+
+                var sql = @"
+                SELECT username, iv_username, password, iv_password
+                FROM nhanvien Where username is not NULL";
+
+                var command = new NpgsqlCommand(sql, connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var account = new Account()
+                        {
+                            Username = reader["username"] as byte[],
+                            Username_iv = reader["iv_username"] as byte[],
+                            Password = reader["password"] as byte[],
+                            Password_iv = reader["iv_password"] as byte[]
+
+                        };
+                        accounts.Add(account);
+                    }
+                }
+            }
+
+            return accounts;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="POS.Shell_Owner"
+﻿<Window x:Class="POS.Shells.Shell_Owner"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="using:POS"
@@ -75,7 +75,7 @@
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="Tài khoản"
-                                    Tag="POS.ChangeAccountPage"
+                                    Tag="POS.AccountPage"
                                     ToolTipService.ToolTip=""
                                     Icon="Account"
 

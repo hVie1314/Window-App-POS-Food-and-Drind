@@ -7,7 +7,7 @@ namespace POS.Models
     /// <summary>
     /// Employee model class
     /// </summary>
-    public class Employee: INotifyPropertyChanged
+    public class EmployeeDataForLogin : INotifyPropertyChanged
     {
         public int EmployeeID { get; set; }
         public string Name { get; set; }
@@ -19,6 +19,8 @@ namespace POS.Models
         public byte[] Username_iv { get; set; }
         public byte[] Password { get; set; }
         public byte[] Password_iv { get; set; }
+        public string UsernameString { get; set; }
+        public string PasswordString { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 

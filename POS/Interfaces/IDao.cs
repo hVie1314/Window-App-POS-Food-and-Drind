@@ -92,6 +92,10 @@ namespace POS.Interfaces
             int page = 1,
             int rowsPerPage = 10
         );
+        Tuple<int, List<Invoice>> GetAllNotPaidInvoices(string searchKeyword = "",
+            int page = 1,
+            int rowsPerPage = 10
+        );
         int InsertInvoice(Invoice invoice);
         int InsertInvoiceWithId(Invoice invoice);
         Invoice GetInvoiceById(int invoiceId);

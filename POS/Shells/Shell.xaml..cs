@@ -6,14 +6,23 @@ using System.Linq;
 using POS.Services;
 using POS.Views;
 
-namespace POS
+namespace POS.Shells
 {
-    public sealed partial class Shell : Window, INavigation
+    public partial class Shell : Window, INavigation
     {
         private bool _navigatedFlag = false;
         public Shell()
         {
             this.InitializeComponent();
+            if((Application.Current as App).CurrentEmployee != null)
+            {
+                if ((Application.Current as App).CurrentEmployee?.Position != "Quản lý")
+                {
+                    DiscountMenuItem.Visibility = Visibility.Collapsed;
+                    EmployeeMenuItem.Visibility = Visibility.Collapsed;
+                    SettingMenuItem.Visibility = Visibility.Collapsed;
+                }
+            }
             //this.SizeChanged += Shell_SizeChanged;
         }
         //Navigate from top to left for NavigationView

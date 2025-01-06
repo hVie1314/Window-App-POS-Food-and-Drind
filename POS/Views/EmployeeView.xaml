@@ -25,6 +25,7 @@
 
             <!-- Converters -->
             <local4:DateToStringConverter x:Key="DateToStringConverter"/>
+            <local4:BoolToEmployeeStatus x:Key="BoolToEmployeeStatusConverter"/>
 
         </ResourceDictionary>
     </Page.Resources>
@@ -62,6 +63,8 @@
              Click="AddEmployee_Click" Style="{StaticResource CustomButtonStyle}"/>
                     <Button Margin="8" Content="Xóa" Width="180" Height="40" HorizontalAlignment="Center"
              Click="DeleteEmployee_Click" Style="{StaticResource CustomButtonStyle}"/>
+                    <Button Margin="8" Content="Tạo/Đổi tài khoản" Width="180" Height="40" HorizontalAlignment="Center"
+Click="AddAccount_Click" Style="{StaticResource CustomButtonStyle}"/>
                 </StackPanel>
             </Grid>
 
@@ -115,7 +118,8 @@
                         <controls:DataGridTextColumn Header="Chức vụ" Binding="{Binding Position}" Width="*" />
                         <controls:DataGridTextColumn Header="Lương" Binding="{Binding Salary}" Width="*" />
                         <controls:DataGridTextColumn Header="Ngày tuyển dụng" Binding="{Binding HireDate}" Width="*" />
-                        <controls:DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="*" />
+                        <controls:DataGridTextColumn Header="Trạng thái" Binding="{Binding Status,Converter={StaticResource BoolToEmployeeStatusConverter}}" Width="*">
+                        </controls:DataGridTextColumn>
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
             </StackPanel>

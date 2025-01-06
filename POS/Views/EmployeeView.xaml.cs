@@ -8,6 +8,8 @@ using System;
 using POS.Models;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Data;
+using POS.Shells;
+using Windows.ApplicationModel.VoiceCommands;
 
 
 namespace POS.Views
@@ -382,6 +384,10 @@ namespace POS.Views
             {
                 // Do nothing when click on other columns
             }
+        }
+        private void AddAccount_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ChangeAccountForManagerPage),ViewModel.SelectedEmployee.EmployeeID);
         }
     }
 }
