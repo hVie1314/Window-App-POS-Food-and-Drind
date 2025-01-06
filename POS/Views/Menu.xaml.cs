@@ -238,6 +238,8 @@ namespace POS.Views
             {
                 var cart = e.Parameter as InvoiceToOrderObject;
                 OrdersUserControl.ViewModel.InvoiceID = cart.InvoiceId;
+                OrdersUserControl.ViewModel.CustomerID = cart.CustomerId;
+                OrdersUserControl.ViewModel.SetCustomerNameByCustomerID(cart.CustomerId);
                 OrdersUserControl.ViewModel.InvoiceDate = DateTime.Now;
                 foreach (var item in cart.InvoiceDetailToCartItemObjects)
                 {
