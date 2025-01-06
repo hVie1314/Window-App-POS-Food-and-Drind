@@ -403,8 +403,23 @@ namespace POS.Views
                 // Do nothing when click on other columns
             }
         }
-        private void AddAccount_Click(object sender, RoutedEventArgs e)
+        private async void AddAccount_Click(object sender, RoutedEventArgs e)
         {
+            if (ViewModel.SelectedEmployee == null)
+            {
+                // Show an error dialog if no item is selected
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Lỗi",
+                    Content = "Vui lòng chọn nhân viên.",
+                    CloseButtonText = "OK",
+                    DefaultButton = ContentDialogButton.Close,
+                    XamlRoot = this.XamlRoot // Bind to the current XamlRoot
+                };
+
+                await errorDialog.ShowAsync();
+                return;
+            }
             Frame.Navigate(typeof(ChangeAccountForManagerPage),ViewModel.SelectedEmployee.EmployeeID);
         }
     }
