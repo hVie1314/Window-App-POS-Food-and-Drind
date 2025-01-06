@@ -76,6 +76,7 @@
             <StackPanel Orientation="Vertical" Margin=" 0 4 0 4">
             <TextBlock>Tên khách hàng: </TextBlock>
                 <AutoSuggestBox PlaceholderText="Nhập tên khách hàng"
+                                Text="{x:Bind ViewModel.CustomerName,Mode=OneWay}"
         TextChanged="AutoSuggestBox_TextChanged"
         QueryIcon="Find"
         QuerySubmitted="AutoSuggestBox_QuerySubmitted"

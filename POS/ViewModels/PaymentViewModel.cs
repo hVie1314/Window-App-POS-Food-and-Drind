@@ -77,7 +77,7 @@ namespace POS.ViewModels
         /// <summary>
         /// ID của hóa đơn
         /// </summary>
-        public int InvoiceId { get; set; }
+        public int InvoiceId { get; set; } = -1;
         /// <summary>
         /// ID của khách hàng
         /// </summary>
@@ -150,8 +150,8 @@ namespace POS.ViewModels
         /// </summary>
         /// <param name="items"></param>
         /// <param name="total"></param>
-        /// <param name="invoiceId"></param>
-        public void SetItems(ObservableCollection<Order> items, double total, int customerId, int invoiceId)
+        /// <param name="flag"></param>
+        public void SetItems(int invoiceID,ObservableCollection<Order> items, double total, int customerId, int flag)
         {
             Items = new ObservableCollection<Order>(items);
             OnPropertyChanged(nameof(Items));
@@ -159,7 +159,7 @@ namespace POS.ViewModels
             OnPropertyChanged(nameof(TotalCost));
             CalculateTotalPayment();
             OnPropertyChanged(nameof(TotalPayable));
-            InvoiceId = invoiceId;
+            InvoiceId = invoiceID;
             CustomerID = customerId;
         }
 
@@ -287,10 +287,19 @@ namespace POS.ViewModels
                 InvoiceDate = PaymentDate,
                 PaymentMethod = SelectedPaymentMethod,
                 Discount = DiscountValue,
+                InvoiceID = InvoiceId,
                 CustomerID = this.CustomerID
             };
-            int newInvoiceId = _invoiceDao.InsertInvoice(invoice);
-
+            int newInvoiceId;
+            if (InvoiceId == -1)
+            {
+                newInvoiceId = _invoiceDao.InsertInvoice(invoice);
+            }
+            else
+            {
+                _invoiceDao.RemoveInvoiceById(InvoiceId);
+                newInvoiceId = _invoiceDao.InsertInvoiceWithId(invoice);
+            }
             foreach (var item in Items)
             {
                 InvoiceDetail invoiceDetail = new InvoiceDetail()
@@ -298,7 +307,8 @@ namespace POS.ViewModels
                     InvoiceID = newInvoiceId,
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
-                    Price = item.Price
+                    Price = item.Price,
+                    Note = item.Note
                 };
                 _invoiceDetailDao.InsertInvoiceDetail(invoiceDetail);
             }

@@ -58,11 +58,6 @@ namespace POS.Views
 
             if (ViewModel.SelectedPaymentMethod == "Tiền mặt")
             {
-                if (ViewModel.InvoiceId >= 0) // Pay from invoice
-                {
-                    ViewModel.UpdateDB();
-                }
-                else // Pay from menu
                 {
                     ViewModel.InvoiceId = ViewModel.SaveToDB();
                 }
@@ -113,11 +108,6 @@ namespace POS.Views
             ContentDialogResult result = await paymentConfirmDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                if (ViewModel.InvoiceId >= 0) // Pay from invoice
-                {
-                    ViewModel.UpdateDB();
-                }
-                else // Pay from menu
                 {
                     ViewModel.InvoiceId = ViewModel.SaveToDB();
                 }
