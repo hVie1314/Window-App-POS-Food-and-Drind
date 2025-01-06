@@ -31,12 +31,20 @@ namespace POS.ViewModels
         private double _tax;
         private double VAT;
         public int CustomerID { get; set; } = -1;
+        public string CustomerName { get; set; }
         public void getCustomersListForAutoSuggest()
         {
             AllCustomers = _customerDao.GetAllCustomers();
         }
+        public void SetCustomerNameByCustomerID(int customerID)
+        {
+            CustomerID = customerID;
+            CustomerName = (CustomerID == -1) ? "" : AllCustomers.Find(c => c.CustomerID == CustomerID).Name;
+        }
         public OrderDetailViewModel()
         {
+            getCustomersListForAutoSuggest();
+            CustomerName = (CustomerID == -1) ? "" : AllCustomers.Find(c => c.CustomerID == CustomerID).Name;
         }
         public int InvoiceID { get; set; } = -1;
         public DateTime InvoiceDate { get; set; } = DateTime.Now;

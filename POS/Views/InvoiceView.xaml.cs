@@ -110,6 +110,7 @@ namespace POS.Views
                 var cart = new InvoiceToOrderObject();
                  cart.InvoiceDetailToCartItemObjects= new List<InvoiceDetailToCartItemObject>();
                 cart.InvoiceId = wholeInvoice.Invoice.InvoiceID;
+                cart.CustomerId = wholeInvoice.Invoice.CustomerID;
                 foreach (var item in wholeInvoice.InvoiceDetailsWithProductInfo)
                 {
                     var product = item.ProductInfo;

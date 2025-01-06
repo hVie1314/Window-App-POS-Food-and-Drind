@@ -40,7 +40,6 @@ namespace POS.Views.UserControls
             this.InitializeComponent();
             this.DataContext = ViewModel;
             ViewModel.GetVATValue();
-            ViewModel.getCustomersListForAutoSuggest();
             CurrentEmployee = (Application.Current as App).CurrentEmployee;
         }
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
@@ -66,7 +65,7 @@ namespace POS.Views.UserControls
                 int payFromMenuInvoiceId = -1; // flag to indicate that this payment is from menu page
                 // Pass data to PaymentViewModel
                 var paymentViewModel = (Application.Current as App).PaymentViewModel;
-                paymentViewModel.SetItems(ViewModel.Items, ViewModel.SubTotal, ViewModel.CustomerID, payFromMenuInvoiceId);
+                paymentViewModel.SetItems(ViewModel.InvoiceID,ViewModel.Items, ViewModel.SubTotal, ViewModel.CustomerID, payFromMenuInvoiceId);
 
                 // Navigate to PaymentView
                 var navigation = (Application.Current as App).navigate;
