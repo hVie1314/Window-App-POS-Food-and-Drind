@@ -39,6 +39,7 @@ namespace POS.Views.UserControls
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
+            ViewModel.GetVATValue();
             ViewModel.getCustomersListForAutoSuggest();
             CurrentEmployee = (Application.Current as App).CurrentEmployee;
         }
