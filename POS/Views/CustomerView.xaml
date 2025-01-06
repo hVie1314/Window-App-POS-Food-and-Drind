@@ -127,8 +127,8 @@
 
             x:Name="AddCustomerDialog"
             Title="Thêm khách hàng"
-            PrimaryButtonText="Hủy"
-            SecondaryButtonText="Lưu"
+            PrimaryButtonText="Lưu"
+            SecondaryButtonText="Hủy"
             PrimaryButtonClick="OnSaveCustomer"
             SecondaryButtonClick="OnCancelAddCustomer"
             CornerRadius="10"
