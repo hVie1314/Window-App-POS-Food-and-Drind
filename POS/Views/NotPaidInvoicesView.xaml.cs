@@ -103,7 +103,11 @@ namespace POS.Views
         }
         //================================================================================================
         //Click handler
-
+        /// <summary>
+        /// Sự kiện khi click vào nút order more dishes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PayInvoice_Click(object sender, RoutedEventArgs e)
         {
             var wholeinvoice = ViewModel.SelectedInvoice;

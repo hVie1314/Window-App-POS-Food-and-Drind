@@ -88,6 +88,10 @@ namespace POS.Views
             (Application.Current as App).CurrentEmployee.PasswordString = newPassword;
 
         }
+        /// <summary>
+        /// Sự kiện khi chuyển trang
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);

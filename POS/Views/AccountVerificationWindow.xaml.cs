@@ -29,7 +29,11 @@ namespace POS.Views
             this.InitializeComponent();
           
         }
-
+        /// <summary>
+        /// Verify the account
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnVerifyClick(object sender, RoutedEventArgs e)
         {
             string username = (Application.Current as App).CurrentEmployee.UsernameString;
@@ -43,7 +47,9 @@ namespace POS.Views
                showInvalidDialog();
             }
         }
-
+        /// <summary>
+        /// Show invalid dialog
+        /// </summary>
         private void showInvalidDialog()
         {
             ContentDialog dialog = new ContentDialog
