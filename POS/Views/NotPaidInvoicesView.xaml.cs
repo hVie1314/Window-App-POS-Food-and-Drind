@@ -122,7 +122,7 @@ namespace POS.Views
                     orderItems.Add(order);
                 }
 
-                paymentViewModel.SetItems(orderItems, totalCost, wholeinvoice.Invoice.CustomerID, wholeinvoice.Invoice.InvoiceID);
+                paymentViewModel.SetItems(wholeinvoice.Invoice.InvoiceID,orderItems, totalCost, wholeinvoice.Invoice.CustomerID, wholeinvoice.Invoice.InvoiceID);
                 var navigation = (Application.Current as App).navigate;
                 navigation.SetCurrentPage(typeof(PaymentView));
             }
